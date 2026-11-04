@@ -1,0 +1,1663 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17131f">
+<title>Camille — De la cave aux étoiles</title>
+<style>
+:root{color-scheme:dark;--bg:#17131f;--panel:#241d2d;--ink:#fff4e8;--muted:#c6b7ca;--gold:#f4c486;--line:#47394d;--rose:#d982a0}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#372239 0,transparent 50%) var(--bg);color:var(--ink);font:16px system-ui,sans-serif;min-height:100vh}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}header,main,footer{max-width:1050px;margin:auto;padding:0 24px}header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-block:20px}.brand{font:italic 26px Georgia;color:var(--gold);white-space:nowrap}.brand span{font:13px system-ui;margin-right:8px}nav,.tabs,.actions{display:flex;gap:7px;flex-wrap:wrap}button{border:1px solid var(--line);border-radius:10px;padding:10px 13px;color:var(--ink);background:#282031}button:hover{border-color:var(--gold)}button[aria-pressed=true],.primary{background:var(--gold);color:#291b24;border-color:transparent;font-weight:700}button:disabled{opacity:.52;cursor:default}main{padding-bottom:30px}h1,h2,h3,p{margin:0}h1,h2{font-family:Georgia,serif;font-weight:500}h1{font-size:clamp(34px,6vw,62px);line-height:1.02}h2{font-size:27px}h3{font-size:17px}p{line-height:1.6;color:var(--muted)}.eyebrow{color:var(--gold);letter-spacing:.19em;font-size:11px;text-transform:uppercase;font-weight:750}.hero{position:relative;isolation:isolate;overflow:hidden;border:1px solid #684761;border-radius:22px;padding:34px clamp(16px,5vw,50px);text-align:center;background:radial-gradient(ellipse at 50% 100%,#653851,#372238 52%,#211927 90%)}.hero:before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(90deg,transparent 0 17px,#e9aac608 22px,transparent 32px),conic-gradient(from 146deg at 50% -30%,transparent,#f2b77e24 12deg,#f2b77e36 34deg,transparent 35deg);pointer-events:none}.hero h1{margin:12px 0}.hero h1 em{color:var(--gold)}.hero p{margin-bottom:16px}.medal{margin:22px auto 9px;width:93px;aspect-ratio:1;border-radius:50%;border:1px solid var(--gold);display:grid;place-content:center;background:#211824;box-shadow:0 0 0 6px #f4c48620;font:38px Georgia;color:var(--gold)}.medal small{font:10px system-ui;text-transform:uppercase;letter-spacing:.15em}.track{height:7px;background:#15111b;border-radius:12px;overflow:hidden;margin:12px 0 7px}.track i{height:100%;display:block;background:var(--accent,var(--gold));border-radius:inherit}.hero .track{max-width:360px;margin-inline:auto}.meta{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:15px}.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px;min-width:0}.card p{margin-top:7px}.wide{grid-column:1/-1}.section-head{margin:20px 0 15px}.section-head h1{margin-top:7px}.tabs{margin-block:14px}.spread,.quest{display:flex;justify-content:space-between;align-items:center;gap:12px}.quest{border-top:1px solid var(--line);padding:10px 0;min-height:60px}.quest:first-of-type{margin-top:13px}.quest strong{display:block;font-size:14px}.quest button{flex-shrink:0}.quest[data-done=true] button{color:#b8e8c7;border-color:#6b9e7f}.accent{color:var(--accent,var(--gold))}.stat{font:32px Georgia;color:var(--gold)}.chart{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:13px}.chart button{display:grid;justify-items:center;align-items:end;gap:6px;background:transparent;padding:6px 2px;font-size:12px}.column{height:92px;width:min(65%,32px);display:flex;align-items:end;background:#17131f;border-radius:5px;overflow:hidden}.column i{background:var(--rose);width:100%;min-height:0}.list{list-style:none;padding:0;margin:12px 0 0}.list li{padding:10px 0;border-bottom:1px solid var(--line)}.list li:last-child{border-bottom:0}.milestone{display:grid;grid-template-columns:68px 1fr auto;gap:10px;align-items:center}.milestone.current{color:var(--gold)}.empty{padding:25px}.empty h2{margin:8px 0}.empty .meta{margin-top:10px}dialog{width:min(560px,calc(100% - 28px));max-height:85vh;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:15px;padding:18px}dialog::backdrop{background:#100b18cc}dialog label{display:grid;gap:4px;font-size:13px}dialog input{width:100%;padding:8px;background:#17131f;border:1px solid var(--line);border-radius:6px;color:inherit}.fields{display:grid;grid-template-columns:1fr 85px;gap:8px;margin-block:9px}.notice{position:fixed;bottom:16px;right:16px;max-width:calc(100vw - 32px);padding:12px 16px;background:#39283f;border:1px solid var(--gold);border-radius:10px;z-index:3;pointer-events:none}footer{padding-bottom:25px;color:var(--muted);font-size:12px}@media(max-width:660px){header,main,footer{padding-inline:13px}header{align-items:flex-start;flex-direction:column;gap:12px;padding-block:13px}header nav{display:grid;grid-template-columns:repeat(4,1fr);width:100%;gap:4px}header nav button,.tabs button{font-size:12px;padding-inline:7px}.grid{grid-template-columns:1fr}.hero{padding-top:25px}.milestone{grid-template-columns:50px 1fr auto}.milestone .meta{font-size:11px}}@media(prefers-reduced-motion:no-preference){.track i{transition:width .25s}}
+
+.brand{display:flex;align-items:center;gap:9px}
+#mailButton{position:relative;padding:6px 10px;color:var(--gold);font:18px system-ui}
+#mailButton #mailCount{position:absolute;top:-8px;right:-8px;margin:0;min-width:18px;padding:1px 4px;border-radius:20px;background:var(--gold);color:#2a1924;font:bold 11px system-ui}
+#inbox{border-color:#9a735e;background:linear-gradient(145deg,#382431,#211822)}
+.mail-entry button{margin-top:8px}.mail-entry p{margin:4px 0}
+#editor fieldset{border:1px solid var(--line);border-radius:10px;margin:14px 0}
+#editor fieldset:first-of-type{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+main:not([data-screen="0"]) .section-head{padding:25px 24px;border:1px solid #79566b;border-radius:19px;background:radial-gradient(ellipse at 82% 6%,#f4bd7840,transparent 54%),repeating-linear-gradient(90deg,transparent 0 23px,#ffcfb10b 30px,transparent 47px),linear-gradient(125deg,#47212d,#2d1c37)}
+main[data-screen="2"] .section-head{background:radial-gradient(ellipse at 85% 10%,#88b9b839,transparent 55%),repeating-linear-gradient(0deg,transparent 0 12px,#ffffff0a 13px,transparent 14px),linear-gradient(125deg,#1d3035,#282235)}
+main[data-screen="3"] .section-head{background:radial-gradient(ellipse at 85% 10%,#f4bd7852,transparent 56%),repeating-linear-gradient(90deg,transparent 0 22px,#ffcfb117 27px,transparent 37px),linear-gradient(125deg,#50242b,#2b1a26)}
+main:not([data-screen="0"]) .card{border-color:color-mix(in srgb,var(--accent,var(--gold)) 32%,#3a2738);border-top:3px solid color-mix(in srgb,var(--accent,var(--gold)) 66%,#3a2738);background:radial-gradient(ellipse at 100% 0%,color-mix(in srgb,var(--accent,var(--gold)) 13%,transparent),transparent 65%),linear-gradient(145deg,#2a202b,#1d1824);box-shadow:0 8px 18px #0e0a1450}
+main[data-screen="3"] .cast{position:relative;overflow:hidden;padding:19px 21px}
+.cast:nth-child(4n+2){--accent:#e9a1bb}.cast:nth-child(4n+3){--accent:#8cd3ee}.cast:nth-child(4n){--accent:#a9d8ba}
+.cast .eyebrow{color:var(--accent,var(--gold))}
+.cast:after{content:"✦";position:absolute;right:14px;top:12px;color:var(--accent,var(--gold));opacity:.35;pointer-events:none}
+.quest{position:relative}.xp-cue{position:absolute;z-index:2;right:6px;top:-8px;color:#261a24;background:var(--accent,var(--gold));font-weight:800;font-size:13px;padding:5px 10px;border-radius:16px;pointer-events:none;box-shadow:0 0 16px #f4c48660}
+@media(prefers-reduced-motion:no-preference){
+  .encore{animation:spotlight .85s ease-out}.xp-cue{animation:applause 1.25s ease-out both}
+  @keyframes spotlight{0%{background:transparent}30%{background:color-mix(in srgb,var(--accent,var(--gold)) 24%,transparent)}100%{background:transparent}}
+  @keyframes applause{0%{opacity:0;transform:translateY(8px) scale(.85)}20%,65%{opacity:1}100%{opacity:0;transform:translateY(-32px) scale(1.06)}}
+}
+
+#trainingRoot .typed-set-row.cardio{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+#trainingRoot .typed-set-row.cardio>.sport-field:first-child{grid-column:1/-1}
+#trainingRoot .bodyweight-load{font-size:12px;align-self:center;padding:8px;border:1px solid #254f45;border-radius:8px}#trainingRoot .bodyweight-load summary{cursor:pointer;min-height:32px;display:flex;align-items:center}
+#trainingRoot .typed-set-row.bodyweight{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.program-set-fields{grid-template-columns:repeat(auto-fit,minmax(100px,1fr))}
+.exercise-modal-open{overflow:hidden!important}#exerciseLibraryModal[hidden]{display:none!important}#exerciseLibraryModal{position:fixed;inset:0;z-index:10010;background:#000b;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box}.exercise-dialog{width:590px;max-width:100%;max-height:88dvh;overflow:auto;padding:22px;box-sizing:border-box;border:1px solid #4a9678;background:#0b211d;color:#e4f5ed;border-radius:18px;box-shadow:0 20px 80px #0009;overscroll-behavior:contain}.exercise-dialog header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.exercise-dialog h2{font-size:23px;margin:0}.exercise-dialog button,.exercise-library-page button{background:#153c30;color:#e3f8ed;border:1px solid #46735f;border-radius:9px;padding:10px 12px;min-height:44px;font:inherit;cursor:pointer}.exercise-dialog header button{min-width:44px}.ex-field{display:block;font-size:13px;margin-bottom:14px;color:#c3dbd0}.ex-field input,.ex-field select,.program-set-fields input{display:block;box-sizing:border-box;width:100%;min-height:46px;border:1px solid #406c5c;background:#081a19;color:#f0fff5;border-radius:9px;padding:10px;margin-top:6px;font:inherit;font-size:16px}#exerciseResults{max-height:40dvh;overflow:auto;border:1px solid #2f5949;border-radius:10px;overscroll-behavior:contain}#exerciseResults>button{display:block;text-align:left;border:0;border-bottom:1px solid #294b3f;border-radius:0;width:100%;padding:12px;min-height:60px}#exerciseResults>button:focus{outline:2px solid #8ce8bb;outline-offset:-2px;background:#24523c}#exerciseResults small,[data-library-results] small{display:block;color:#a2c4b2;margin-top:5px;font-size:12px}[data-ex-custom]{margin:14px 0}[data-ex-custom] small{display:block;color:#a9c7b8;font-size:12px;margin-top:8px}[data-ex-error]{color:#ffbfb4;font-size:13px}.exercise-dialog footer{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}.program-draft-ex{border:1px solid #315845;border-radius:12px;padding:14px;margin:12px 0}.program-draft-ex>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:10px}.program-set-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}.program-set-fields label{font-size:12px;min-width:0}.ex-help{font-size:12px;color:#a8c8b7}[data-library-results]{max-height:60dvh;overflow:auto}[data-library-results] article{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px;border-bottom:1px solid #2a5043}[data-library-results] strong{font-size:14px}.exercise-library-page h2{font-size:23px}.exercise-library-page>p{font-size:13px}@media(max-width:420px){#exerciseLibraryModal{padding:10px}.exercise-dialog{padding:16px;max-height:90dvh}.exercise-dialog h2{font-size:21px}.exercise-dialog footer button{font-size:13px}.program-set-fields{gap:6px}}@media(prefers-reduced-motion:reduce){.exercise-dialog{scroll-behavior:auto}}
+
+.shinobi-motto{display:none}body.shinobi-mode .shinobi-motto{display:inline}body.shinobi-mode .monarch-motto{display:none}#trainingRoot .sport-ex>summary{position:relative;padding-left:55px!important}
+#trainingRoot .exercise-drag-handle{position:absolute;left:5px;top:50%;transform:translateY(-50%);width:42px;height:46px;min-width:42px;padding:10px!important;border:1px solid #47627b;border-radius:9px;background:#102738;color:#a4d9e6;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.exercise-drag-handle svg{width:20px;height:24px;pointer-events:none}.exercise-drag-handle:active{cursor:grabbing}.exercise-is-dragging{opacity:.5}.exercise-drop-before{box-shadow:0 -4px #7ef0c4!important}.exercise-drop-after{box-shadow:0 4px #7ef0c4!important}.exercise-drag-ghost{position:fixed;left:0;top:0;max-width:210px;padding:10px 14px;border-radius:10px;background:#174536;border:1px solid #8ce4c3;color:#fff;font-size:13px;pointer-events:none;z-index:10000;box-shadow:0 6px 22px #0009}.exercise-order-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+#editor .fields{grid-template-columns:minmax(0,1fr) 68px auto;align-items:end}
+#editor .fields button{padding:7px 10px;color:var(--rose)}
+#training[hidden],#main[hidden]{display:none}
+#trainingRoot .training-hero{background:radial-gradient(ellipse at 90% 0%,#d08d5860,transparent 53%),repeating-linear-gradient(90deg,transparent 0 24px,#f5c38a10 27px,transparent 38px),linear-gradient(120deg,#492731,#2a1c31)}
+#trainingRoot .sport-card,#trainingRoot .sport-record,#trainingRoot .training-management,#trainingRoot .exercise-trend{padding:15px;margin:12px 0;border:1px solid #624752;border-top:2px solid #aa785f;border-radius:13px;background:linear-gradient(135deg,#34242e,#211a27)}
+#trainingRoot .sport-title{font:25px Georgia;margin:14px 0 8px;color:var(--gold)}
+#trainingRoot .sport-actions{display:flex;flex-wrap:wrap;gap:8px;margin:9px 0}
+#trainingRoot .sport-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:9px}
+#trainingRoot .sport-field{display:grid;gap:5px;min-width:0}
+#trainingRoot input:not([type=checkbox]),#trainingRoot select,#trainingRoot textarea{max-width:100%;min-width:0;padding:7px;border:1px solid var(--line);border-radius:7px;background:#19131e;color:var(--ink);font:inherit}
+#trainingRoot .sport-launch,#trainingRoot .sport-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,100px),1fr));gap:8px;align-items:center}
+#trainingRoot .sport-row{padding:7px 0;border-bottom:1px solid var(--line)}
+#trainingRoot .sport-row input:not([type=checkbox]){width:100%}
+#trainingRoot summary{cursor:pointer;color:var(--gold);padding:9px}
+#trainingRoot summary.primary{color:#291b24;border-radius:8px}
+#trainingRoot .sport-ex{margin:10px 0;padding:6px 9px;border-radius:8px;border:1px solid var(--line);border-left:3px solid var(--muscle,var(--gold))}
+#trainingRoot .sport-ex summary span,#trainingRoot .sport-ex summary small{margin-left:8px}
+#trainingRoot .sport-ex-complete{background:#18342966}
+#trainingRoot .sport-progress-track{height:7px;border-radius:8px;background:#17131f;margin:8px 0}
+#trainingRoot .sport-progress-fill{height:100%;border-radius:8px;background:var(--gold)}
+#trainingRoot .sport-cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+#trainingRoot .sport-cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center}
+#trainingRoot .sport-cal-day{padding:7px 1px;min-height:38px}
+#trainingRoot .sport-cal-day small{display:block;font-size:10px}
+#trainingRoot .sport-cal-done{background:#4a363b;color:var(--gold)}
+#trainingRoot .sport-cal-today{border-color:var(--gold)}
+#trainingRoot .exercise-trend label{display:inline-grid;margin:7px}
+#trainingRoot .exercise-trend svg{max-width:550px;display:block}
+#exerciseLibraryModal section{background:linear-gradient(145deg,#382431,#211822);border-color:#9a735e}
+@media(max-width:660px){header nav{display:flex;flex-wrap:wrap}header nav button{flex:1 0 auto}}
+
+:root{--stage-sparkles:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22260%22%20height%3D%22150%22%20viewBox%3D%220%200%20260%20150%22%3E%3Ccircle%20cx%3D%2285.5%22%20cy%3D%22144.6%22%20r%3D%221.6%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.47%22%2F%3E%3Ccircle%20cx%3D%22222.6%22%20cy%3D%224.1%22%20r%3D%221.2%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.10%22%2F%3E%3Ccircle%20cx%3D%22166.7%22%20cy%3D%2256.1%22%20r%3D%220.7%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.11%22%2F%3E%3Ccircle%20cx%3D%22210.7%22%20cy%3D%22144.4%22%20r%3D%220.8%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.21%22%2F%3E%3Ccircle%20cx%3D%22101.4%22%20cy%3D%2221.7%22%20r%3D%221.0%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.39%22%2F%3E%3Ccircle%20cx%3D%2276.9%22%20cy%3D%2274.3%22%20r%3D%221.1%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.41%22%2F%3E%3Ccircle%20cx%3D%2245.3%22%20cy%3D%2288.9%22%20r%3D%220.9%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.57%22%2F%3E%3Ccircle%20cx%3D%22193.1%22%20cy%3D%2235.1%22%20r%3D%221.5%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.24%22%2F%3E%3Ccircle%20cx%3D%22237.3%22%20cy%3D%22108.0%22%20r%3D%221.3%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.09%22%2F%3E%3Ccircle%20cx%3D%2262.3%22%20cy%3D%2276.5%22%20r%3D%221.2%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%2224.2%22%20cy%3D%2237.6%22%20r%3D%220.6%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.24%22%2F%3E%3Ccircle%20cx%3D%22185.0%22%20cy%3D%22146.4%22%20r%3D%220.9%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.24%22%2F%3E%3Ccircle%20cx%3D%22159.8%22%20cy%3D%2253.8%22%20r%3D%220.6%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.24%22%2F%3E%3Ccircle%20cx%3D%2266.7%22%20cy%3D%2218.1%22%20r%3D%220.9%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.23%22%2F%3E%3Ccircle%20cx%3D%2292.2%22%20cy%3D%2225.1%22%20r%3D%220.6%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.41%22%2F%3E%3Ccircle%20cx%3D%22163.7%22%20cy%3D%2271.8%22%20r%3D%221.4%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.31%22%2F%3E%3Ccircle%20cx%3D%223.7%22%20cy%3D%2246.9%22%20r%3D%221.1%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.61%22%2F%3E%3Ccircle%20cx%3D%2211.6%22%20cy%3D%22109.0%22%20r%3D%220.9%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.23%22%2F%3E%3Ccircle%20cx%3D%2297.3%22%20cy%3D%2242.7%22%20r%3D%221.4%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.47%22%2F%3E%3Ccircle%20cx%3D%2273.8%22%20cy%3D%2265.4%22%20r%3D%221.2%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.21%22%2F%3E%3Ccircle%20cx%3D%2234.7%22%20cy%3D%22101.6%22%20r%3D%220.8%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%2246.0%22%20cy%3D%2215.3%22%20r%3D%220.5%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%2292.6%22%20cy%3D%2264.6%22%20r%3D%220.6%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%22119.9%22%20cy%3D%2264.2%22%20r%3D%221.2%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.24%22%2F%3E%3Ccircle%20cx%3D%2242.2%22%20cy%3D%2279.7%22%20r%3D%221.1%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.43%22%2F%3E%3Ccircle%20cx%3D%2292.2%22%20cy%3D%22136.3%22%20r%3D%221.2%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.16%22%2F%3E%3Ccircle%20cx%3D%22190.9%22%20cy%3D%2239.9%22%20r%3D%220.5%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.21%22%2F%3E%3Ccircle%20cx%3D%22173.2%22%20cy%3D%22105.3%22%20r%3D%220.9%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%22147.4%22%20cy%3D%226.9%22%20r%3D%221.2%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.12%22%2F%3E%3Ccircle%20cx%3D%22144.5%22%20cy%3D%2297.2%22%20r%3D%220.9%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%22186.4%22%20cy%3D%22122.5%22%20r%3D%220.9%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.08%22%2F%3E%3Ccircle%20cx%3D%229.7%22%20cy%3D%2229.2%22%20r%3D%220.9%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.38%22%2F%3E%3Ccircle%20cx%3D%2273.5%22%20cy%3D%2224.2%22%20r%3D%220.5%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.49%22%2F%3E%3Ccircle%20cx%3D%22105.0%22%20cy%3D%22125.4%22%20r%3D%221.4%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.45%22%2F%3E%3Ccircle%20cx%3D%22109.4%22%20cy%3D%2289.6%22%20r%3D%221.0%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.40%22%2F%3E%3Ccircle%20cx%3D%22170.7%22%20cy%3D%2250.1%22%20r%3D%221.4%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.21%22%2F%3E%3Ccircle%20cx%3D%22245.9%22%20cy%3D%22134.7%22%20r%3D%221.3%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.11%22%2F%3E%3Ccircle%20cx%3D%2298.1%22%20cy%3D%2215.9%22%20r%3D%220.8%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.44%22%2F%3E%3Ccircle%20cx%3D%2243.6%22%20cy%3D%22134.9%22%20r%3D%220.8%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.52%22%2F%3E%3Ccircle%20cx%3D%22241.2%22%20cy%3D%2276.4%22%20r%3D%220.4%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.10%22%2F%3E%3Ccircle%20cx%3D%22198.5%22%20cy%3D%2258.8%22%20r%3D%220.9%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%22186.8%22%20cy%3D%2250.6%22%20r%3D%220.6%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%22219.0%22%20cy%3D%22102.9%22%20r%3D%221.3%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.17%22%2F%3E%3Ccircle%20cx%3D%2239.6%22%20cy%3D%2283.0%22%20r%3D%220.6%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.55%22%2F%3E%3Ccircle%20cx%3D%2257.5%22%20cy%3D%2294.2%22%20r%3D%220.8%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.31%22%2F%3E%3Ccircle%20cx%3D%2228.0%22%20cy%3D%2257.7%22%20r%3D%220.8%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.55%22%2F%3E%3Ccircle%20cx%3D%22143.4%22%20cy%3D%22130.5%22%20r%3D%220.7%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%2296.0%22%20cy%3D%2221.6%22%20r%3D%221.2%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.45%22%2F%3E%3Ccircle%20cx%3D%22206.5%22%20cy%3D%2286.3%22%20r%3D%220.5%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%22240.2%22%20cy%3D%2272.0%22%20r%3D%221.6%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.07%22%2F%3E%3Ccircle%20cx%3D%22192.3%22%20cy%3D%22113.5%22%20r%3D%220.8%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2216.9%22%20cy%3D%22100.3%22%20r%3D%221.3%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%2233.5%22%20cy%3D%2239.6%22%20r%3D%220.5%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.46%22%2F%3E%3Ccircle%20cx%3D%2237.2%22%20cy%3D%2294.1%22%20r%3D%221.0%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.43%22%2F%3E%3Ccircle%20cx%3D%22169.8%22%20cy%3D%2210.0%22%20r%3D%220.7%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.31%22%2F%3E%3Ccircle%20cx%3D%224.0%22%20cy%3D%2288.7%22%20r%3D%221.3%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.37%22%2F%3E%3Ccircle%20cx%3D%22169.2%22%20cy%3D%2219.8%22%20r%3D%220.8%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%2267.1%22%20cy%3D%2273.8%22%20r%3D%221.4%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.39%22%2F%3E%3Ccircle%20cx%3D%2229.5%22%20cy%3D%2275.5%22%20r%3D%221.3%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.42%22%2F%3E%3Ccircle%20cx%3D%22124.1%22%20cy%3D%2298.0%22%20r%3D%221.1%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%2295.5%22%20cy%3D%2254.1%22%20r%3D%221.6%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%22133.3%22%20cy%3D%2238.1%22%20r%3D%220.4%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.15%22%2F%3E%3Ccircle%20cx%3D%226.5%22%20cy%3D%2283.9%22%20r%3D%220.9%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.39%22%2F%3E%3Ccircle%20cx%3D%2236.5%22%20cy%3D%2297.6%22%20r%3D%221.0%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.55%22%2F%3E%3Ccircle%20cx%3D%22230.1%22%20cy%3D%2299.4%22%20r%3D%221.5%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.17%22%2F%3E%3Ccircle%20cx%3D%22194.8%22%20cy%3D%22109.4%22%20r%3D%220.9%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%22172.5%22%20cy%3D%22138.5%22%20r%3D%221.4%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2295.1%22%20cy%3D%2254.4%22%20r%3D%220.5%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.45%22%2F%3E%3Ccircle%20cx%3D%22177.7%22%20cy%3D%2254.2%22%20r%3D%221.1%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%22192.5%22%20cy%3D%2236.8%22%20r%3D%220.4%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%22134.2%22%20cy%3D%22132.3%22%20r%3D%221.1%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%22199.3%22%20cy%3D%2296.8%22%20r%3D%220.8%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%2258.6%22%20cy%3D%2246.8%22%20r%3D%221.4%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.53%22%2F%3E%3Ccircle%20cx%3D%22124.5%22%20cy%3D%22127.0%22%20r%3D%221.1%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%22230.3%22%20cy%3D%22120.5%22%20r%3D%220.8%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.13%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%22112.9%22%20r%3D%221.1%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.23%22%2F%3E%3Ccircle%20cx%3D%2230.2%22%20cy%3D%2271.6%22%20r%3D%220.8%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.48%22%2F%3E%3Ccircle%20cx%3D%22210.3%22%20cy%3D%2267.5%22%20r%3D%220.5%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.19%22%2F%3E%3Ccircle%20cx%3D%2213.9%22%20cy%3D%2242.0%22%20r%3D%220.9%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2277.9%22%20cy%3D%2285.6%22%20r%3D%221.2%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.19%22%2F%3E%3Ccircle%20cx%3D%2265.2%22%20cy%3D%22104.4%22%20r%3D%221.1%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.39%22%2F%3E%3Ccircle%20cx%3D%22199.8%22%20cy%3D%225.1%22%20r%3D%220.9%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.08%22%2F%3E%3Ccircle%20cx%3D%22249.2%22%20cy%3D%22116.7%22%20r%3D%220.6%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.15%22%2F%3E%3Ccircle%20cx%3D%22122.0%22%20cy%3D%2260.5%22%20r%3D%220.5%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.41%22%2F%3E%3Ccircle%20cx%3D%22132.4%22%20cy%3D%22137.7%22%20r%3D%220.6%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.16%22%2F%3E%3Ccircle%20cx%3D%22120.6%22%20cy%3D%2260.6%22%20r%3D%221.1%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%22184.2%22%20cy%3D%22129.4%22%20r%3D%221.5%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%2235.2%22%20cy%3D%2295.7%22%20r%3D%221.6%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.46%22%2F%3E%3Ccircle%20cx%3D%22141.7%22%20cy%3D%2235.7%22%20r%3D%220.7%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.15%22%2F%3E%3Ccircle%20cx%3D%2260.0%22%20cy%3D%2219.4%22%20r%3D%221.4%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.52%22%2F%3E%3Ccircle%20cx%3D%2279.8%22%20cy%3D%22118.6%22%20r%3D%220.5%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.41%22%2F%3E%3Ccircle%20cx%3D%2254.2%22%20cy%3D%22117.1%22%20r%3D%220.8%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.54%22%2F%3E%3Ccircle%20cx%3D%22150.5%22%20cy%3D%2214.1%22%20r%3D%220.8%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.16%22%2F%3E%3Ccircle%20cx%3D%22221.8%22%20cy%3D%22103.0%22%20r%3D%220.5%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.21%22%2F%3E%3Ccircle%20cx%3D%2237.1%22%20cy%3D%22100.2%22%20r%3D%221.6%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%22106.2%22%20cy%3D%225.9%22%20r%3D%221.6%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.38%22%2F%3E%3Ccircle%20cx%3D%2249.5%22%20cy%3D%22110.1%22%20r%3D%220.8%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.21%22%2F%3E%3Ccircle%20cx%3D%227.9%22%20cy%3D%2273.0%22%20r%3D%220.8%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.38%22%2F%3E%3Ccircle%20cx%3D%22143.1%22%20cy%3D%2287.4%22%20r%3D%220.5%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%22149.7%22%20cy%3D%2255.8%22%20r%3D%221.5%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.17%22%2F%3E%3Ccircle%20cx%3D%22170.2%22%20cy%3D%2263.5%22%20r%3D%220.8%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%226.3%22%20cy%3D%2242.1%22%20r%3D%221.1%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.55%22%2F%3E%3Ccircle%20cx%3D%2228.2%22%20cy%3D%22109.1%22%20r%3D%221.4%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.48%22%2F%3E%3Ccircle%20cx%3D%2225.1%22%20cy%3D%22118.5%22%20r%3D%220.5%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.17%22%2F%3E%3Ccircle%20cx%3D%2277.4%22%20cy%3D%2294.6%22%20r%3D%221.6%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.49%22%2F%3E%3Ccircle%20cx%3D%22159.6%22%20cy%3D%2215.6%22%20r%3D%221.2%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%22238.7%22%20cy%3D%2282.3%22%20r%3D%221.2%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.08%22%2F%3E%3Ccircle%20cx%3D%2277.9%22%20cy%3D%22112.1%22%20r%3D%221.0%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.33%22%2F%3E%3Ccircle%20cx%3D%2263.4%22%20cy%3D%2227.4%22%20r%3D%221.4%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.40%22%2F%3E%3Ccircle%20cx%3D%22230.5%22%20cy%3D%2271.9%22%20r%3D%220.8%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.15%22%2F%3E%3Ccircle%20cx%3D%22177.0%22%20cy%3D%2271.0%22%20r%3D%221.3%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.11%22%2F%3E%3Ccircle%20cx%3D%22144.7%22%20cy%3D%22110.3%22%20r%3D%220.8%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%220.33%22%2F%3E%3Ccircle%20cx%3D%2216.0%22%20cy%3D%2249.6%22%20r%3D%221.6%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.37%22%2F%3E%3Ccircle%20cx%3D%2224.9%22%20cy%3D%2231.3%22%20r%3D%220.5%22%20fill%3D%22%23ffdba0%22%20opacity%3D%220.38%22%2F%3E%3Ccircle%20cx%3D%2277.4%22%20cy%3D%22146.8%22%20r%3D%221.3%22%20fill%3D%22%23fff0cf%22%20opacity%3D%220.45%22%2F%3E%3Cpath%20transform%3D%22translate%2826%2033%29%20scale%280.9%29%22%20d%3D%22M0%20-10Q1.6%20-1.6%208%200Q1.6%201.6%200%2010Q-1.6%201.6%20-8%200Q-1.6%20-1.6%200%20-10Z%22%20fill%3D%22%23ffdba0%22%20opacity%3D%22.86%22%2F%3E%3Cpath%20transform%3D%22translate%2868%2069%29%20scale%281.3%29%22%20d%3D%22M0%20-10Q1.6%20-1.6%208%200Q1.6%201.6%200%2010Q-1.6%201.6%20-8%200Q-1.6%20-1.6%200%20-10Z%22%20fill%3D%22%23fff0cf%22%20opacity%3D%22.86%22%2F%3E%3Cpath%20transform%3D%22translate%28109%2022%29%20scale%280.6%29%22%20d%3D%22M0%20-10Q1.6%20-1.6%208%200Q1.6%201.6%200%2010Q-1.6%201.6%20-8%200Q-1.6%20-1.6%200%20-10Z%22%20fill%3D%22%23fff0cf%22%20opacity%3D%22.86%22%2F%3E%3Cpath%20transform%3D%22translate%28126%20106%29%20scale%280.8%29%22%20d%3D%22M0%20-10Q1.6%20-1.6%208%200Q1.6%201.6%200%2010Q-1.6%201.6%20-8%200Q-1.6%20-1.6%200%20-10Z%22%20fill%3D%22%23e9a1bb%22%20opacity%3D%22.86%22%2F%3E%3Cpath%20transform%3D%22translate%2847%20119%29%20scale%280.5%29%22%20d%3D%22M0%20-10Q1.6%20-1.6%208%200Q1.6%201.6%200%2010Q-1.6%201.6%20-8%200Q-1.6%20-1.6%200%20-10Z%22%20fill%3D%22%23fff0cf%22%20opacity%3D%22.86%22%2F%3E%3Cpath%20transform%3D%22translate%28174%2057%29%20scale%280.5%29%22%20d%3D%22M0%20-10Q1.6%20-1.6%208%200Q1.6%201.6%200%2010Q-1.6%201.6%20-8%200Q-1.6%20-1.6%200%20-10Z%22%20fill%3D%22%23ffdba0%22%20opacity%3D%22.86%22%2F%3E%3Cpath%20transform%3D%22translate%28203%20116%29%20scale%280.4%29%22%20d%3D%22M0%20-10Q1.6%20-1.6%208%200Q1.6%201.6%200%2010Q-1.6%201.6%20-8%200Q-1.6%20-1.6%200%20-10Z%22%20fill%3D%22%23fff0cf%22%20opacity%3D%22.86%22%2F%3E%3C%2Fsvg%3E")}
+.hero{border-color:#ae795b;box-shadow:0 0 30px #e3a16624,inset 0 0 25px #f2b78018}
+.hero::after,.section-head::after{content:"";position:absolute;pointer-events:none;inset:0;z-index:-1;background:var(--stage-sparkles) top right / min(45%,260px) auto no-repeat}
+.hero::after{background:var(--stage-sparkles) top left / min(43%,275px) auto no-repeat,var(--stage-sparkles) bottom right / min(43%,275px) auto no-repeat}
+.section-head{position:relative;isolation:isolate;overflow:hidden}
+.medal{box-shadow:0 0 0 6px #f4c48620,0 0 24px #f4c48644}
+.brand>span{text-shadow:0 0 10px #ffd796}
+main:not([data-screen="0"]) .card,#trainingRoot .sport-card{position:relative;isolation:isolate}
+main:not([data-screen="0"]) .card::before,#trainingRoot .sport-card::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;background:var(--stage-sparkles) top right / 116px auto no-repeat;opacity:.32}
+@media(prefers-reduced-motion:no-preference){.hero::after{animation:stage-twinkle 3s ease-in-out 2 alternate}@keyframes stage-twinkle{from{opacity:.55}to{opacity:1}}}
+
+.story-reading{max-width:690px;margin:auto;scroll-margin-top:16px}
+.story-reading .story-number{margin-top:19px}
+.story-reading h2{font-size:clamp(27px,5vw,39px)}
+.story-reading p{font:clamp(17px,2.4vw,20px)/1.65 Georgia,serif;color:var(--ink);margin:14px 0}
+.story-turn{margin-top:20px}
+</style>
+</head>
+<body>
+<header><div class="brand"><span aria-hidden="true">✦</span> Camille <button id="mailButton" data-inbox aria-label="Messagerie">✉ <span id="mailCount" hidden></span></button></div><nav id="nav" aria-label="Navigation principale"></nav></header>
+<main id="main"></main><main id="training" data-screen="4" hidden><div id="trainingRoot"></div></main>
+<footer>Camille · De la cave aux étoiles</footer>
+<dialog id="editor" aria-labelledby="editorTitle"></dialog>
+<dialog id="inbox" aria-labelledby="inboxTitle"></dialog>
+<div id="notice" class="notice" role="status" hidden></div>
+<script>
+const source = {"curve": [0, 300, 600, 1200, 1800, 2500, 3100, 4000, 4900, 5800, 6800, 8000, 9200, 10400, 11700, 12900, 14400, 16000, 17500, 19000, 20600, 22400, 24200, 26100, 27900, 29800, 31900, 34100, 36200, 38400, 40500, 43000, 45400, 47900, 50300, 52800, 55500, 58300, 61100, 63800, 66600, 69700, 72700, 75800, 78900, 81900, 85300, 88700, 92100, 95400, 98800, 102500, 106200, 109900, 113500, 117200, 121200, 125200, 129200, 133200, 137200, 141500, 145800, 150100, 154400, 158700, 163300, 167900, 172500, 177100, 181700, 186600, 191500, 196400, 201300, 206200, 211400, 216700, 221900, 227100, 232300, 237800, 243400, 248900, 254400, 259900, 265800, 271600, 277400, 283300, 289100, 295200, 301400, 307500, 313600, 319800, 326200, 332700, 339100, 345600, 352000], "cast": [["Camille", "Héroïne", "Camille veut chanter, jouer et remplir une salle. Pour l’instant, elle remplit surtout son agenda de massages et sa cave de projets. Elle peut répéter un refrain trente fois et hésiter quarante fois avant de le faire écouter."], ["Rachid", "Allié / Coach de vie", "Rachid a un plan d’action pour tout. Tu lui confies une petite hésitation et tu repars avec trois objectifs, une date butoir et un rendez-vous pour faire le point."], ["Lauriane", "Alliée / Électrochoc", "Lauriane distribue ses encouragements comme des contrôles surprises. Elle repère une excuse à travers deux portes et sait exactement quelle question poser pour la faire tomber."], ["Inès", "Alliée / Colocataire", "Inès peut improviser une solution à presque tout, sauf aux poubelles. Depuis qu’une footballeuse est ressortie de son cabinet avec une jambe cassée, elle évite de promettre des résultats spectaculaires."], ["Melissa", "Alliée / Colocataire", "Mélissa a le sens du détail. Depuis son incident avec un soin des sourcils, elle réserve ce talent aux problèmes de ses colocataires et garde la pince à épiler à bonne distance."], ["Voldemort", "Ex toxique", "Voldemort a une définition très personnelle du partage. La maison finit chez lui, les cartons chez Camille, et il trouve encore le moyen d’appeler ça un compromis."], ["Anissa", "Meilleure amie", "Anissa peut gérer une crise au travail avant son premier café. Pour répondre à un simple « salut » après un rendez-vous, elle ouvre une cellule de crise avec Camille."], ["Mère de Camille", "Famille", "La mère de Camille appelle pour prendre des nouvelles et raccroche avec un plan en trois étapes pour sa propre vie amoureuse. Camille avait juste eu le temps de dire allô."], ["Alexis", "Allié", "Alexis est la voix du calme. Quand Lauriane a déjà tranché, il apporte une nuance essentielle en disant exactement la même chose, mais plus doucement."], ["Bande LUX", "Ennemis", "La Bande LUX se dit très exigeante sur la musique. Pour remplacer sa chanteuse, le groupe a surtout comparé les photos. Sur la justesse du refrain, les délibérations continuent."], ["Christelle", "Antagoniste professionnelle", "Christelle dirige le salon de massage et connaît deux températures d’accueil. Camille a droit au courant d’air. Un homme franchit la porte et le printemps revient."], ["Lionel", "Allié / Policier", "Lionel a le don de transformer quinze minutes d’explications de Voldemort en une seule question. Il a aussi la patience d’attendre la réponse."], ["Lio", "Alliée / Nièce", "Lio peut partir chercher du pain et revenir avec une idée de voyage, deux nouveaux amis et aucun pain. Avec elle, Camille pense enfin à autre chose qu’à sa liste de choses à régler."], ["Nathan", "Allié / Neveu", "Nathan connaît toujours quelqu’un qui connaît quelqu’un. Tu lui demandes où se trouve la sortie et il revient avec le numéro du régisseur et une invitation pour vendredi."]], "heritage": [["1", "Cave en colocation"], ["10", "Premières économies"], ["20", "Budget personnel structuré"], ["30", "Premier équipement artistique"], ["40", "Recherche d'un logement"], ["50", "Épargne pour une voiture"], ["60", "Premier véhicule d'occasion envisageable"], ["70", "Matériel artistique personnel"], ["80", "Recherche immobilière active"], ["90", "Premiers revenus artistiques"], ["100", "Possibilité d'acheter une voiture"], ["110", "Meilleure stabilité financière"], ["120", "Premier appartement indépendant"], ["130", "Appartement aménagé"], ["140", "Voiture confortable"], ["150", "Épargne importante"], ["160", "Achat immobilier"], ["170", "Voyages et loisirs"], ["180", "Belle maison avec jardin"], ["190", "Investissements et patrimoine"], ["200", "Indépendance financière et liberté de créer"]]};
+// Ajouter les chapitres ici avec un id stable, un titre, un niveau requis et un texte.
+const chapters = [
+  {
+    "id": "camille-01",
+    "title": "Le plafond de verre fait un mètre quatre-vingts",
+    "level": 1,
+    "text": "La première fois que Camille tenta un contre-ut dans sa cave, le voisin frappa trois coups dans la tuyauterie. Elle essaya une tierce plus bas. Deux coups. Enfin quelqu’un qui lui donnait des notes précises.\nEn remontant l’escalier du sous-sol, elle trouva un carton que Voldemort, son ex, avait fait déposer. Il contenait une robe de scène, un micro et une clé qui n’ouvrait plus rien chez lui. Elle posa la clé, brancha le micro et écrivit sur le carton : « À ouvrir quand j’aurai un public. »"
+  },
+  {
+    "id": "camille-02",
+    "title": "Le premier casting se fait en chaussettes",
+    "level": 2,
+    "text": "Camille posta une annonce pour trouver quelqu’un à qui faire écouter sa chanson. Lio arriva en chaussettes, avec deux amis rencontrés dans l’escalier et un chien qu’aucun des trois ne connaissait.\nLe chien s’endormit au deuxième couplet. Au refrain, il leva la tête.\n« Coupe tout ce qui vient avant », dit Lio.\nCamille n’avait encore jamais accepté une note de mise en scène d’un animal. Le soir même, elle raccourcit la chanson et envoya la nouvelle version à Anissa."
+  },
+  {
+    "id": "camille-03",
+    "title": "Réunion de crise pour un bouton Envoyer",
+    "level": 3,
+    "text": "Anissa écouta la chanson en traversant un open space où une imprimante fumait. Elle débrancha l’imprimante, rassura son équipe et appela Camille.\n« Tu l’envoies au bar des Arcades. Ils font une scène ouverte jeudi. »\nCamille répondit qu’elle devait encore réfléchir à la virgule dans son mail.\n« D’accord. On se donne quinze secondes de réflexion stratégique. »\nAu bout de onze, Anissa entendit le clic. Elle demanda à Camille de lui rendre la pareille pour répondre à un « salut ». Elles y passèrent deux heures."
+  },
+  {
+    "id": "camille-04",
+    "title": "Le plan de Rachid comporte un rappel",
+    "level": 4,
+    "text": "Rachid débarqua avec un agenda et demanda à Camille son objectif à six mois.\n« Pouvoir dire que je chante sans rajouter “un peu”. »\nIl inscrivit « dire que je chante » à la date du jour. Camille protesta qu’il avait oublié le délai.\n« Non. Le délai, c’est pour apprendre à respirer entre les phrases. »\nLe bar des Arcades répondit pendant leur séance. Dix minutes sur scène. Rachid raya ses six premières cases et écrivit une seule ligne : « Jeudi, arriver. »"
+  },
+  {
+    "id": "camille-05",
+    "title": "Christelle découvre le télétravail vocal",
+    "level": 5,
+    "text": "Au salon de massage, Camille demanda à partir dix minutes plus tôt jeudi. Christelle répondit que toute absence mettait l’établissement en péril.\nPuis un client demanda à décaler d’une heure pour un rendez-vous chez le barbier. Christelle lui souhaita de trouver sa coupe.\nCamille proposa de prendre le premier créneau le lendemain, obtint son échange et descendit répéter dans la réserve. Elle découvrit qu’un carton de serviettes faisait un très bon pupitre. Elle y oublia sa feuille de paroles."
+  },
+  {
+    "id": "camille-06",
+    "title": "La scène ouverte ferme à vingt-deux heures",
+    "level": 9,
+    "text": "Sur la petite scène des Arcades, Camille chercha sa feuille dans sa poche. Elle en sortit un ticket de caisse et une liste de courses d’Inès. Elle annonça qu’elle allait interpréter « Tomates, lessive, ne pas oublier les tomates ».\nLe public rit. Camille retrouva le refrain sans le papier. Deux personnes le reprirent à la fin, dont une qui s’était trompée de bar.\nDe retour en coulisses, le régisseur lui proposa de revenir. Elle demanda combien de morceaux préparer. Il lui en demanda trois."
+  },
+  {
+    "id": "camille-07",
+    "title": "Un avis de trois mots",
+    "level": 14,
+    "text": "Lauriane avait filmé la prestation. Elle montra à Camille les vingt secondes où celle-ci scrutait ses chaussures.\n« Tu leur chantes quoi ? »\nCamille n’eut rien à répondre. Au deuxième visionnage, elle vit une femme au premier rang se pencher en avant pour essayer d’attraper son regard.\nAlexis suggéra une solution douce : poser la caméra à hauteur des yeux et refaire une prise. Camille la regarda pendant une chanson entière. La prise était raide et fausse par endroits, mais pour la première fois, on aurait dit qu’elle parlait à quelqu’un."
+  },
+  {
+    "id": "camille-08",
+    "title": "La bande LUX fait un geste",
+    "level": 18,
+    "text": "LUX, l’ancien groupe de Camille, vit la vidéo des Arcades. Le groupe lui proposa de revenir pour une soirée, « en qualité d’ancienne collaboratrice ». Elle lut le détail : apporter son propre micro, apparaître derrière le batteur et chanter les harmonies.\nElle déclina et demanda la vieille maquette qu’ils avaient enregistrée ensemble. Le batteur l’envoya, ravi qu’on lui parle enfin d’autre chose que du volume de sa caisse claire. Camille retrouva dessus un couplet qu’elle avait écrit et oublié. Elle en fit sa deuxième chanson."
+  },
+  {
+    "id": "camille-09",
+    "title": "Le colis en recommandé",
+    "level": 22,
+    "text": "Voldemort découvrit la vidéo. Il écrivit : « Fier de ce que tu deviens. Passe à la maison, on parlera de ce que je peux faire pour toi. » Puis, comme Camille ne répondait pas : « Tu as pris mon câble. »\nCamille faillit ressortir du métro pour aller le lui rendre. Anissa lui fit relire les deux messages dans l’ordre. Camille expédia le câble et demanda que les questions sur ses affaires passent par écrit. Elle garda une copie du reçu dans le carton du micro."
+  },
+  {
+    "id": "camille-10",
+    "title": "Les loges sentent la lessive",
+    "level": 27,
+    "text": "Pour la deuxième soirée aux Arcades, Inès transforma la buanderie en loge avec un miroir posé sur un panier à linge. Mélissa accrocha au mur un plan de maquillage « compatible avec deux yeux ouverts », une clause à laquelle elle tenait personnellement.\nLa nouvelle chanson passa bien. La troisième, trop longue, laissa au public le temps de commander deux tournées. Une femme attendit pourtant la fin pour dire à Camille que son histoire de clé lui rappelait la sienne. Camille nota la phrase de la femme, après lui avoir demandé la permission."
+  },
+  {
+    "id": "camille-11",
+    "title": "Deux invités, un tabouret",
+    "level": 31,
+    "text": "Nathan décrocha un duo au Café du Pont en discutant avec un homme qui n’était pas le patron. L’homme était le pianiste et le patron n’était au courant de rien. Ils s’arrangèrent autour d’un tabouret.\nCamille avait prévu de chanter toutes ses chansons au même tempo. Le pianiste en ralentit une sans la prévenir. Il lui laissa assez de silence pour qu’elle entende une phrase qu’elle avait jusque-là avalée. À la fin, elle lui demanda s’il voulait refaire ça en étant officiellement attendu."
+  },
+  {
+    "id": "camille-12",
+    "title": "Le père Noël du mois de mai",
+    "level": 35,
+    "text": "Nathan lui trouva aussi une audition pour une publicité. Camille devait dire « Je le veux rouge » avec l’intensité d’une femme qui vient d’apprendre un secret. Elle s’imagina que le père Noël lui devait de l’argent.\nL’équipe éclata de rire. Le directeur de casting lui demanda de rejouer la scène presque sans bouger. Cette fois, il sourit et garda son numéro. La publicité prit quelqu’un d’autre. Trois jours plus tard, il rappela pour une lecture de théâtre."
+  },
+  {
+    "id": "camille-13",
+    "title": "L’actrice qui attend son tour",
+    "level": 40,
+    "text": "À la lecture, Camille jouait une voisine. Elle avait deux répliques et passa les quatre-vingts premières minutes à les répéter dans sa tête. Quand son tour arriva, elle dit la première au milieu de la tirade d’un autre.\nLa metteuse en scène lui demanda de lire ce qui précédait, puis de répondre comme si elle découvrait la situation. Camille entendit la voix de son partenaire trembler. Sa réplique sortit tout autrement. Elle obtint le rôle et repartit avec une consigne : écouter jusqu’au bout."
+  },
+  {
+    "id": "camille-14",
+    "title": "Un frigo en résidence artistique",
+    "level": 44,
+    "text": "En répétition, Camille apporta le bruit de son frigo comme exemple de ce qui épuise sa voisine. Le régisseur demanda un enregistrement. Inès s’en chargea, puis oublia d’arrêter le téléphone avant de lui dire : « Tu peux faire moins de bruit ? C’est pour une œuvre. »\nLa metteuse en scène garda la prise, y compris la négociation avec le frigo. Elle demanda à Camille d’écrire une chanson courte pour le changement de décor. Camille comprit qu’une cuisine pouvait lui servir de studio, à condition d’attendre la fin du cycle de dégivrage."
+  },
+  {
+    "id": "camille-15",
+    "title": "Une critique à deux étoiles",
+    "level": 48,
+    "text": "Le spectacle ouvrit devant seize personnes. Un blog lui donna deux étoiles. La mère de Camille annonça la nouvelle avec enthousiasme avant de comprendre que le barème en comptait cinq.\nCamille lut que la chanson de transition semblait arriver « d’un autre spectacle ». Elle retourna s’asseoir avec la metteuse en scène pour écouter la réplique qui la précédait. Elles coupèrent un couplet et changèrent son entrée. Le lendemain, Camille entendit quelqu’un fredonner l’air en quittant la salle."
+  },
+  {
+    "id": "camille-16",
+    "title": "Le comité des poubelles",
+    "level": 53,
+    "text": "Camille proposa de jouer ses nouvelles chansons dans la cour de l’immeuble. Inès s’engagea à vider les poubelles avant le concert. Elle tint parole à sa façon : elles disparurent derrière un rideau.\nAu moment le plus émouvant, le camion de collecte passa et le gardien surgit sur scène pour récupérer les bacs. Camille décala son deuxième couplet et attendit son retour. Il s’assit au premier rang, en gants orange. Elle décida de garder la pause dans la chanson. Elle ferait moins de bruit à l’enregistrement."
+  },
+  {
+    "id": "camille-17",
+    "title": "La maquette à l’heure creuse",
+    "level": 57,
+    "text": "Mélissa obtint un studio à tarif réduit entre six et huit heures du matin. À six heures, personne n’avait de voix. À sept heures, Camille en avait assez pour enregistrer la chanson de la clé. À sept heures cinquante-huit, elle essaya une version avec le silence de la cour.\nLe pianiste préféra celle-là. Il lui demanda aussi de mettre son nom sur la maquette : les harmonies et l’arrangement venaient de leurs répétitions communes. Camille ajouta les crédits avant de faire écouter quoi que ce soit."
+  },
+  {
+    "id": "camille-18",
+    "title": "Une chanson en pièce jointe",
+    "level": 61,
+    "text": "Voldemort renvoya un dossier qu’il disait avoir préparé « pour sa carrière ». Sur la couverture, son propre nom occupait plus de place que celui de Camille. Il voulait présenter ses chansons à des producteurs en se faisant passer pour son représentant.\nElle refusa et écrivit aux deux personnes qu’il avait mises en copie. L’une d’elles, une programmatrice, demanda quand même à écouter la maquette, envoyée directement par Camille. Il y avait une date libre à la fin du mois. Le dossier de Voldemort partit dans un sous-dossier nommé « À conserver »."
+  },
+  {
+    "id": "camille-19",
+    "title": "Le premier cachet",
+    "level": 66,
+    "text": "La date payée rapporta à Camille assez pour régler le studio et dîner après le concert. À la table, Rachid sortit un tableur pour répartir l’argent.\n« Le dessert est dans quelle colonne ? » demanda Inès.\nIl en créa une. Camille paya le pianiste avant de commander, glissa la facture dans une enveloppe et garda une pièce pour le vestiaire. En récupérant son manteau, elle trouva dans la poche un flyer de l’époque de LUX. Elle écrivit le montant de son premier cachet au dos."
+  },
+  {
+    "id": "camille-20",
+    "title": "Une saison au théâtre",
+    "level": 70,
+    "text": "La metteuse en scène proposa à Camille un rôle plus long pour sa prochaine pièce. Elle y jouait une chanteuse obligée de doubler la voix d’une vedette derrière un paravent.\nCamille trouva la situation peu crédible. Puis elle se rappela l’invitation de LUX à chanter derrière le batteur et demanda quand commençaient les répétitions.\nLe premier jour, elle chanta si fort qu’on ne comprit plus la réplique de la vedette. Les deux actrices essayèrent ensemble jusqu’à ce que le public puisse entendre l’effort de l’une pour voler la place de l’autre."
+  },
+  {
+    "id": "camille-21",
+    "title": "Une salle de trente mètres carrés",
+    "level": 74,
+    "text": "Pour répéter sans faire trembler les tuyaux de la cave, Camille loua une salle à l’heure. Lio vint pour la première répétition, revint pour la deuxième et disparut à la troisième. Camille lui demanda ce qu’elle avait raté.\n« Rien. C’est justement le problème. Tu faisais la même chose trois fois. »\nCamille prit une feuille et y écrivit les passages qu’elle voulait essayer autrement. À la séance suivante, Lio revint et resta jusqu’au bout. Elle avait apporté du pain, ce qui inquiétait davantage l’équipe que son absence."
+  },
+  {
+    "id": "camille-22",
+    "title": "Le contrat et le stabilo",
+    "level": 79,
+    "text": "Une petite société de production proposa de financer un EP de trois titres. Le contrat offrait une somme ronde et réclamait une liste de droits beaucoup plus longue. Rachid arriva avec un stabilo neuf. Au bout de deux pages, il demanda un deuxième stabilo.\nCamille fit relire l’accord, négocia la durée et conserva la possibilité de jouer ses chansons sur scène. La société accepta de financer deux titres au lieu de trois. Elle choisit elle-même lesquels et décida de payer le troisième avec ses prochains cachets."
+  },
+  {
+    "id": "camille-23",
+    "title": "Le podcast qu’on aurait pu couper",
+    "level": 83,
+    "text": "Une journaliste invita Camille à parler de sa double vie entre salon et théâtre. Camille expliqua la réserve, la feuille de paroles oubliée et le ticket de caisse. Elle ajouta que Christelle avait du flair, surtout pour entendre une demande de congé à travers trois cloisons.\nL’extrait circula. Christelle le fit écouter à la réception pour prouver que Camille « avait toujours eu du potentiel ». Camille profita du moment pour demander un vrai jour fixe pour les répétitions. Christelle accepta devant deux clientes qui venaient de s’abonner au podcast."
+  },
+  {
+    "id": "camille-24",
+    "title": "Le public est en avance sur le refrain",
+    "level": 87,
+    "text": "Une vidéo des Arcades dépassa tout ce que Camille avait posté. À son concert suivant, le public reprit la phrase de la clé avant elle. Camille eut le réflexe de chanter par-dessus, puis regarda le pianiste et attendit. Le public termina le refrain à sa place.\nAu bar, quelqu’un commanda « la chanson du double de clé ». Le barman servit deux cafés.\nCamille changea le titre sur la maquette. Elle tenait enfin le nom que les gens se rappelleraient sans avoir à ouvrir leur téléphone."
+  },
+  {
+    "id": "camille-25",
+    "title": "La tournée des trois ronds-points",
+    "level": 92,
+    "text": "Nathan trouva quatre dates dans trois villes. La voiture d’Alexis affichait un voyant que Lauriane appelait « l’étoile de la prudence ». Ils partirent quand même avec un budget essence, de quoi payer les techniciens et un sac de vêtements qui arriva une ville avant eux.\nAu premier concert, Camille joua avec les manches de la chemise d’Alexis retroussées jusqu’aux coudes. Elle la remit le lendemain alors que sa valise était revenue. Elle avait enfin trouvé une tenue dans laquelle elle oubliait de rentrer le ventre."
+  },
+  {
+    "id": "camille-26",
+    "title": "Une voix dans le public",
+    "level": 96,
+    "text": "Voldemort se présenta à une date et demanda à entrer en coulisses en se disant responsable de Camille. La personne à l’accueil vérifia la liste. Son nom n’y figurait pas.\nCamille apprit l’incident en arrivant. Elle en parla à la responsable de la salle, qui prévint l’équipe. Puis elle appela Anissa et lui demanda de rester au téléphone pendant qu’elle faisait ses vocalises.\nElle entra sur scène encore secouée. Au premier rang, une femme à qui elle avait serré la main la veille attendait le deuxième couplet."
+  },
+  {
+    "id": "camille-27",
+    "title": "La preuve par la clé USB",
+    "level": 100,
+    "text": "Lionel aida Camille à mettre de l’ordre dans les messages et les documents conservés. Il lui demanda ce qu’elle voulait récupérer, et elle dressa la liste de ses affaires et des enregistrements qui étaient restés chez Voldemort.\nLa récupération fut organisée avec un tiers. Parmi les cartons, Camille retrouva une vieille clé USB étiquetée « FINAL définitif V8 ». Elle contenait la première prise de sa chanson, qu’elle croyait perdue. Elle la copia, rangea la clé et passa le reste de l’après-midi à répéter avec son pianiste."
+  },
+  {
+    "id": "camille-28",
+    "title": "Camille joue quelqu’un de calme",
+    "level": 105,
+    "text": "La troupe présenta sa pièce dans un festival. Le jour de la représentation, le paravent ne tenait plus debout. Camille proposa de jouer sa chanteuse à découvert, face au public, pendant que les autres personnages feraient semblant de ne pas la voir.\nLa scène devint plus drôle et plus cruelle. Au salut, la metteuse en scène souffla qu’elle avait envie de garder ce dispositif.\n« Le paravent est disponible pour un entretien », répondit Camille. Ils le laissèrent plié contre le mur pour la représentation suivante."
+  },
+  {
+    "id": "camille-29",
+    "title": "Le clip sans pluie",
+    "level": 109,
+    "text": "Pour filmer son premier clip, Lio avait prévu un orage spectaculaire. Le ciel resta bleu. Inès proposa un tuyau d’arrosage et faillit tremper l’unique prise électrique.\nCamille coupa l’eau et déplaça l’équipe dans la cage d’escalier. Elle chanta en remontant les marches pendant que Lio descendait à reculons, très lentement, pour éviter d’ajouter une chute au scénario. En découvrant les images, elles gardèrent le début, où l’on entendait les tuyaux du sous-sol répondre avant la première note."
+  },
+  {
+    "id": "camille-30",
+    "title": "Neuf virgule quatre sur dix",
+    "level": 113,
+    "text": "Un concours de chanson sélectionna Camille. Avant le passage, on lui demanda de condenser son parcours en une phrase et demie. Elle répondit : « J’ai commencé dans une cave. Ensuite, il y avait des escaliers. »\nElle ne remporta pas le prix du jury. Le public lui donna pourtant la meilleure note de la soirée. En coulisses, une productrice de théâtre lui demanda de venir parler de ses chansons et de ses textes. Camille prit rendez-vous pour le matin, avant que le concours ne retire la table de café."
+  },
+  {
+    "id": "camille-31",
+    "title": "Une offre trop parfaite",
+    "level": 118,
+    "text": "La productrice lui proposa un spectacle à elle, à condition qu’elle apporte une idée claire. Le même jour, une agence lui offrit des mois de dates et une interview exclusive si elle racontait publiquement sa rupture dans les détails.\nCamille posa les deux offres sur la table. La seconde promettait de remplir l’agenda tout de suite. La première lui demandait d’arriver avec dix pages pour vendredi. Elle se servit du verso du dossier de l’agence pour écrire la première scène."
+  },
+  {
+    "id": "camille-32",
+    "title": "Le spectacle qui commence en bas",
+    "level": 122,
+    "text": "Camille écrivit un spectacle où une chanteuse répétait au sous-sol pendant qu’une assemblée de copropriétaires, à l’étage, cherchait l’origine du bruit. Ses chansons donnaient une autre version de chaque événement.\nLauriane lut le texte et souligna trois pages de débat sur les charges.\n« Est-ce que le public vient pour chanter ou pour voter le budget du syndic ? »\nCamille supprima deux pages. Elle garda le moment où une voisine se mettait à chanter à travers la bouche d’aération. Elle avait enfin trouvé comment faire se rencontrer les deux étages."
+  },
+  {
+    "id": "camille-33",
+    "title": "Les auditions du plafond",
+    "level": 126,
+    "text": "Camille ouvrit les auditions pour son spectacle. Son ancienne choriste de LUX se présenta sans prévenir. Camille s’attendait à des excuses. La choriste expliqua simplement qu’elle avait quitté le groupe à son tour et demanda si elle pouvait lire le rôle.\nCamille lui fit passer le même essai qu’aux autres. Elle fut la seule à entendre l’entrée du piano depuis derrière le décor et à donner la réplique au bon moment. Camille lui proposa le rôle et envoya les conditions par écrit le jour même."
+  },
+  {
+    "id": "camille-34",
+    "title": "La générale était presque générale",
+    "level": 131,
+    "text": "À la générale, la moitié des accessoires manquait et la mère de Camille s’était assise dans une chaise du décor. À la deuxième scène, une actrice dut lui demander de quitter la réunion de copropriété.\n« Je peux au moins voter ? »\nLa salle de répétition éclata de rire. Camille demanda ensuite à la comédienne de reprendre cette phrase dans le spectacle. Sa mère exigea un crédit au programme et proposa deux autres répliques. L’une concernait son nouveau compagnon. Camille ne retint que le vote."
+  },
+  {
+    "id": "camille-35",
+    "title": "On ajoute une chaise",
+    "level": 135,
+    "text": "À la première, le spectacle remplit soixante places. Le lendemain, une famille se présenta avec un billet de plus que la salle ne pouvait en accueillir. Camille vit le théâtre leur trouver une autre représentation et prendre leur numéro. La semaine précédente, elle avait appelé trois cousins pour compléter la salle.\nElle resta écouter les spectateurs dans le hall. Plusieurs parlaient de leurs voisins avant même de parler des chansons. Elle demanda à la productrice combien de dates ils pourraient ajouter avec la même équipe. Elles en trouvèrent deux."
+  },
+  {
+    "id": "camille-36",
+    "title": "Le rideau a pris une décision",
+    "level": 139,
+    "text": "En tournée, un rideau automatique descendit au milieu d’une chanson et s’arrêta à hauteur de genoux. Le public vit les chaussures de Camille et entendit la fin du couplet.\nCamille termina accroupie, tête sous le rideau. La choriste entra à son tour et elles chantèrent la dernière phrase assises au bord du plateau. Le lendemain, on proposa de reproduire l’accident pour les réseaux. Camille demanda plutôt à la régie de lui montrer comment vérifier les changements de décor avant l’ouverture des portes."
+  },
+  {
+    "id": "camille-37",
+    "title": "La vidéo avec la mauvaise légende",
+    "level": 144,
+    "text": "Un extrait du spectacle circula avec une légende attribuant la chanson à LUX. Le groupe avait gardé en ligne un bout de l’ancienne maquette. Camille reconnut le couplet enregistré chez eux.\nElle joignit les fichiers datés, contacta la chaîne qui avait publié l’extrait et fit corriger les crédits, y compris le nom de son pianiste. Le batteur de LUX partagea la version rectifiée. Il avait ajouté « baissez un peu le piano » sous la publication. Camille lui envoya un cœur et laissa le piano exactement où il était."
+  },
+  {
+    "id": "camille-38",
+    "title": "La loge avec une porte qui ferme",
+    "level": 148,
+    "text": "Camille récupéra les clés d’un appartement. Elle mit deux semaines à comprendre que la table de la cuisine pouvait rester une table de cuisine même quand elle ne servait pas de bureau, de pupitre ou de surface de repassage.\nInès et Mélissa vinrent dîner. Elles apportèrent le miroir de la buanderie et une petite plaque « LOGE 1 ». Camille accrocha la plaque à la porte de la chambre. Puis elles déplièrent une table de secours pour pouvoir manger autour du miroir, que personne n’avait pensé à retirer."
+  },
+  {
+    "id": "camille-39",
+    "title": "L’interview de quatre minutes",
+    "level": 152,
+    "text": "La promotion du spectacle envoya Camille sur un plateau télé. Le présentateur voulait savoir qui l’avait « découverte ». Elle cita le régisseur des Arcades, le pianiste, la metteuse en scène, Lio et le chien. La régie afficha le mot « publicité » avant la fin de la liste.\nOn lui laissa quand même chanter un refrain. Elle choisit celui que les gens connaissaient déjà. L’appel arriva le soir même : une grande salle voulait la recevoir sur une date d’essai. Elle aurait la soirée entière et devrait adapter le spectacle à un plateau trois fois plus large."
+  },
+  {
+    "id": "camille-40",
+    "title": "L’écho de sept cents places",
+    "level": 157,
+    "text": "Depuis le fond de la grande salle, Lauriane fit signe à Camille de recommencer la scène de la cave. Le premier geste, visible à soixante places, disparaissait à cette distance. Camille essaya plus grand. On aurait dit qu’elle guidait un avion.\nElles travaillèrent le placement et les éclairages jusqu’à ce que le fond de salle voie enfin la clé dans sa main. Camille demanda à la régie de ne pas éclairer tout le plateau pendant ce passage. Pour que la salle paraisse grande plus tard, il fallait d’abord retrouver la taille de la cave."
+  },
+  {
+    "id": "camille-41",
+    "title": "Une affiche avec assez de place",
+    "level": 161,
+    "text": "Le premier projet d’affiche disait « Camille, le phénomène ». Camille demanda à mettre le titre de son spectacle plus gros que son prénom et à indiquer les noms de la troupe dans le programme.\nLa photographe proposa ensuite un portrait majestueux. Camille posa en chemise retroussée, sa tenue des trois ronds-points. Un technicien lui prêta une pince à linge pour tenir le col. Sur la photo retenue, on devinait la pince. Sa mère lui demanda si elle faisait désormais du placement de produit."
+  },
+  {
+    "id": "camille-42",
+    "title": "Le jour où l’escalier craque",
+    "level": 165,
+    "text": "À quinze minutes de l’ouverture, une marche du décor se fendit. La régisseuse condamna l’escalier. Camille revit son entrée et demanda à la choriste si elle pouvait commencer la scène à l’étage pendant qu’elle chanterait depuis la fosse.\nElles essayèrent une fois. Ça fonctionna mieux que prévu : Camille se trouvait littéralement plus bas que le public et les premiers rangs entendirent son souffle avant la musique. L’escalier fut réparé le lendemain. La fosse garda son rôle."
+  },
+  {
+    "id": "camille-43",
+    "title": "Le rappel qui vide le frigo",
+    "level": 170,
+    "text": "La grande salle demanda un rappel. Camille avait prévu un morceau de plus. Le public en réclama deux. Le pianiste lança au hasard l’accord de la chanson du frigo.\n« Vous êtes sûrs ? À la maison, on paie pour qu’il se taise. »\nElle chanta le premier couplet et entendit la choriste lui répondre sans avoir besoin de regarder le conducteur. La régisseuse leur annonça les chiffres à la sortie. La salle proposait une deuxième date. Camille demanda d’abord si toute l’équipe pouvait revenir."
+  },
+  {
+    "id": "camille-44",
+    "title": "Le message à la mauvaise personne",
+    "level": 174,
+    "text": "Voldemort écrivit à la salle pour demander une invitation et ajouta qu’il avait « rendu possible le début de sa carrière ». Le message atterrit chez Anissa, qui s’occupait exceptionnellement des accréditations.\nElle le transmit à Camille avec une question : « Je réponds quoi ? »\nCamille relut la phrase et lui demanda de suivre la procédure habituelle. Les invitations d’équipe étaient déjà attribuées. Elle posa son téléphone et retourna à sa répétition. Quand elle rentra, elle avait oublié de demander si Voldemort avait répondu."
+  },
+  {
+    "id": "camille-45",
+    "title": "La chanson qui refuse de finir",
+    "level": 178,
+    "text": "Une salle nationale proposa à Camille la tête d’affiche de son festival. Elle décida d’écrire un final inédit. Pendant une semaine, chaque version se terminait par un changement de tonalité de plus. À la huitième, le pianiste vérifia qu’il restait des touches au clavier.\nCamille reprit la phrase de la femme des Arcades et essaya de la chanter seule. Le reste de l’équipe entra après le silence. Elle jeta les six dernières pages et demanda à tout le monde de répéter cette entrée jusqu’à pouvoir se passer de signe."
+  },
+  {
+    "id": "camille-46",
+    "title": "Les chaussures de secours",
+    "level": 183,
+    "text": "Le matin du festival, Camille découvrit que le colis contenant ses bottes avait été livré à un autre théâtre. Lio proposa une expédition. Mélissa demanda combien de scènes se passaient vraiment debout. Camille alla chercher dans son sac les baskets qu’elle mettait pour monter l’escalier de la cave.\nElle fit les balances avec, traversa le plateau deux fois et les garda. Dans les coulisses, elle retrouva son premier ticket des Arcades dans la poche du sac. Elle le glissa dans le programme du soir."
+  },
+  {
+    "id": "camille-47",
+    "title": "Le silence du premier rang",
+    "level": 187,
+    "text": "À l’entrée du spectacle, les premiers rangs étaient si silencieux que Camille crut avoir raté son départ. Elle vit une femme poser son téléphone et se pencher comme aux Arcades. Elle continua.\nAu dernier refrain, la choriste attendit une seconde de plus que prévu. Camille lui laissa cette seconde. Quand le piano entra, elle entendit la salle reprendre une phrase du final qu’elle venait d’inventer. Le lendemain, un festival d’été lui proposa sa grande scène. Son nom serait seul en haut de l’affiche, pour le spectacle qu’elle avait écrit."
+  },
+  {
+    "id": "camille-48",
+    "title": "La grande scène est un chantier",
+    "level": 191,
+    "text": "Le jour du grand concert, le festival perdit la projection et une partie du son au cours des balances. Le directeur proposa de décaler d’une heure pour réparer. Le public arrivait déjà et la choriste devait partir tôt.\nCamille demanda à la régisseuse ce qu’ils pouvaient jouer avec le piano, les micros qui marchaient et les projecteurs disponibles. La régisseuse compta, refit son plan et dit : « On peut ouvrir la cave. »\nIls ressortirent le petit éclairage de la première scène et gardèrent la place du grand final."
+  },
+  {
+    "id": "camille-49",
+    "title": "Les étoiles étaient côté cour",
+    "level": 196,
+    "text": "Camille monta sur la grande scène en baskets. Au milieu du deuxième morceau, elle aperçut sa mère qui agitait le programme à l’envers, Inès et Mélissa qui ne regardaient plus les écrans, et Anissa qui tenait son téléphone sans filmer.\nÀ la dernière chanson, le système de projection revint. La régisseuse demanda dans l’oreillette s’il fallait l’allumer. Camille regarda ses partenaires, qui attendaient leur entrée dans la pénombre.\n« Garde le projecteur sur eux. »\nLe refrain traversa la foule sans image. Puis l’équipe revint saluer au complet."
+  },
+  {
+    "id": "camille-50",
+    "title": "Le sommet a une sortie de secours",
+    "level": 200,
+    "text": "Quelques semaines après le festival, Camille retourna aux Arcades pour inaugurer une scène ouverte qu’elle avait aidé à financer. Au mur, l’affiche de la grande scène portait les signatures de toute la troupe. Le régisseur lui demanda si elle voulait ouvrir la soirée. Elle lui demanda plutôt de donner ses dix minutes à une fille qui attendait au bar, les yeux rivés sur ses chaussures.\nLa fille monta sans feuille, vida ses poches et posa une clé sur le tabouret. Camille reconnut le bruit de métal. Elle recula sa chaise pour que le premier rang voie mieux."
+  }
+];
+const domains = [
+  {id:'voice', name:'Bien être', color:'#f4c486', daily:[['Respecter mon objectif de sommeil',100],['Faire une pause sans écran',75],['Prendre un temps de récupération',75]], weekly:['Prévoir un temps de repos vocal','Faire une activité qui me détend','Tenir une routine de sommeil','Faire le point sur mon énergie']},
+  {id:'stage', name:'Nutrition', color:'#a9d8ba', daily:[['Boire 1,5 L d’eau',100],['Préparer un repas équilibré',75],['Prévoir une collation pour la journée',75]], weekly:['Planifier quelques repas','Faire les courses pour la semaine','Cuisiner une nouvelle recette','Prévoir un repas pour les jours de répétition']},
+  {id:'craft', name:'Sport', color:'#8cd3ee', daily:[['Marcher ou bouger',75],['Faire une séance de sport',100],['Travailler ma mobilité',75]], weekly:['Réaliser mes séances prévues','Travailler mon souffle','Faire une séance de récupération active','Noter mes progrès sur un exercice']},
+  {id:'balance', name:'Discipline', color:'#e9a1bb', daily:[['Faire des vocalises',75],['Répéter une chanson ou une scène',100],['Faire avancer mon projet artistique',75]], weekly:['Enregistrer une prise complète','Apprendre un nouveau texte ou morceau','Repérer une audition ou une scène ouverte','Préparer ma semaine de répétitions']}
+];
+const keys = ['daily','weekly'];
+const cap = {daily:250,weekly:500};
+const defaultQuests = Object.fromEntries(domains.flatMap(domain => keys.flatMap(period =>
+  domain[period].map((entry,index) => [
+    domain.id + '-' + period + '-' + index,
+    {domain:domain.id,period,name:period==='daily'?entry[0]:entry,xp:period==='daily'?entry[1]:125}
+  ])
+)));
+const storeKey = 'camille-atelier-v1';
+const blank = () => ({log:{},custom:{},titles:{},unlocked:[],mail:[]});
+let state = blank();
+try {
+  const saved = JSON.parse(localStorage.getItem(storeKey));
+  if (saved?.log && saved?.custom && Array.isArray(saved.unlocked)) state = saved;
+} catch {}
+const main = document.getElementById('main');
+const editor = document.getElementById('editor');
+const nav = document.getElementById('nav');
+const notice = document.getElementById('notice');
+const screens = ['Accueil','Quêtes','Progressions','Aventures','Entraînement'];
+const inbox = document.getElementById('inbox');
+const questTabs = ['Journalières','Hebdomadaires'];
+const progressTabs = ['Vue d’ensemble','Historique','Bilan hebdomadaire'];
+const adventureTabs = ['Histoire','Personnages','Niveau patrimoine'];
+let screen = 0, questTab = 0, progressTab = 0, adventureTab = 0, chapterId = null;
+let historyDay = null, timer;
+const nf = new Intl.NumberFormat('fr-FR');
+const fmt = value => nf.format(value);
+const esc = value => String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const dateKey = date => [date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
+const shift = (date,days) => {const next=new Date(date);next.setDate(next.getDate()+days);return next;};
+const monday = date => shift(date,-((date.getDay()+6)%7));
+const parseDay = key => new Date(key+'T12:00:00');
+const niceDate = (date,options={day:'numeric',month:'long'}) => date.toLocaleDateString('fr-FR',options);
+const periodKey = (period,date) => period==='daily'?dateKey(date):dateKey(monday(date));
+const sum = rows => rows.reduce((total,row)=>total+row.xp,0);
+const allRows = () => Object.values(state.log);
+const domainTitle = domain => state.titles?.[domain.id] ?? domain.name;
+const quests = () => Object.entries({...defaultQuests,...state.custom})
+  .map(([id,q])=>({...defaultQuests[id],...q,id}))
+  .filter(q=>!q.archived);
+const stageCurve = [0,0,...source.curve.slice(1).flatMap((xp,index)=>[xp,Math.round((xp+(source.curve[index+2]??xp))/2)]).slice(0,-1)];
+const levelOf = (xp,curve) => curve.reduce((level,threshold,index)=>xp>=threshold?index:level,0);
+const artistLevel = () => levelOf(sum(allRows()),stageCurve);
+const disciplineCurve = source.curve.map(xp=>xp/4);
+const rank = level => level>=180?'Tête d’affiche':level>=120?'Artiste confirmée':level>=60?'Artiste émergente':level>=20?'Première scène':'Artiste en devenir';
+const percent = (a,b) => Math.max(0,Math.min(100,b?Math.round(a/b*100):100));
+const bar = (value,max,label) => '<div class="track" role="progressbar" aria-label="'+esc(label)+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+percent(value,max)+'"><i style="width:'+percent(value,max)+'%"></i></div>';
+function flash(message){
+  clearTimeout(timer);
+  notice.textContent=message;
+  notice.hidden=false;
+  timer=setTimeout(()=>notice.hidden=true,3000);
+}
+function save(next, reward=false){
+  const previousLevel=artistLevel();
+  const level=levelOf(sum(Object.values(next.log)),stageCurve);
+  const unlocked=chapters.filter(chapter=>chapter.level<=level&&!next.unlocked.includes(chapter.id));
+  next.unlocked=[...next.unlocked,...unlocked.map(chapter=>chapter.id)];
+  const rewards=[];
+  if(reward && level>previousLevel){
+    rewards.push({id:'level-'+level,title:'Niveau '+level+' atteint',text:'Camille monte d’un cran dans sa carrière. '+rank(level)+'.'});
+    for(const [target,label] of source.heritage){
+      if(Number(target)>previousLevel&&Number(target)<=level)
+        rewards.push({id:'heritage-'+target,title:'Patrimoine · Niveau '+target,text:label});
+    }
+  }
+  for(const chapter of unlocked.filter(chapter=>chapter.level>1)) rewards.push({id:'chapter-'+chapter.id,title:'Chapitre débloqué',text:chapter.title});
+  const mail=next.mail??[];
+  const fresh=rewards.filter(item=>!mail.some(message=>message.id===item.id));
+  next.mail=[...fresh.map(item=>({...item,read:false,date:dateKey(new Date())})),...mail];
+  try {localStorage.setItem(storeKey,JSON.stringify(next));}
+  catch {flash('La sauvegarde locale a échoué.');return false;}
+  state=next;
+  if(fresh.length) flash('✉ '+(fresh.length===1?'Nouvelle récompense':'Nouvelles récompenses')+' dans la messagerie.');
+  return true;
+}
+const tabs = (labels,current,action) => '<div class="tabs">'+labels.map((label,index)=>'<button type="button" data-'+action+'="'+index+'" aria-pressed="'+(index===current)+'">'+label+'</button>').join('')+'</div>';
+const heading = (tag,title,description='') => '<div class="section-head"><div class="eyebrow">'+tag+'</div><h1>'+title+'</h1>'+(description?'<p>'+description+'</p>':'')+'</div>';
+function summaryFor(period,date){
+  const key=periodKey(period,date);
+  return allRows().filter(row=>row.period===period&&row.key===key);
+}
+function weekRows(start){
+  const first=dateKey(start), last=dateKey(shift(start,6));
+  return allRows().filter(row=>row.date>=first&&row.date<=last);
+}
+function renderHome(){
+  const today=new Date(), xp=sum(allRows()), level=artistLevel();
+  const next=stageCurve[level+1], base=stageCurve[level];
+  const day=summaryFor('daily',today), week=summaryFor('weekly',today);
+  return '<section class="hero"><div class="eyebrow">Le journal de Camille</div><h1>De la cave <em>aux étoiles</em></h1><div class="medal"><small>Niveau</small>'+level+'</div><p>'+rank(level)+'</p>'+bar(xp-base,next===undefined?0:next-base,'Progression vers le niveau suivant')+'<div class="meta">'+fmt(xp)+' XP au total'+(next===undefined?' · Niveau maximal':' · '+fmt(next-xp)+' XP avant le niveau '+(level+1))+'</div></section>'+
+  '<div class="grid"><section class="card"><div class="eyebrow">Aujourd’hui</div><div class="stat">'+fmt(sum(day))+' XP</div><p>'+day.length+' quête(s) validée(s) · plafond de 1 000 XP</p>'+bar(sum(day),1000,'Quêtes du jour')+'<button class="primary" data-go="1" data-period="0">Mes quêtes du jour</button></section>'+
+  '<section class="card"><div class="eyebrow">Cette semaine</div><div class="stat">'+fmt(sum(week))+' XP</div><p>'+week.length+' quête(s) hebdomadaire(s) validée(s)</p>'+bar(sum(week),2000,'Quêtes hebdomadaires')+'<button data-go="2" data-review="true">Voir le bilan</button></section></div>';
+}
+function renderQuests(){
+  const period=keys[questTab], now=new Date(), key=periodKey(period,now), rows=summaryFor(period,now);
+  const title=period==='daily'?niceDate(now,{weekday:'long',day:'numeric',month:'long'}):niceDate(monday(now))+' – '+niceDate(shift(monday(now),6));
+  return heading('Le carnet de pratique','Quêtes')+tabs(questTabs,questTab,'quest-tab')+
+  '<div class="spread"><div class="meta">'+title+' · '+fmt(sum(rows))+' XP</div><button data-edit="'+period+'">Personnaliser</button></div>'+
+  '<div class="grid">'+domains.map(domain=>{
+    const earned=sum(rows.filter(row=>row.domain===domain.id));
+    return '<section class="card" style="--accent:'+domain.color+'"><div class="spread"><h3 class="accent">'+esc(domainTitle(domain))+'</h3><span class="meta">'+earned+' / '+cap[period]+' XP</span></div>'+bar(earned,cap[period],domainTitle(domain))+quests().filter(q=>q.period===period&&q.domain===domain.id).map(q=>{
+      const done=state.log[key+'|'+q.id];
+      const blocked=!done&&earned+q.xp>cap[period];
+      return '<div class="quest" data-done="'+Boolean(done)+'"><div><strong>'+esc(done?.name??q.name)+'</strong><span class="meta">+'+(done?.xp??q.xp)+' XP'+(blocked?' · Plafond atteint':'')+'</span></div><button data-quest="'+q.id+'" data-key="'+key+'" aria-label="'+esc((done?'Annuler ':'Valider ')+(done?.name??q.name))+'" '+(blocked?'disabled':'')+'>'+(done?'✓ Annuler':'Valider')+'</button></div>';
+    }).join('')+'</section>';
+  }).join('')+'</div>';
+}
+function entries(rows,withDate=false){
+  if(!rows.length) return '<p>Aucune quête validée sur cette période.</p>';
+  return '<ul class="list">'+rows.map(row=>'<li class="spread"><span>'+esc(row.name)+(withDate?' <small class="meta">· '+niceDate(parseDay(row.date))+'</small>':'')+'</span><span class="accent">+'+fmt(row.xp)+' XP</span></li>').join('')+'</ul>';
+}
+function renderProgress(){
+  let content;
+  if(progressTab===0){
+    content='<div class="grid">'+domains.map(domain=>{
+      const xp=sum(allRows().filter(row=>row.domain===domain.id)), level=levelOf(xp,disciplineCurve);
+      const next=disciplineCurve[level+1],base=disciplineCurve[level];
+      return '<section class="card" style="--accent:'+domain.color+'"><h3 class="accent">'+esc(domainTitle(domain))+'</h3><div class="stat">Niveau '+level+'</div>'+bar(xp-base,next===undefined?0:next-base,domainTitle(domain))+'<div class="meta">'+fmt(xp)+' XP au total · '+(next===undefined?'Niveau maximal':fmt(next-xp)+' XP avant le prochain niveau')+'</div></section>';
+    }).join('')+'</div>';
+  }else if(progressTab===1){
+    const now=new Date(), dates=Array.from({length:7},(_,index)=>shift(now,index-6));
+    const chosen=historyDay??dateKey(now);
+    const totals=dates.map(day=>sum(allRows().filter(row=>row.date===dateKey(day))));
+    const high=Math.max(1,...totals);
+    content='<section class="card"><div class="spread"><h2>Les 7 derniers jours</h2><input aria-label="Date de l’historique" type="date" id="historyDate" value="'+chosen+'" max="'+dateKey(now)+'"></div><div class="chart">'+dates.map((day,index)=>'<button data-day="'+dateKey(day)+'" aria-pressed="'+(chosen===dateKey(day))+'" aria-label="'+niceDate(day)+' · '+fmt(totals[index])+' XP"><span>'+fmt(totals[index])+'</span><span class="column"><i style="height:'+percent(totals[index],high)+'%"></i></span>'+niceDate(day,{weekday:'short'})+'</button>').join('')+'</div></section><section class="card" style="margin-top:13px"><h2>'+niceDate(parseDay(chosen))+'</h2>'+entries(allRows().filter(row=>row.date===chosen))+'</section>';
+  }else{
+    const current=monday(new Date());
+    const periods=[['Cette semaine',current],['Semaine précédente',shift(current,-7)]];
+    content='<div class="grid">'+periods.map(([label,start])=>{
+      const rows=weekRows(start);
+      return '<section class="card"><div class="eyebrow">'+label+'</div><p>'+niceDate(start)+' – '+niceDate(shift(start,6))+'</p><div class="stat">'+fmt(sum(rows))+' XP</div><p>'+rows.length+' quête(s) · '+new Set(rows.map(row=>row.date)).size+' jour(s) actif(s)</p><ul class="list">'+domains.map(domain=>'<li class="spread"><span>'+esc(domainTitle(domain))+'</span><span>'+fmt(sum(rows.filter(row=>row.domain===domain.id)))+' XP</span></li>').join('')+'</ul></section>';
+    }).join('')+'</div>';
+  }
+  return heading('Le journal de bord','Progressions')+tabs(progressTabs,progressTab,'progress-tab')+content;
+}
+function renderAdventure(){
+  const level=artistLevel();
+  let content;
+  if(adventureTab===0){
+    const isOpen=chapter=>chapter.level<=level||state.unlocked.includes(chapter.id);
+    const selected=chapters.find(chapter=>chapter.id===chapterId&&isOpen(chapter));
+    if(selected){
+      const index=chapters.indexOf(selected), previous=chapters[index-1], next=chapters[index+1];
+      const turn=(chapter,label)=>'<button data-chapter="'+esc(chapter.id)+'" '+(isOpen(chapter)?'':'disabled')+'>'+label+'</button>';
+      content='<article class="card empty story-reading"><button data-chapter-back>Retour aux chapitres</button><div class="eyebrow story-number">Chapitre '+(index+1)+' / '+chapters.length+'</div><h2 tabindex="-1">'+esc(selected.title)+'</h2>'+selected.text.split('\n').map(paragraph=>'<p>'+esc(paragraph)+'</p>').join('')+'<div class="actions story-turn">'+(previous?turn(previous,'← Précédent'):'')+(next?turn(next,isOpen(next)?'Suivant →':'Suivant · Niveau '+next.level):'')+'</div></article>';
+    }else{
+      content='<section class="card"><h2>Chapitres</h2><p>'+chapters.filter(isOpen).length+' / '+chapters.length+' accessibles · Les quêtes font monter ton niveau.</p><ul class="list">'+chapters.map((chapter,index)=>{
+        const open=isOpen(chapter);
+        return '<li class="spread"><div><strong>'+(open?esc(chapter.title):'Chapitre '+(index+1))+'</strong><div class="meta">Niveau '+chapter.level+'</div></div><button data-chapter="'+esc(chapter.id)+'" '+(open?'':'disabled')+'>'+(open?'Lire':'Verrouillé')+'</button></li>';
+      }).join('')+'</ul></section>';
+    }
+  }else if(adventureTab===1){
+    content='<div class="grid">'+source.cast.map(([name,role,description])=>'<article class="card cast"><div class="eyebrow">'+esc(role)+'</div><h2 style="margin-top:6px">'+esc(name)+'</h2><p>'+esc(description)+'</p></article>').join('')+'</div>';
+  }else{
+    const current=source.heritage.findLastIndex(([target])=>Number(target)<=level);
+    const next=source.heritage[current+1];
+    content='<section class="card"><div class="eyebrow">Palier actuel · niveau '+source.heritage[current][0]+'</div><h2 style="margin-top:6px">'+esc(source.heritage[current][1])+'</h2><p>'+(next?'Prochain palier au niveau '+next[0]+' · '+esc(next[1]):'Tous les paliers sont atteints.')+'</p></section>'+
+    '<section class="card" style="margin-top:13px"><h2>Les paliers de Camille</h2><ul class="list">'+source.heritage.map(([target,label],index)=>'<li class="milestone '+(index===current?'current':'')+'"><small>Niv. '+target+'</small><span>'+esc(label)+'</span><span class="meta">'+(index===current?'Actuel':index<current?'Atteint':'À venir')+'</span></li>').join('')+'</ul></section>';
+  }
+  return heading('Derrière le rideau','Aventures')+tabs(adventureTabs,adventureTab,'adventure-tab')+content;
+}
+function render(){
+  nav.innerHTML=screens.map((label,index)=>'<button data-go="'+index+'" aria-pressed="'+(index===screen)+'">'+label+'</button>').join('');
+  const count=(state.mail??[]).filter(message=>!message.read).length;
+  const badge=document.getElementById('mailCount');
+  badge.hidden=!count;
+  badge.textContent=count;
+  document.getElementById('mailButton').setAttribute('aria-label','Messagerie'+(count?' · '+count+' notification(s) non lue(s)':''));
+  main.hidden=screen===4;
+  document.getElementById('training').hidden=screen!==4;
+  if(screen===4) return;
+  main.dataset.screen=screen;
+  main.innerHTML=[renderHome,renderQuests,renderProgress,renderAdventure][screen]();
+}
+function toggleQuest(id,key){
+  const q=quests().find(quest=>quest.id===id);
+  const today=new Date();
+  if(!q||key!==periodKey(q.period,today)){render();return;}
+  const log={...state.log}, eventId=key+'|'+q.id;
+  const undo=Boolean(log[eventId]);
+  const before=artistLevel(), unlockCount=state.unlocked.length;
+  if(undo) delete log[eventId];
+  else{
+    const earned=sum(summaryFor(q.period,today).filter(row=>row.domain===q.domain));
+    if(earned+q.xp>cap[q.period]) return;
+    log[eventId]={...q,key,date:dateKey(today)};
+  }
+  const mailCount=state.mail?.length??0;
+  if(!save({...state,log},!undo)) return;
+  render();
+  main.querySelector('[data-quest="'+id+'"]')?.focus({preventScroll:true});
+  if(!undo) animateQuest(id,q.xp,artistLevel()>before);
+  if((state.mail?.length??0)===mailCount && state.unlocked.length===unlockCount){
+    flash(undo?'Validation annulée.':'+'+q.xp+' XP'+(artistLevel()>before?' · Niveau '+artistLevel()+' atteint !':''));
+  }
+}
+function animateQuest(id,xp,levelUp){
+  const row=main.querySelector('[data-quest="'+id+'"]')?.closest('.quest');
+  if(!row) return;
+  row.classList.add('encore');
+  const cue=document.createElement('span');
+  cue.className='xp-cue';
+  cue.setAttribute('aria-hidden','true');
+  cue.textContent=(levelUp?'✦ Niveau '+artistLevel()+' · ':'✦ ')+'+'+xp+' XP';
+  row.append(cue);
+  setTimeout(()=>{cue.remove();row.classList.remove('encore');},1250);
+}
+function renderInbox(){
+  const messages=state.mail??[];
+  inbox.innerHTML='<div class="spread"><h2 id="inboxTitle">Courrier des coulisses</h2><button data-mail-close aria-label="Fermer la messagerie">×</button></div>'+
+    (messages.some(message=>!message.read)?'<button data-read-all style="margin-top:12px">Tout marquer comme lu</button>':'')+
+    (messages.length?'<ul class="list">'+messages.map(message=>'<li class="mail-entry"><div class="spread"><strong>'+esc(message.title)+'</strong><small class="meta">'+niceDate(parseDay(message.date))+'</small></div><p>'+esc(message.text)+'</p>'+
+    (!message.read?'<button data-read="'+esc(message.id)+'">Marquer comme lu</button>':'')+'</li>').join('')+'</ul>':'<p>Les récompenses de Camille arriveront ici.</p>');
+}
+function readMail(id){
+  const mail=(state.mail??[]).map(message=>id===null||message.id===id?{...message,read:true}:message);
+  if(save({...state,mail})){
+    render();
+    renderInbox();
+    inbox.querySelector('[data-mail-close]').focus();
+  }
+}
+function openEditor(period){
+  const originals=quests().filter(q=>q.period===period);
+  editor.innerHTML='<form><h2 id="editorTitle">Personnaliser les quêtes '+(period==='daily'?'journalières':'hebdomadaires')+'</h2><p>Les validations passées restent dans l’historique. Le plafond par catégorie est de '+cap[period]+' XP sur la période.</p>'+
+    '<fieldset><legend>Titres des catégories</legend>'+domains.map(domain=>'<label>'+domain.name+'<input name="title-'+domain.id+'" value="'+esc(domainTitle(domain))+'" maxlength="32" required></label>').join('')+'</fieldset>'+
+    domains.map(domain=>'<fieldset><legend>'+esc(domainTitle(domain))+'</legend><div data-quest-rows="'+domain.id+'"></div><button type="button" data-add-row="'+domain.id+'">+ Ajouter une quête</button></fieldset>').join('')+
+    '<p data-editor-error role="alert"></p><div class="actions"><button type="button" data-close>Annuler</button><button class="primary">Enregistrer</button></div></form>';
+  const form=editor.querySelector('form');
+  function appendRow(q){
+    const list=form.querySelector('[data-quest-rows="'+q.domain+'"]');
+    list.insertAdjacentHTML('beforeend','<div class="fields" data-config-row="'+q.id+'"><label>Intitulé<input data-name value="'+esc(q.name)+'" required maxlength="90"></label><label>XP<input data-xp type="number" value="'+q.xp+'" min="1" max="'+cap[period]+'" required></label><button type="button" data-remove-row aria-label="Supprimer cette quête">×</button></div>');
+    return list.lastElementChild;
+  }
+  originals.forEach(appendRow);
+  form.onclick=event=>{
+    const button=event.target.closest('button');
+    if(button?.dataset.addRow){
+      const id='custom-'+(globalThis.crypto?.randomUUID?.()??(Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)));
+      appendRow({id,domain:button.dataset.addRow,name:'',xp:period==='daily'?50:125}).querySelector('[data-name]').focus();
+    }
+    if(button?.hasAttribute('data-remove-row')) button.closest('[data-config-row]').remove();
+  };
+  form.onsubmit=event=>{
+    event.preventDefault();
+    const fields=new FormData(form), custom={...state.custom};
+    const updates=[...form.querySelectorAll('[data-config-row]')].map(row=>({
+      id:row.dataset.configRow,domain:row.closest('[data-quest-rows]').dataset.questRows,period,
+      name:row.querySelector('[data-name]').value.trim(),xp:Number(row.querySelector('[data-xp]').value)
+    }));
+    const issue=form.querySelector('[data-editor-error]');
+    const titles=Object.fromEntries(domains.map(domain=>[domain.id,String(fields.get('title-'+domain.id)).trim()]));
+    if(Object.values(titles).some(title=>!title)){issue.textContent='Chaque catégorie doit avoir un titre.';return;}
+    if(updates.some(q=>!q.name)){issue.textContent='Chaque quête doit avoir un intitulé.';return;}
+    const kept=new Set(updates.map(q=>q.id));
+    originals.filter(q=>!kept.has(q.id)).forEach(q=>custom[q.id]={...q,archived:true});
+    updates.forEach(q=>custom[q.id]=q);
+    if(save({...state,custom,titles})){editor.close();render();flash('Quêtes mises à jour.');}
+  };
+  editor.showModal();
+}
+document.addEventListener('click',event=>{
+  const button=event.target.closest('button');
+  if(!button) return;
+  const data=button.dataset;
+  if(data.inbox!==undefined){renderInbox();inbox.showModal();return;}
+  if(data.mailClose!==undefined){inbox.close();return;}
+  if(data.readAll!==undefined){readMail(null);return;}
+  if(data.read!==undefined){readMail(data.read);return;}
+  if(data.close!==undefined){editor.close();return;}
+  if(data.quest){toggleQuest(data.quest,data.key);return;}
+  if(data.edit){openEditor(data.edit);return;}
+  if(data.go!==undefined){
+    screen=Number(data.go);
+    if(data.period!==undefined) questTab=Number(data.period);
+    if(data.review) progressTab=2;
+    window.scrollTo(0,0);
+  }else if(data.questTab!==undefined) questTab=Number(data.questTab);
+  else if(data.progressTab!==undefined) progressTab=Number(data.progressTab);
+  else if(data.adventureTab!==undefined){adventureTab=Number(data.adventureTab);chapterId=null;}
+  else if(data.day) historyDay=data.day;
+  else if(data.chapter!==undefined) chapterId=data.chapter;
+  else if(data.chapterBack!==undefined) chapterId=null;
+  else return;
+  render();
+  if(data.chapter!==undefined||data.chapterBack!==undefined){
+    const title=main.querySelector('.story-reading h2');
+    if(title){title.focus({preventScroll:true});title.closest('article').scrollIntoView({block:'start'});}
+    else main.querySelector('[data-chapter]:not([disabled])')?.focus();
+  }
+  if(data.go!==undefined) nav.querySelector('[aria-pressed="true"]')?.focus({preventScroll:true});
+});
+document.addEventListener('change',event=>{
+  if(event.target.id==='historyDate'&&event.target.value&&event.target.validity.valid){
+    historyDay=event.target.value;
+    render();
+  }
+});
+window.addEventListener('storage',event=>{
+  if(event.key!==storeKey&&event.key!==null) return;
+  try{state=JSON.parse(event.newValue)||blank();render();}catch{}
+});
+render();
+</script>
+<script>
+      const SPORT_KEY = "camille-training-v1";
+      const today = () => dateKey(new Date());
+      const appStorage = {
+        getItem: key => localStorage.getItem(key),
+        setItem: (key,value) => localStorage.setItem(key,value),
+        commit: entries => Object.entries(entries).forEach(([key,value])=>localStorage.setItem(key,value)),
+        validate: (key,value) => {
+          if(!Array.isArray(value.sessions)||!Array.isArray(value.programs)||!Array.isArray(value.library))
+            throw new Error("Carnet invalide");
+        },
+        validDate: key => {
+          const date=parseDay(key);
+          return Number.isFinite(date.getTime())&&dateKey(date)===key;
+        }
+      };
+      const SPORT_DISCIPLINES = [
+        {
+          name: "Course à pied",
+          icon: "🏃",
+          aliases: [
+            "course",
+            "running",
+            "run",
+            "jogging",
+            "footing",
+            "course a pied",
+            "tapis de course",
+          ],
+        },
+        {
+          name: "Vélo",
+          icon: "🚴",
+          aliases: ["velo", "cyclisme", "cycling", "bike"],
+        },
+        {
+          name: "Natation",
+          icon: "🏊",
+          aliases: ["natation", "swimming", "swim"],
+        },
+        { name: "Rameur", icon: "🚣", aliases: ["rameur", "rowing", "aviron"] },
+        {
+          name: "Marche",
+          icon: "🚶",
+          aliases: ["marche", "marche rapide", "walking"],
+        },
+        {
+          name: "Randonnée",
+          icon: "🥾",
+          aliases: ["randonnee", "rando", "hiking"],
+        },
+        {
+          name: "Football",
+          icon: "⚽",
+          aliases: ["football", "foot", "soccer"],
+        },
+        {
+          name: "Basketball",
+          icon: "🏀",
+          aliases: ["basketball", "basket", "basket ball"],
+        },
+        { name: "Tennis", icon: "🎾", aliases: ["tennis"] },
+        {
+          name: "Boxe",
+          icon: "🥊",
+          aliases: ["boxe", "boxing", "boxe anglaise"],
+        },
+      ];
+      const sportNormalizeName = (name) =>
+        String(name || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .replace(/[’'-]/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      function sportDisciplineKey(name) {
+        const key = sportNormalizeName(name);
+        const found = SPORT_DISCIPLINES.find(
+          (d) => sportNormalizeName(d.name) === key || d.aliases.includes(key),
+        );
+        return found ? sportNormalizeName(found.name) : key;
+      }
+      function sportDisciplineOptions() {
+        return [
+          { name: "Musculation", icon: "🏋️" },
+          ...SPORT_DISCIPLINES,
+          { name: "Autre", icon: "➕" },
+        ]
+          .map(
+            (d) =>
+              `<option value="${sportEsc(d.name)}" ${sportSportChoice === d.name ? "selected" : ""}>${d.icon} ${d.name === "Autre" ? "Autre sport personnalisé" : d.name}</option>`,
+          )
+          .join("");
+      }
+      const sportDefault = () => ({
+        library: [],
+        programs: [],
+        sessions: [],
+        active: null,
+        equipped: null,
+      });
+      let sport = sportDefault();
+      try {
+        const v = JSON.parse(appStorage.getItem(SPORT_KEY) || "null");
+        if (v && typeof v === "object") sport = { ...sportDefault(), ...v };
+      } catch (e) {}
+      const SPORT_STARTER = [
+        ["Soulevé de terre jambes tendues", 3, "8–12", "2 min"],
+        ["Presse à cuisses", 3, "10–12", "2 min"],
+        ["Squat", 3, "8–10", "2 min"],
+        ["Hip thrust machine", 3, "10–12", "2 min"],
+        ["Fentes bulgares", 3, "8–12", "1 min 30"],
+      ];
+      if (!Array.isArray(sport.programs)) sport.programs = [];
+      if (!Array.isArray(sport.library)) sport.library = [];
+      const sportId = () =>
+        Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+      const sportEsc = (v) => esc(v ?? "");
+      let sportPage = "home",
+        sportEdit = null,
+        sportSportChoice = "Musculation",
+        sportEntryDate = null;
+      const sportIsoValid = (d) =>
+        /^\d{4}-\d{2}-\d{2}$/.test(d) &&
+        appStorage.validDate(d) &&
+        d <= today();
+      const sportChosenDate = () =>
+        sportIsoValid(sportEntryDate) ? sportEntryDate : today();
+      let sportMonth = new Date();
+      sportMonth.setDate(1);
+      const SPORT_LOCKED_ID = "hyrule-jambes-fessiers-v1";
+      function sportStarter() {
+        return {
+          id: SPORT_LOCKED_ID,
+          name: "Jambes & fessiers · Hyrule",
+          exercises: SPORT_STARTER.map(([name, n, target, rest]) => ({
+            name, target, rest,
+            sets: Array.from({ length: n }, () => ({ kg: 0, reps: Number(target.split("–")[0]), done: false })),
+          })),
+        };
+      }
+      // Le modèle initial est immuable : réparer les modifications héritées des anciennes versions.
+      sport.programs = sport.programs.filter((p) => p.id !== SPORT_LOCKED_ID && p.id !== "fullbody-initial-v451");
+      sport.programs.unshift(sportStarter());
+      function sportCalendar() {
+        const y = sportMonth.getFullYear(),
+          m = sportMonth.getMonth(),
+          first = (new Date(y, m, 1).getDay() + 6) % 7,
+          days = new Date(y, m + 1, 0).getDate();
+        let out =
+          '<div class="sport-card"><div class="sport-cal-head"><button data-sport="monthPrev">‹</button><strong>📅 ' +
+          sportMonth.toLocaleDateString("fr-FR", {
+            month: "long",
+            year: "numeric",
+          }) +
+          '</strong><button data-sport="monthNext">›</button></div><div class="sport-cal-grid">';
+        for (const day of ["L", "M", "M", "J", "V", "S", "D"])
+          out += '<span class="sport-cal-label">' + day + "</span>";
+        for (let i = 0; i < first; i++) out += "<span></span>";
+        for (let d = 1; d <= days; d++) {
+          const iso = `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`,
+            n = sport.sessions.filter((x) => x.date === iso).length;
+          out += `<button class="sport-cal-day ${n ? "sport-cal-done" : ""} ${iso === today() ? "sport-cal-today" : ""}" data-sport="day" data-date="${iso}">${d}${n ? "<small>" + n + " ✓</small>" : ""}</button>`;
+        }
+        return (
+          out +
+          '</div><p class="sport-muted">Choisis un jour pour voir tes séances et corriger une erreur. Les séances sauvegardées sont marquées ✓.</p></div>'
+        );
+      }
+      function sportDay(date) {
+        sportPage = "progress";
+        sportHistoryDay = date;
+        sportRender();
+      }
+      let sportHistoryDay = null,
+        sportOpenExercise = null;
+      function sportEditHistory(id) {
+        const old = sport.sessions.find((s) => s.id === id);
+        if (!old) return;
+        if (old.type !== "Musculation") {
+          const minutes = prompt("Durée (minutes)", old.minutes || 60);
+          if (minutes === null) return;
+          old.minutes = Math.max(1, Number(minutes) || 60);
+          const correctedDate = prompt("Date (AAAA-MM-JJ)", old.date);
+          if (correctedDate && sportIsoValid(correctedDate))
+            old.date = correctedDate;
+          const note = prompt("Notes", old.note || "");
+          if (note !== null) old.note = note;
+          sportSave();
+          return;
+        }
+        if (
+          sport.active &&
+          !confirm("Remplacer la séance en cours par cette séance passée ?")
+        )
+          return;
+        sport.active = JSON.parse(JSON.stringify(old));
+        sport.active.editSessionId = id;
+        const correctedDate = prompt(
+          "Date de cette séance (AAAA-MM-JJ)",
+          old.date,
+        );
+        if (correctedDate && sportIsoValid(correctedDate))
+          sport.active.date = correctedDate;
+        sportSportChoice = "Musculation";
+        sportPage = "home";
+        sportSave();
+      }
+
+      function sportSave() {
+        let saved = true;
+        try {
+          appStorage.setItem(SPORT_KEY, JSON.stringify(sport));
+        } catch (e) {
+          saved = false;
+          alert(
+            "Sauvegarde impossible : exporte ton aventure avant de fermer la page.",
+          );
+        }
+        sportRender();
+        return saved;
+      }
+      function sportNotify(t) {
+        flash(t);
+      }
+      function sportExerciseKind(ex){
+        if(ex.kind)return ex.kind;
+        const key=sportNormalizeName(ex.name);
+        const stored=sport.exerciseTypes?.[key.replace(/[^a-z0-9]/g,"")];if(stored)return stored;
+        if(["velo appartement","velo elliptique","tapis de course","marche sur tapis","rameur","escalier cardio"].includes(key)){
+          if(ex.sets?.some(s=>Number(s.kg)>0||Number(s.reps)>0)&&!ex.sets.some(s=>Number(s.minutes)>0))return "strength";
+          return "cardio";
+        }
+        if(/^(tractions|pompes|dips|crunch|releve|planche|ab wheel|dead bug|bird dog|russian twist|mountain climbers|pont fessier)/.test(key))return "bodyweight";
+        return "strength";
+      }
+      function sportCardioType(ex){const key=sportNormalizeName(ex.name);return ({"velo appartement":"Vélo","velo elliptique":"Vélo elliptique","tapis de course":"Course à pied","marche sur tapis":"Marche","rameur":"Rameur","escalier cardio":"Escalier"})[key]||ex.name;}
+      function sportSetText(ex,set){const kind=sportExerciseKind(ex);if(kind==="cardio")return `${set.minutes||0} min${set.distance?" · "+set.distance+" km":""}${set.resistance?" · résistance "+set.resistance:""}`;if(kind==="bodyweight")return `${set.reps||0} rép. · poids du corps${set.kg?" + "+set.kg+" kg de lest":""}`;return `${set.kg||0} kg × ${set.reps||0} rép.`;}
+      function sportExerciseRows(ex,i){const kind=sportExerciseKind(ex);return ex.sets.map((set,j)=>{
+        const field=(key,label,step="1")=>`<label class="sport-field">${label}<input type="number" min="0" step="${step}" data-sport-field="${key}" data-ex="${i}" data-set="${j}" value="${sportEsc(set[key]||0)}"></label>`;
+        const measures=kind==="cardio"?field("minutes","Durée (min)","0.5")+field("distance","Distance (km)","0.1")+field("resistance","Résistance (facultative)","0.5"):kind==="bodyweight"?field("reps","Répétitions")+`<details class="bodyweight-load"><summary>Lest facultatif</summary>${field("kg","Lest (kg)","0.5")}</details>`:field("kg","kg","0.5")+field("reps","Répétitions");
+        return `<div class="sport-row typed-set-row ${kind}"><label class="sport-field">${kind==="cardio"?"Bloc":"Série"} ${j+1}<span>${set.done?"✓ Terminée":"À faire"}</span></label>${measures}<div><input class="sport-check" aria-label="${sportEsc(ex.name)} · ${kind==="cardio"?"Bloc":"Série"} ${j+1} terminé" type="checkbox" data-sport-field="done" data-ex="${i}" data-set="${j}" ${set.done?"checked":""}></div></div>`;
+      }).join("");}
+      function sportLast(ex){for(const session of [...sport.sessions].reverse()){const entry=(session.exercises||[]).find(x=>x.name.toLowerCase()===ex.toLowerCase());if(entry)return entry.sets.map(s=>sportSetText(entry,s)).join(" · ");}return "Première séance";}
+      function sportProgramCard(p, manage = false) {
+        return `<div class="sport-card training-program-card"><div><h3>${sportEsc(p.name)}</h3><p>${p.exercises.length} exercice${p.exercises.length === 1 ? "" : "s"} · ${p.exercises.reduce((n, e) => n + e.sets.length, 0)} séries</p></div><button class="primary" data-sport="start" data-id="${sportEsc(p.id)}">▶ Commencer</button>${manage ? `<div class="sport-actions">${p.id === SPORT_LOCKED_ID ? '<span class="sport-muted">🔒 Modèle protégé</span>' : `<button data-sport="edit" data-id="${sportEsc(p.id)}">✎ Modifier</button><button data-sport="deleteProgram" data-id="${sportEsc(p.id)}">Supprimer</button>`}</div>` : ""}</div>`;
+      }
+      function sportManagement() {
+        return `<details class="v69-fold easy-fold training-management" data-training-management><summary>⚙️ Gérer mes programmes et exercices</summary><div class="sport-actions"><button data-sport="newProgram">+ Créer un programme</button><button data-sport="page" data-page="programs">Mes programmes</button><button data-sport="page" data-page="library">Bibliothèque d’exercices</button></div></details>`;
+      }
+      function sportResumeCard() {
+        const a = sport.active;
+        if (!a) return "";
+        const done = a.exercises.reduce(
+            (n, e) => n + e.sets.filter((s) => s.done).length,
+            0,
+          ),
+          total = a.exercises.reduce((n, e) => n + e.sets.length, 0),
+          current = a.exercises.find((e) => e.sets.some((s) => !s.done));
+        return `<section class="sport-card training-resume" aria-label="Séance en cours"><small>SÉANCE EN COURS · ${sportEsc(a.date)}</small><h3>${sportEsc(a.name)}</h3><p>${done}/${total} séries validées · sauvegarde automatique</p><div class="sport-progress-track"><div class="sport-progress-fill" style="width:${total ? Math.round((done / total) * 100) : 0}%"></div></div><p class="training-current-exercise">${current ? "À poursuivre : " + sportEsc(current.name) : "Toutes les séries sont cochées. Tu peux terminer ta séance."}</p><button class="primary" data-sport="resume">▶ Reprendre ma séance</button></section>`;
+      }
+
+      function sportMuscleColor(name) {
+        const n = String(name || "").toLowerCase();
+        if (/couch|pec|développé|developpe/.test(n)) return "#ff7087";
+        if (/traction|tirage|rowing|dos/.test(n)) return "#bc8bff";
+        if (/squat|presse|leg curl|ischio|mollet|jambe|fente/.test(n))
+          return "#4ce3a8";
+        if (/curl|biceps|triceps|extension/.test(n)) return "#ffb568";
+        if (/élévation|elevation|épaule|epaule|oiseau/.test(n))
+          return "#65c8ff";
+        return "#67baff";
+      }
+      function exerciseProgress() {
+        const exercises = new Map();
+        for (const session of sport.sessions) {
+          for (const exercise of session.exercises || []) {
+            if (sportExerciseKind(exercise) === "cardio") continue;
+            const key = sportNormalizeName(exercise.name);
+            const item = exercises.get(key) || { name: exercise.name, sets: [] };
+            for (const set of exercise.sets || []) {
+              if (set.done && Number(set.reps) > 0) {
+                item.sets.push({ date: session.date, id: session.id, kg: Number(set.kg) || 0, reps: Number(set.reps) });
+              }
+            }
+            if (item.sets.length) exercises.set(key, item);
+          }
+        }
+        if (!exercises.size) return "";
+        const options = [...exercises.keys()].map(key => `<option value="${sportEsc(key)}">${sportEsc(exercises.get(key).name)}</option>`).join("");
+        return `<details class="exercise-trend" data-exercise-trend><summary>Courbe de progression</summary>
+          <label>Exercice <select data-trend-exercise>${options}</select></label>
+          <label>Charge <select data-trend-load></select></label>
+          <div data-trend-output></div></details>`;
+      }
+
+      function updateExerciseTrend(panel, resetLoad) {
+        const key = panel.querySelector("[data-trend-exercise]").value;
+        const load = panel.querySelector("[data-trend-load]");
+        const sets = sport.sessions.flatMap(session => (session.exercises || [])
+          .filter(ex => sportNormalizeName(ex.name) === key && sportExerciseKind(ex) !== "cardio")
+          .flatMap(ex => (ex.sets || []).filter(set => set.done && Number(set.reps) > 0)
+            .map(set => ({ id: session.id, date: session.date, kg: Number(set.kg) || 0, reps: Number(set.reps) }))));
+        if (resetLoad || !load.options.length) {
+          const weights = [...new Set(sets.map(set => set.kg))].sort((a, b) => b - a);
+          load.innerHTML = weights.map(kg => `<option value="${kg}">${kg} kg</option>`).join("");
+        }
+        const best = new Map();
+        for (const set of sets.filter(set => set.kg === Number(load.value))) {
+          if (set.reps > (best.get(set.id)?.reps || 0)) best.set(set.id, set);
+        }
+        const points = [...best.values()].sort((a, b) => a.date.localeCompare(b.date)).slice(-12);
+        if (!points.length) return;
+        const max = Math.max(...points.map(point => point.reps));
+        const coords = points.map((point, index) => [
+          points.length === 1 ? 240 : 28 + 424 * index / (points.length - 1),
+          112 - 90 * point.reps / max,
+        ]);
+        panel.querySelector("[data-trend-output]").innerHTML = `<p>Meilleure série par séance à ${load.value} kg · ${points.length} séance(s)</p>
+          <svg viewBox="0 0 480 130" role="img" aria-label="Évolution des répétitions par séance">
+            <path d="M28 112H452" stroke="#567767"/>
+            <polyline points="${coords.map(pair => pair.join(",")).join(" ")}" fill="none" stroke="#60dfae" stroke-width="3"/>
+            ${coords.map(([x,y], i) => `<circle cx="${x}" cy="${y}" r="4" fill="#9affd1"/><text x="${x}" y="${y-8}" text-anchor="middle" fill="currentColor" font-size="12">${points[i].reps}</text>`).join("")}
+          </svg>
+          <details><summary>Dates et répétitions</summary><ul>${points.map(point => `<li>${sportEsc(point.date)} · ${point.reps} répétitions</li>`).join("")}</ul></details>`;
+      }
+
+      document.addEventListener("toggle", event => {
+        const panel = event.target;
+        if (panel.matches?.("[data-exercise-trend]") && panel.open) updateExerciseTrend(panel, false);
+      }, true);
+      document.addEventListener("change", event => {
+        const panel = event.target.closest("[data-exercise-trend]");
+        if (panel) updateExerciseTrend(panel, event.target.matches("[data-trend-exercise]"));
+      });
+      function sportRender() {
+        if (["gear", "history"].includes(sportPage)) sportPage = "progress";
+        const root = document.getElementById("trainingRoot");
+        if (!root) return;
+        let html = `<div class="training-hero section-head"><div class="eyebrow">Préparation physique</div><h1>Carnet d’entraînement</h1></div>
+          <nav class="training-nav tabs" aria-label="Carnet d’entraînement">
+            <button data-sport="page" data-page="home" aria-pressed="${sportPage !== "progress"}">Ma séance</button>
+            <button data-sport="page" data-page="progress" aria-pressed="${sportPage === "progress"}">Carte du temps</button>
+          </nav>`;
+        if (sportPage === "home") {
+          html += sportResumeCard();
+          const controls = `<div class="sport-card sport-launch sport-date-compact"><label class="sport-field">📅 Date de la séance<input type="date" data-sport-date value="${sportChosenDate()}" max="${today()}"></label><label class="sport-field">Discipline<select id="sportDiscipline" data-sport-discipline>${sportDisciplineOptions()}</select></label></div>`;
+          html += sport.active
+            ? `<details class="v69-fold training-session-settings"><summary>📅 Date et discipline</summary>${controls}</details>`
+            : controls;
+        }
+        if (
+          sport.active &&
+          sportPage === "home" &&
+          sportSportChoice === "Musculation"
+        ) {
+          if(sportOpenExercise !== null && !sport.active.exercises[sportOpenExercise]) sportOpenExercise=null;
+          const a = sport.active;
+          html += `<div class="sport-card training-active-session"><h2 class="sport-title">Mes exercices</h2>${a.exercises
+            .map(
+              (ex, i) =>
+                `<details style="--muscle:${sportMuscleColor(ex.name)};--muscle-glow:${sportMuscleColor(ex.name)}26" class="sport-ex sport-ex-compact ${ex.sets.length && ex.sets.every((x) => x.done) ? "sport-ex-complete" : ""}" ${sportOpenExercise === i ? "open" : ""}><summary data-sport-summary="${i}"><strong>${ex.sets.length && ex.sets.every((x) => x.done) ? "✅ " : ""}${sportEsc(ex.name)}</strong><span>${ex.sets.filter((x) => x.done).length}/${ex.sets.length} ${sportExerciseKind(ex)==="cardio"?"blocs":"séries"} ✓</span><small class="shinobi-ex-summary">${sportEsc(sportSetText(ex,ex.sets[0]||{}))}</small></summary><p class="sport-note">Dernière fois : ${sportEsc(sportLast(ex.name))}</p><p class="sport-note">Objectif de référence : ${sportEsc(
+                  ex.target ? ex.target + " répétitions · " + ex.rest + " de repos" : (
+                    sport.programs.find((p) => p.id === a.programId)
+                      ?.exercises || []
+                  )
+                    .find((x) => x.name === ex.name)
+                    ?.sets.map((x) => sportSetText(ex,x))
+                    .join(" · ") || "Exercice ponctuel",
+                )}</p><div class="sport-actions"><button data-sport="addSet" data-index="${i}">+ Série</button><button data-sport="removeActiveEx" data-index="${i}">Retirer</button></div>${sportExerciseRows(ex,i)}</details>`,
+            )
+            .join(
+              "",
+            )}<div class="sport-actions training-session-actions"><button data-sport="addActiveEx">+ Ajouter un exercice</button><button data-sport="cancel">Annuler la séance</button><button class="primary" data-sport="finish">🏆 Terminer la séance</button></div></div>`;
+          html += sportManagement();
+          root.innerHTML = html;
+          
+          return;
+        }
+        if (sportPage === "home") {
+          html += `<div class="sport-card"><h2 class="sport-title">${sportSportChoice === "Musculation" ? "Ma séance" : "Enregistrer ma séance"}</h2>${sportSportChoice === "Musculation" ? `<details class="training-start-choice"><summary class="primary">▶ Commencer un entraînement</summary><div class="sport-actions"><button type="button" data-start-improvised>✚ Partir de zéro — séance du jour</button></div><details class="training-program-choice"><summary>Suivre un programme existant</summary><div class="sport-grid">${sport.programs.filter(p=>p.exercises.length).map((p) => sportProgramCard(p)).join("") || "<p>Aucun programme enregistré.</p>"}</div></details></details>` : `<div class="sport-row">${sportSportChoice === "Autre" ? '<label class="sport-field">Sport personnalisé<input id="sportCustomName" placeholder="Ex. Escalade, badminton…" maxlength="80"></label>' : '<div class="sport-field">Sport choisi<strong>' + sportEsc(sportSportChoice) + "</strong></div>"}<label class="sport-field">Durée (min)<input id="sportCustomMinutes" type="number" min="1" value="60"></label></div><div class="sport-row"><label class="sport-field">Intensité<select id="sportCustomIntensity"><option>Modérée</option><option>Faible</option><option>Élevée</option></select></label><label class="sport-field">Distance (km, facultatif)<input id="sportCustomDistance" type="number" min="0" step="0.1" placeholder="—"></label></div><label class="sport-field">Notes<input id="sportCustomNotes" placeholder="Sensations, performance…"></label><div class="sport-actions"><button class="primary" data-sport="saveCustomSport">✓ Enregistrer la séance</button></div>`}</div>`;
+        }
+        if (sportPage === "home") html += sportManagement();
+        if (sportPage === "library") {
+          html += `<h2 class="sport-title">📚 Bibliothèque d’exercices</h2><div class="sport-actions"><button class="primary" data-sport="addLibrary">+ Ajouter un exercice</button></div><div class="sport-grid">${sport.library.map((x) => `<div class="sport-card"><h3>${sportEsc(x)}</h3><p>${sportEsc(sportLast(x))}</p><button data-sport="removeLibrary" data-name="${sportEsc(x)}">Supprimer</button></div>`).join("") || '<p class="sport-muted">Ajoute tes exercices habituels, puis réutilise-les dans plusieurs programmes.</p>'}</div>`;
+        }
+        if (sportPage === "programs") {
+          html += `<h2 class="sport-title">⭐ Programmes permanents</h2><div class="sport-actions"><button class="primary" data-sport="newProgram">+ Nouveau programme</button></div><div class="sport-grid">${sport.programs.map((p) => sportProgramCard(p, true)).join("") || "<p>Tu peux créer ton programme progressivement.</p>"}</div>`;
+        }
+        if (sportPage === "progress" || sportPage === "history") {
+          const records = new Map();
+          for (const session of sport.sessions)
+            for (const ex of session.exercises || [])
+              for (const set of ex.sets || [])
+                if (set.done && sportExerciseKind(ex)!=="cardio" && (sportExerciseKind(ex)!=="bodyweight"||Number(set.kg)>0))
+                  records.set(
+                    ex.name,
+                    Math.max(records.get(ex.name) || 0, Number(set.kg) || 0),
+                  );
+          html +=
+            '<div class="sport-card"><h2 class="sport-title">🏋️ Records par exercice</h2>' +
+            ([...records]
+              .map(
+                ([name, kg]) =>
+                  "<p>" +
+                  sportEsc(name) +
+                  " · <strong>" +
+                  kg +
+                  " kg</strong></p>",
+              )
+              .join("") ||
+              '<p class="sport-muted">Les records apparaîtront avec tes séries enregistrées.</p>') +
+            "</div>";
+          html += exerciseProgress();
+          html += sportCalendar();
+          html += `<h2 class="sport-title">📈 Historique & corrections</h2><div class="sport-actions"><button class="primary" data-sport="backdate">+ Ajouter une séance ${sportHistoryDay ? "le " + sportHistoryDay : "à une date passée"}</button></div><div class="sport-actions"><button data-sport="allHistory">Toutes les dates</button>${sportHistoryDay ? `<strong>Jour sélectionné : ${sportHistoryDay}</strong>` : ""}</div><div class="sport-card sport-list">${
+            sport.sessions
+              .filter((s) => !sportHistoryDay || s.date === sportHistoryDay)
+              .slice()
+              .reverse()
+              .map(
+                (s) =>
+                  `<div class="sport-record"><strong>${sportEsc(s.date)} · ${sportEsc(s.name)}</strong><p>${s.type === "Musculation" ? (s.exercises || []).map((ex) => sportEsc(ex.name) + " : " + ex.sets.map((x) => sportEsc(sportSetText(ex,x))).join(", ")).join("<br>") : sportEsc(s.minutes) + " min · " + sportEsc(s.intensity || "") + " · " + sportEsc(s.note || "")}</p><button data-sport="editHistory" data-id="${sportEsc(s.id)}">✎ Corriger</button> <button data-sport="deleteSession" data-id="${sportEsc(s.id)}">Supprimer</button></div>`,
+              )
+              .join("") || "<p>Aucune séance enregistrée.</p>"
+          }</div>`;
+        }
+        root.innerHTML = html;
+        
+      }
+      function sportCreateProgram() {
+        const name = prompt("Nom de ton programme (ex. Séance bas du corps)");
+        if (!name?.trim()) return;
+        const p = { id: sportId(), name: name.trim(), exercises: [] };
+        sport.programs.push(p);
+        sportEdit = p.id;
+        sportEditProgram(p);
+      }
+      function sportEditProgram(p) {
+        if (!p || p.id === SPORT_LOCKED_ID) return;
+        let repeat = true;
+        while (repeat) {
+          const msg = `${p.name}\n\n${p.exercises.map((x, i) => `${i + 1}. ${x.name} — ${x.sets.length} séries (${x.sets[0]?.reps || 8} répétitions)`).join("\n") || "Aucun exercice"}\n\n1 = Ajouter un exercice\n2 = Retirer un exercice\n3 = Renommer le programme\n4 = Modifier les séries / répétitions d’un exercice\n0 = Terminer`;
+          const cmd = prompt(msg, "1");
+          if (cmd === null || cmd === "0") {
+            repeat = false;
+            break;
+          }
+          if (cmd === "1") {
+            const name = prompt(
+              "Nom de l’exercice (tu peux aussi choisir dans ta bibliothèque)\n" +
+                sport.library.join(" · "),
+            );
+            if (!name?.trim()) continue;
+            const n = Math.max(
+              1,
+              Math.min(12, Number(prompt("Nombre de séries ?", "3")) || 3),
+            );
+            const reps = Math.max(
+              1,
+              Number(prompt("Répétitions prévues ?", "8")) || 8,
+            );
+            const kg = Math.max(
+              0,
+              Number(prompt("Charge prévue (kg) ?", "0")) || 0,
+            );
+            p.exercises.push({
+              name: name.trim(),
+              sets: Array.from({ length: n }, () => ({
+                kg,
+                reps,
+                done: false,
+              })),
+            });
+            if (
+              !sport.library.some(
+                (x) => x.toLowerCase() === name.trim().toLowerCase(),
+              )
+            )
+              sport.library.push(name.trim());
+          } else if (cmd === "2") {
+            const i = Number(prompt("Numéro de l’exercice à retirer ?")) - 1;
+            if (
+              p.exercises[i] &&
+              confirm("Retirer cet exercice du programme ?")
+            )
+              p.exercises.splice(i, 1);
+          } else if (cmd === "3") {
+            const n = prompt("Nouveau nom", p.name);
+            if (n?.trim()) p.name = n.trim();
+          } else if (cmd === "4") {
+            const i = Number(prompt("Numéro de l’exercice à modifier ?")) - 1,
+              ex = p.exercises[i];
+            if (ex) {
+              const n = Math.max(
+                1,
+                Math.min(
+                  12,
+                  Number(prompt("Nombre de séries", String(ex.sets.length))) ||
+                    ex.sets.length,
+                ),
+              );
+              const r = Math.max(
+                1,
+                Number(
+                  prompt("Répétitions prévues", String(ex.sets[0]?.reps || 8)),
+                ) || 8,
+              );
+              const k = Math.max(
+                0,
+                Number(prompt("Charge prévue", String(ex.sets[0]?.kg || 0))) ||
+                  0,
+              );
+              ex.sets = Array.from({ length: n }, () => ({
+                kg: k,
+                reps: r,
+                done: false,
+              }));
+            }
+          }
+        }
+        sportSave();
+      }
+      function sportStart(p) {
+        sportOpenExercise = null;
+        if (
+          sport.active &&
+          !confirm(
+            "Remplacer la séance en cours ? Les modifications non terminées seront perdues.",
+          )
+        )
+          return;
+        sport.active = {
+          id: sportId(),
+          name: p.name,
+          type: "Musculation",
+          date: sportChosenDate(),
+          programId: p.id,
+          exercises: JSON.parse(JSON.stringify(p.exercises)),
+        };
+        sport.active.exercises.forEach((ex) =>
+          ex.sets.forEach((x) => (x.done = false)),
+        );
+        sportSave();
+      }
+      function sportOther() {
+        const predefined = SPORT_DISCIPLINES.find(
+          (d) => d.name === sportSportChoice,
+        );
+        const name =
+          predefined?.name ||
+          document.getElementById("sportCustomName")?.value.trim();
+        const minutes = Number(
+          document.getElementById("sportCustomMinutes")?.value,
+        );
+        if (!name) {
+          alert("Indique le nom du sport.");
+          return;
+        }
+        if (!Number.isFinite(minutes) || minutes <= 0) {
+          alert("Indique une durée valide.");
+          return;
+        }
+        const intensity =
+          document.getElementById("sportCustomIntensity")?.value || "Modérée";
+        const note = document.getElementById("sportCustomNotes")?.value || "";
+        const distance =
+          document.getElementById("sportCustomDistance")?.value || "";
+        sport.sessions.push({
+          id: sportId(),
+          type: name,
+          name,
+          date: sportChosenDate(),
+          minutes,
+          intensity,
+          note,
+          distance,
+        });
+        sportSportChoice = "Musculation";
+        sportPage = "home";
+        if (sportSave()) flash("Séance enregistrée dans le carnet.");
+      }
+
+      function sportFinish() {
+        const a = sport.active;
+        if (!a) return;
+        if (!a.exercises.length) {
+          alert("Ajoute au moins un exercice.");
+          return;
+        }
+        if (!confirm("Terminer et enregistrer cette séance ?")) return;
+        const last = sport.sessions.filter(
+          (s) => s.type === "Musculation" && s.id !== a.editSessionId,
+        );
+        let pr = 0;
+        for (const ex of a.exercises) {
+          const max = Math.max(
+            0,
+            ...ex.sets.filter((x) => x.done).map((x) => Number(x.kg) || 0),
+          );
+          const prev = Math.max(
+            0,
+            ...last.flatMap((s) =>
+              (s.exercises || [])
+                .filter((x) => x.name === ex.name)
+                .flatMap((x) =>
+                  x.sets.filter((y) => y.done).map((y) => Number(y.kg) || 0),
+                ),
+            ),
+          );
+          if (max > prev && prev > 0) pr++;
+        }
+        a.pr = Math.min(pr, 3);
+        if (a.editSessionId) {
+          sport.sessions = sport.sessions.filter(
+            (s) => s.id !== a.editSessionId,
+          );
+          delete a.editSessionId;
+        }
+        sport.sessions.push(a);
+        sport.active = null;
+        sportOpenExercise = null;
+        sportPage = "progress";
+        if (sportSave()) flash("Séance enregistrée dans le carnet.");
+      }
+      document.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-sport]");
+        if (!b) return;
+        const op = b.dataset.sport,
+          id = b.dataset.id;
+        const p = sport.programs.find((x) => x.id === id);
+        if (op === "resume") {
+          sportSportChoice = "Musculation";
+          sportPage = "home";
+          sportRender();
+          const current =
+            document.querySelector("#trainingRoot details.sport-ex[open]") ||
+            document.querySelector("#trainingRoot .training-active-session");
+          current?.scrollIntoView({ block: "start", behavior: "smooth" });
+          current?.querySelector("summary")?.focus({ preventScroll: true });
+        } else if (op === "weekDay") {
+          sportEntryDate = b.dataset.date;
+          if (sport.active) sport.active.date = sportEntryDate;
+          sportSave();
+        } else if (op === "weekToday") {
+          sportEntryDate = today();
+          if (sport.active) sport.active.date = sportEntryDate;
+          sportSave();
+        } else if (op === "weekShift") {
+          const d = new Date(sportChosenDate() + "T12:00:00");
+          d.setDate(d.getDate() + Number(b.dataset.shift));
+          const iso = [
+            d.getFullYear(),
+            String(d.getMonth() + 1).padStart(2, "0"),
+            String(d.getDate()).padStart(2, "0"),
+          ].join("-");
+          sportEntryDate = iso > today() ? today() : iso;
+          if (sport.active) sport.active.date = sportEntryDate;
+          sportSave();
+        } else if (op === "page") {
+          sportPage = b.dataset.page;
+          if (["history", "progress"].includes(sportPage))
+            sportHistoryDay = null;
+          sportRender();
+        } else if (op === "monthPrev" || op === "monthNext") {
+          sportMonth.setMonth(
+            sportMonth.getMonth() + (op === "monthPrev" ? -1 : 1),
+          );
+          sportRender();
+        } else if (op === "day") {
+          sportDay(b.dataset.date);
+        } else if (op === "backdate") {
+          sportEntryDate = sportHistoryDay || today();
+          sportPage = "home";
+          sportRender();
+        } else if (op === "allHistory") {
+          sportHistoryDay = null;
+          sportRender();
+        } else if (op === "editHistory") {
+          sportEditHistory(id);
+        } else if (op === "newProgram") sportCreateProgram();
+        else if (op === "edit") sportEditProgram(p);
+        else if (op === "start") sportStart(p);
+        else if (
+          op === "deleteProgram" &&
+          p &&
+          p.id !== SPORT_LOCKED_ID &&
+          confirm(
+            "Supprimer ce programme ? Les séances passées seront conservées.",
+          )
+        ) {
+          sport.programs = sport.programs.filter((x) => x.id !== id);
+          sportSave();
+        } else if (op === "addLibrary") {
+          const n = prompt("Nom du nouvel exercice");
+          if (
+            n?.trim() &&
+            !sport.library.some(
+              (x) => x.toLowerCase() === n.trim().toLowerCase(),
+            )
+          ) {
+            sport.library.push(n.trim());
+            sportSave();
+          }
+        } else if (
+          op === "removeLibrary" &&
+          confirm("Retirer cet exercice de la bibliothèque ?")
+        ) {
+          sport.library = sport.library.filter((x) => x !== b.dataset.name);
+          sportSave();
+        } else if (op === "other" || op === "saveCustomSport") sportOther();
+        else if (op === "completeExercise" || op === "uncheckExercise") {
+          if (!sport.active) return;
+          const i = +b.dataset.index,
+            ex = sport.active.exercises[i];
+          if (!ex) return;
+          ex.sets.forEach((set) => (set.done = op === "completeExercise"));
+          sportOpenExercise = i;
+          sportSave();
+        } else if (op === "addSet") {
+          const ex = sport.active.exercises[+b.dataset.index],
+            last = ex.sets.at(-1) || { kg: 0, reps: 8 };
+          ex.sets.push({ ...last, done: false });
+          sportSave();
+        } else if (op === "removeSet") {
+          const ex = sport.active.exercises[+b.dataset.index];
+          if (ex.sets.length > 1) {
+            ex.sets.splice(+b.dataset.set, 1);
+            sportSave();
+          }
+        } else if (op === "removeActiveEx") {
+          if (
+            confirm(
+              "Retirer cet exercice uniquement de la séance du jour ? Le programme de référence conservera cet exercice.",
+            )
+          ) {
+            sport.active.exercises.splice(+b.dataset.index, 1);
+            sportSave();
+          }
+        } else if (op === "renameActive") {
+          const ex = sport.active.exercises[+b.dataset.index],
+            n = prompt("Exercice de remplacement (ponctuel)", ex.name);
+          if (n?.trim()) {
+            ex.name = n.trim();
+            sportSave();
+          }
+        } else if (op === "addActiveEx") {
+          const n = prompt("Nom de l’exercice\n" + sport.library.join(" · "));
+          if (n?.trim()) {
+            sport.active.exercises.push({
+              name: n.trim(),
+              sets: [{ kg: 0, reps: 8, done: false }],
+            });
+            sportSave();
+          }
+        } else if (op === "saveTemplate") {
+          const a = sport.active;
+          if (!a) return;
+          if (a.programId === SPORT_LOCKED_ID) {
+            alert(
+              "Le programme Jambes & fessiers de référence est protégé. Crée un autre programme pour enregistrer un modèle personnalisé.",
+            );
+            return;
+          }
+          const old = sport.programs.find((p) => p.id === a.programId);
+          if (
+            old &&
+            confirm(
+              "Remplacer le programme permanent « " +
+                old.name +
+                " » par les exercices de cette séance ?",
+            )
+          ) {
+            old.exercises = JSON.parse(JSON.stringify(a.exercises));
+            old.exercises.forEach((ex) =>
+              ex.sets.forEach((x) => (x.done = false)),
+            );
+            sportSave();
+          } else if (!old) {
+            sport.programs.push({
+              id: sportId(),
+              name: a.name,
+              exercises: JSON.parse(JSON.stringify(a.exercises)),
+            });
+            sportSave();
+          }
+        } else if (op === "finish") sportFinish();
+        else if (
+          op === "restoreDefault" &&
+          sport.active &&
+          confirm(
+            "Recharger le programme Jambes & fessiers de référence ? Cela remplacera uniquement la séance en cours.",
+          )
+        ) {
+          const d = sportStarter();
+          sport.active.exercises = JSON.parse(JSON.stringify(d.exercises));
+          sportSave();
+        } else if (
+          op === "cancel" &&
+          confirm("Annuler la séance en cours sans enregistrer ?")
+        ) {
+          sport.active = null;
+          sportOpenExercise = null;
+          sportSave();
+        } else if (
+          op === "deleteSession" &&
+          confirm("Supprimer cette séance ?")
+        ) {
+          sport.sessions = sport.sessions.filter((x) => x.id !== id);
+          sportSave();
+        }
+      });
+      document.addEventListener(
+        "toggle",
+        (e) => {
+          if (e.target.matches("details.sport-ex")) {
+            if (!e.target.isConnected) return;
+            const list = [
+              ...document.querySelectorAll("#trainingRoot details.sport-ex"),
+            ];
+            if (e.target.open) sportOpenExercise = list.indexOf(e.target);
+            else if (sportOpenExercise === list.indexOf(e.target))
+              sportOpenExercise = null;
+          }
+        },
+        true,
+      );
+      document.addEventListener("change", (e) => {
+        if (e.target.matches("[data-sport-date]")) {
+          if (!sportIsoValid(e.target.value)) {
+            alert("Choisis une date valide, aujourd’hui ou avant.");
+            e.target.value = sportChosenDate();
+            return;
+          }
+          sportEntryDate = e.target.value;
+          if (sport.active) {
+            sport.active.date = sportEntryDate;
+            appStorage.setItem(SPORT_KEY, JSON.stringify(sport));
+          }
+          return;
+        }
+        if (e.target.matches("[data-sport-discipline]")) {
+          sportSportChoice = [
+            "Musculation",
+            "Autre",
+            ...SPORT_DISCIPLINES.map((d) => d.name),
+          ].includes(e.target.value)
+            ? e.target.value
+            : "Musculation";
+          sportPage = "home";
+          sportRender();
+          return;
+        }
+        const f = e.target.closest("[data-sport-field]");
+        if (!f || !sport.active) return;
+        const set = sport.active.exercises[+f.dataset.ex]?.sets[+f.dataset.set];
+        if (!set) return;
+        set[f.dataset.sportField] =
+          f.dataset.sportField === "done"
+            ? f.checked
+            : Math.max(0, Number(f.value) || 0);
+        appStorage.setItem(SPORT_KEY, JSON.stringify(sport));
+        if (f.dataset.sportField === "done") {
+          sportOpenExercise = +f.dataset.ex;
+          sportRender();
+        }
+      });
+      // Include training data in the existing backup, while accepting older backups.
+      sportRender();
+(()=>{
+'use strict';
+let drag=null,frame=0;
+const status=document.createElement('div');status.className='exercise-order-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');document.body.append(status);
+function decorate(){document.querySelectorAll('#trainingRoot details.sport-ex>summary').forEach((summary,i)=>{if(summary.querySelector('[data-exercise-drag]'))return;const button=document.createElement('button');button.type='button';button.dataset.exerciseDrag=String(i);button.className='exercise-drag-handle';button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><circle cx="8" cy="5" r="2"/><circle cx="16" cy="5" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="8" cy="19" r="2"/><circle cx="16" cy="19" r="2"/></svg>';button.setAttribute('aria-label','Déplacer '+sport.active.exercises[i].name);button.title='Glisser pour déplacer · clavier : flèches haut / bas';summary.prepend(button);});}
+function move(from,to,sessionId){
+ if(!sport.active||sport.active.id!==sessionId||from===to||from<0||to<0||to>=sport.active.exercises.length)return;
+ const indexes=sport.active.exercises.map((_,i)=>i);indexes.splice(to,0,indexes.splice(from,1)[0]);
+ const next={...sport,active:{...sport.active,exercises:indexes.map(i=>sport.active.exercises[i])}};
+ const opened=[...document.querySelectorAll('#trainingRoot details.sport-ex')].findIndex(e=>e.open);
+ try{appStorage.commit({[SPORT_KEY]:JSON.stringify(next)});}catch{status.textContent='Déplacement non enregistré : stockage indisponible.';return;}
+ sport=next;sportOpenExercise=opened<0?null:indexes.indexOf(opened);sportRender();
+ status.textContent=next.active.exercises[to].name+' déplacé en position '+(to+1)+' sur '+indexes.length+'.';
+ document.querySelector('[data-exercise-drag="'+to+'"]')?.focus({preventScroll:true});
+}
+function clear(){cancelAnimationFrame(frame);if(drag){drag.ghost?.remove();drag.card.classList.remove('exercise-is-dragging');try{drag.handle.releasePointerCapture(drag.id);}catch{}}document.querySelectorAll('.exercise-drop-before,.exercise-drop-after').forEach(e=>e.classList.remove('exercise-drop-before','exercise-drop-after'));drag=null;}
+function target(){if(!drag?.started)return;document.querySelectorAll('.exercise-drop-before,.exercise-drop-after').forEach(e=>e.classList.remove('exercise-drop-before','exercise-drop-after'));const root=document.querySelector('.training-active-session');if(!root){clear();return;}const rect=root.getBoundingClientRect();if(drag.x<rect.left||drag.x>rect.right){drag.slot=null;return;}const cards=[...root.querySelectorAll('details.sport-ex')];let hit=document.elementFromPoint(drag.x,drag.y)?.closest('details.sport-ex');if(!hit){hit=cards.find(e=>e.getBoundingClientRect().top>drag.y)||cards.at(-1);}if(!hit)return;const index=cards.indexOf(hit),r=hit.getBoundingClientRect(),after=drag.y>r.top+r.height/2;drag.slot=index+(after?1:0);hit.classList.add(after?'exercise-drop-after':'exercise-drop-before');}
+function scroll(){if(!drag?.started)return;const speed=drag.y<110?-Math.ceil((110-drag.y)/8):drag.y>innerHeight-110?Math.ceil((drag.y-innerHeight+110)/8):0;if(speed){window.scrollBy(0,Math.max(-18,Math.min(18,speed)));target();}frame=requestAnimationFrame(scroll);}
+document.addEventListener('click',e=>{if(e.target.closest('[data-exercise-drag]')){e.preventDefault();e.stopPropagation();}},true);
+document.addEventListener('pointerdown',e=>{const handle=e.target.closest('[data-exercise-drag]');if(!handle||e.button!==0||!sport.active)return;clear();drag={id:e.pointerId,handle,card:handle.closest('details.sport-ex'),from:Number(handle.dataset.exerciseDrag),sessionId:sport.active.id,startX:e.clientX,startY:e.clientY,x:e.clientX,y:e.clientY,started:false,slot:null};handle.setPointerCapture(e.pointerId);e.preventDefault();});
+document.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;drag.x=e.clientX;drag.y=e.clientY;if(!drag.started&&Math.hypot(drag.x-drag.startX,drag.y-drag.startY)>7){drag.started=true;drag.card.classList.add('exercise-is-dragging');drag.ghost=document.createElement('div');drag.ghost.className='exercise-drag-ghost';drag.ghost.textContent=sport.active?.exercises[drag.from]?.name||'Exercice';document.body.append(drag.ghost);frame=requestAnimationFrame(scroll);}if(drag.started){e.preventDefault();drag.ghost.style.transform=`translate(${Math.max(8,Math.min(innerWidth-180,drag.x-60))}px,${drag.y+18}px)`;target();}},{passive:false});
+document.addEventListener('pointerup',e=>{if(!drag||e.pointerId!==drag.id)return;const d=drag,slot=d.slot,to=slot===null?d.from:slot-(slot>d.from?1:0);clear();if(d.started&&slot!==null)move(d.from,to,d.sessionId);});
+document.addEventListener('pointercancel',clear);window.addEventListener('blur',clear);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drag){e.preventDefault();clear();return;}const handle=e.target.closest('[data-exercise-drag]');if(!handle||!['ArrowUp','ArrowDown'].includes(e.key)||!sport.active)return;e.preventDefault();const from=Number(handle.dataset.exerciseDrag);move(from,from+(e.key==='ArrowUp'?-1:1),sport.active.id);});
+const previous=sportRender;sportRender=function(...args){clear();const result=previous(...args);decorate();return result;};decorate();
+})();
+
+(()=>{
+'use strict';
+const BUILTIN=[{"name": "Développé couché", "group": "Pectoraux"}, {"name": "Développé couché haltères", "group": "Pectoraux"}, {"name": "Développé incliné barre", "group": "Pectoraux"}, {"name": "Développé incliné haltères", "group": "Pectoraux"}, {"name": "Développé décliné barre", "group": "Pectoraux"}, {"name": "Développé décliné haltères", "group": "Pectoraux"}, {"name": "Chest press machine", "group": "Pectoraux"}, {"name": "Écarté couché haltères", "group": "Pectoraux"}, {"name": "Écarté incliné haltères", "group": "Pectoraux"}, {"name": "Pec deck", "group": "Pectoraux"}, {"name": "Écarté à la poulie haute", "group": "Pectoraux"}, {"name": "Écarté à la poulie basse", "group": "Pectoraux"}, {"name": "Pompes", "group": "Pectoraux"}, {"name": "Dips pectoraux", "group": "Pectoraux"}, {"name": "Tractions", "group": "Dos"}, {"name": "Tractions supination", "group": "Dos"}, {"name": "Tractions prise neutre", "group": "Dos"}, {"name": "Tractions assistées", "group": "Dos"}, {"name": "Tirage vertical prise large", "group": "Dos"}, {"name": "Tirage vertical prise serrée", "group": "Dos"}, {"name": "Tirage horizontal poulie", "group": "Dos"}, {"name": "Tirage horizontal machine", "group": "Dos"}, {"name": "Rowing barre", "group": "Dos"}, {"name": "Rowing haltère unilatéral", "group": "Dos"}, {"name": "Rowing poitrine appuyée", "group": "Dos"}, {"name": "Rowing T-bar", "group": "Dos"}, {"name": "Rowing prise inversée", "group": "Dos"}, {"name": "Pull-over poulie", "group": "Dos"}, {"name": "Pull-over haltère", "group": "Dos"}, {"name": "Soulevé de terre", "group": "Dos"}, {"name": "Développé militaire barre", "group": "Épaules"}, {"name": "Développé épaules haltères", "group": "Épaules"}, {"name": "Développé épaules machine", "group": "Épaules"}, {"name": "Développé Arnold", "group": "Épaules"}, {"name": "Élévations latérales", "group": "Épaules"}, {"name": "Élévations latérales poulie", "group": "Épaules"}, {"name": "Élévations latérales machine", "group": "Épaules"}, {"name": "Élévations frontales", "group": "Épaules"}, {"name": "Oiseau haltères", "group": "Épaules"}, {"name": "Oiseau à la poulie", "group": "Épaules"}, {"name": "Reverse pec deck", "group": "Épaules"}, {"name": "Face pull", "group": "Épaules"}, {"name": "Shrugs barre", "group": "Épaules"}, {"name": "Shrugs haltères", "group": "Épaules"}, {"name": "Curl biceps", "group": "Biceps"}, {"name": "Curl incliné", "group": "Biceps"}, {"name": "Curl barre EZ", "group": "Biceps"}, {"name": "Curl barre droite", "group": "Biceps"}, {"name": "Curl marteau", "group": "Biceps"}, {"name": "Curl pupitre", "group": "Biceps"}, {"name": "Curl pupitre machine", "group": "Biceps"}, {"name": "Curl concentration", "group": "Biceps"}, {"name": "Curl à la poulie basse", "group": "Biceps"}, {"name": "Curl à la poulie haute", "group": "Biceps"}, {"name": "Extension triceps", "group": "Triceps"}, {"name": "Extension triceps corde", "group": "Triceps"}, {"name": "Extension triceps barre à la poulie", "group": "Triceps"}, {"name": "Extension triceps unilatérale poulie", "group": "Triceps"}, {"name": "Extension triceps au-dessus de la tête", "group": "Triceps"}, {"name": "Barre au front", "group": "Triceps"}, {"name": "Extension triceps couché haltères", "group": "Triceps"}, {"name": "Kickback triceps", "group": "Triceps"}, {"name": "Développé couché prise serrée", "group": "Triceps"}, {"name": "Dips triceps", "group": "Triceps"}, {"name": "Squat barre", "group": "Quadriceps"}, {"name": "Squat avant", "group": "Quadriceps"}, {"name": "Goblet squat", "group": "Quadriceps"}, {"name": "Hack Squat", "group": "Quadriceps"}, {"name": "Presse à cuisses", "group": "Quadriceps"}, {"name": "Presse à cuisses unilatérale", "group": "Quadriceps"}, {"name": "Leg extension", "group": "Quadriceps"}, {"name": "Fentes avant", "group": "Quadriceps"}, {"name": "Fentes marchées", "group": "Quadriceps"}, {"name": "Split squat bulgare", "group": "Quadriceps"}, {"name": "Leg curl", "group": "Ischios et fessiers"}, {"name": "Leg curl assis", "group": "Ischios et fessiers"}, {"name": "Leg curl couché", "group": "Ischios et fessiers"}, {"name": "Leg curl debout", "group": "Ischios et fessiers"}, {"name": "Soulevé de terre roumain", "group": "Ischios et fessiers"}, {"name": "Soulevé de terre jambes tendues", "group": "Ischios et fessiers"}, {"name": "Hip thrust barre", "group": "Ischios et fessiers"}, {"name": "Hip thrust machine", "group": "Ischios et fessiers"}, {"name": "Pont fessier", "group": "Ischios et fessiers"}, {"name": "Kickback fessier poulie", "group": "Ischios et fessiers"}, {"name": "Abduction machine", "group": "Ischios et fessiers"}, {"name": "Adduction machine", "group": "Ischios et fessiers"}, {"name": "Step-up", "group": "Ischios et fessiers"}, {"name": "Extension lombaire", "group": "Ischios et fessiers"}, {"name": "Mollets", "group": "Mollets"}, {"name": "Mollets debout machine", "group": "Mollets"}, {"name": "Mollets assis machine", "group": "Mollets"}, {"name": "Mollets à la presse", "group": "Mollets"}, {"name": "Mollets unilatéraux debout", "group": "Mollets"}, {"name": "Crunch", "group": "Abdominaux"}, {"name": "Crunch à la poulie", "group": "Abdominaux"}, {"name": "Crunch machine", "group": "Abdominaux"}, {"name": "Crunch inversé", "group": "Abdominaux"}, {"name": "Relevé de jambes suspendu", "group": "Abdominaux"}, {"name": "Relevé de genoux suspendu", "group": "Abdominaux"}, {"name": "Relevé de jambes au sol", "group": "Abdominaux"}, {"name": "Planche abdominale", "group": "Abdominaux"}, {"name": "Planche latérale", "group": "Abdominaux"}, {"name": "Ab wheel", "group": "Abdominaux"}, {"name": "Dead bug", "group": "Abdominaux"}, {"name": "Bird dog", "group": "Abdominaux"}, {"name": "Russian twist", "group": "Abdominaux"}, {"name": "Pallof press", "group": "Abdominaux"}, {"name": "Mountain climbers", "group": "Abdominaux"}, {"name": "Curl inversé", "group": "Avant-bras"}, {"name": "Flexion des poignets", "group": "Avant-bras"}, {"name": "Extension des poignets", "group": "Avant-bras"}, {"name": "Marche du fermier", "group": "Avant-bras"}, {"name": "Vélo appartement", "group": "Cardio"}, {"name": "Marche sur tapis", "group": "Cardio"}, {"name": "Tapis de course", "group": "Cardio"}, {"name": "Rameur", "group": "Cardio"}, {"name": "Vélo elliptique", "group": "Cardio"}, {"name": "Escalier cardio", "group": "Cardio"}];
+const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const text=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const aliases={'Vélo appartement':"vélo d’appartement velo stationnaire stationary bike",'Marche sur tapis':'walking treadmill marche tapis','Tapis de course':'running treadmill course tapis','Rameur':'rowing ergometre','Vélo elliptique':'elliptical cross trainer','Escalier cardio':'stairmaster stepmill','Développé couché':'bench press benchpress dc','Tractions':'pull up pullup chin up','Squat barre':'back squat','Soulevé de terre':'deadlift','Soulevé de terre roumain':'romanian deadlift rdl','Tirage horizontal poulie':'seated cable row rowing poulie','Tirage vertical prise large':'lat pulldown','Élévations latérales':'lateral raise','Extension triceps':'triceps pushdown','Leg curl':'ischios legcurl','Leg extension':'quadriceps legextension','Presse à cuisses':'leg press','Développé militaire barre':'overhead press ohp','Planche abdominale':'gainage plank','Planche latérale':'gainage lateral side plank','Marche du fermier':'farmer walk','Hip thrust barre':'hipthrust'};
+let layer,view=null,ctx=null,draft=null,focusBack=null,query='',group='',pageQuery='',pageGroup='';
+const usedNames=()=>[...sport.sessions.flatMap(s=>(s.exercises||[]).map(e=>e.name)),...sport.programs.flatMap(p=>p.exercises.map(e=>e.name)),...(sport.active?.exercises||[]).map(e=>e.name)];
+function catalog(){const saved=new Map();for(const name of [...usedNames(),...sport.library])if(!saved.has(norm(name)))saved.set(norm(name),name);const map=new Map(BUILTIN.map(e=>[norm(e.name),{...e,name:saved.get(norm(e.name))||e.name,builtin:true,kind:sportExerciseKind({name:e.name}),aliases:aliases[e.name]||''}]));for(const name of sport.library)if(!map.has(norm(name)))map.set(norm(name),{name,group:'Personnalisés',builtin:false,kind:sportExerciseKind({name}),aliases:''});return [...map.values()];}
+function exactExercise(name){const key=norm(name),aliases={velodappartement:'Vélo appartement',stationarybike:'Vélo appartement',benchpress:'Développé couché',dc:'Développé couché',pullup:'Tractions',pullups:'Tractions',deadlift:'Soulevé de terre',rdl:'Soulevé de terre roumain',ohp:'Développé militaire barre',plank:'Planche abdominale',gainage:'Planche abdominale',legpress:'Presse à cuisses',latpulldown:'Tirage vertical prise large',hipthrust:'Hip thrust barre'};return catalog().find(e=>norm(e.name)===key)||catalog().find(e=>norm(e.name)===norm(aliases[key]||''));}
+function matches(items,q,g){const tokens=String(q).trim().split(/\s+/).map(norm).filter(Boolean);return items.filter(e=>(!g||e.group===g)&&tokens.every(t=>norm(e.name+' '+e.group+' '+e.aliases).includes(t))).sort((a,b)=>{const n=norm(q);return (norm(b.name).startsWith(n)?1:0)-(norm(a.name).startsWith(n)?1:0)||a.name.localeCompare(b.name,'fr');});}
+function groups(){return [...new Set([...BUILTIN.map(e=>e.group),'Personnalisés'])];}
+function selectHTML(value){return '<option value="">Tous les groupes</option>'+groups().map(g=>'<option '+(g===value?'selected':'')+' value="'+text(g)+'">'+text(g)+'</option>').join('');}
+function commit(next){try{appStorage.validate(SPORT_KEY,next);appStorage.commit({[SPORT_KEY]:JSON.stringify(next)});sport=next;sportRender();return true;}catch{error('Enregistrement impossible. Tes données précédentes sont conservées.');return false;}}
+function remember(list,name){return list.some(n=>norm(n)===norm(name))?list:[...list,name];}
+function ensure(){if(layer)return;layer=document.createElement('div');layer.id='exerciseLibraryModal';layer.hidden=true;layer.innerHTML='<section class="exercise-dialog" role="dialog" aria-modal="true" aria-labelledby="exerciseDialogTitle" tabindex="-1"></section>';document.body.append(layer);layer.addEventListener('click',e=>{if(e.target===layer){if(view==='picker'&&ctx?.mode==='program'){view='builder';renderBuilder();}else close();}});layer.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();if(view==='picker'&&ctx?.mode==='program'){view='builder';renderBuilder();}else close();}if(e.key==='Tab'){const nodes=[...layer.querySelectorAll('button,input,select,[tabindex="0"]')].filter(e=>!e.disabled&&e.offsetParent!==null),first=nodes[0],last=nodes.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}});}
+function fitViewport(){if(!layer||layer.hidden)return;const v=window.visualViewport;if(v){layer.style.height=v.height+'px';layer.style.top=v.offsetTop+'px';layer.style.bottom='auto';layer.querySelector('section').style.maxHeight=Math.max(120,v.height-20)+'px';}}
+window.visualViewport?.addEventListener('resize',fitViewport);window.visualViewport?.addEventListener('scroll',fitViewport);
+function open(){ensure();if(layer.hidden)focusBack=document.activeElement;layer.hidden=false;fitViewport();document.body.classList.add('exercise-modal-open');}
+function close(){if(!layer)return;layer.hidden=true;view=null;ctx=null;draft=null;document.body.classList.remove('exercise-modal-open');if(focusBack?.isConnected)focusBack.focus({preventScroll:true});else document.querySelector('.shinobi-side-link[data-page="home"]')?.focus({preventScroll:true});}
+function error(message){const e=layer&&!layer.hidden?layer.querySelector('[data-ex-error]'):document.querySelector('[data-library-status]');if(e)e.textContent=message;}
+function shell(title,body){layer.querySelector('section').innerHTML='<header><h2 id="exerciseDialogTitle">'+title+'</h2><button type="button" data-ex-close aria-label="Fermer">✕</button></header>'+body+'<p data-ex-error role="status"></p>';layer.querySelector('[data-ex-close]').onclick=()=>{if(view==='picker'&&ctx?.mode==='program'){view='builder';renderBuilder();}else close();};}
+function picker(mode,sessionId){ctx={mode,sessionId};query='';group='';view='picker';open();renderPicker();}
+function renderPicker(){shell('Choisir un exercice','<label class="ex-field">Rechercher un exercice<input id="exerciseSearch" type="search" maxlength="80" placeholder="Ex. développé, dos, bench press…" autocomplete="off" role="combobox" aria-controls="exerciseResults" aria-expanded="true" aria-autocomplete="list" value="'+text(query)+'"></label><label class="ex-field">Groupe musculaire<select id="exerciseGroup">'+selectHTML(group)+'</select></label><p data-ex-count aria-live="polite"></p><div id="exerciseResults" role="listbox" aria-label="Exercices disponibles"></div><div data-ex-custom></div>'+(ctx.mode==='program'?'<button type="button" data-ex-back>← Retour au programme</button>':''));layer.querySelector('#exerciseSearch').oninput=e=>{query=e.target.value;results();};layer.querySelector('#exerciseSearch').onkeydown=e=>{if(e.key==='ArrowDown'){e.preventDefault();layer.querySelector('[data-ex-pick]')?.focus();}else if(e.key==='Enter'){const exact=exactExercise(query);if(exact){e.preventDefault();pick(exact.name);}}};layer.querySelector('#exerciseGroup').onchange=e=>{group=e.target.value;results();};layer.querySelector('[data-ex-back]')?.addEventListener('click',()=>{view='builder';renderBuilder();});results();layer.querySelector('#exerciseSearch').focus();}
+function results(){const list=matches(catalog(),query,group);layer.querySelector('[data-ex-count]').textContent=list.length+' exercice'+(list.length===1?'':'s')+' disponible'+(list.length===1?'':'s');const box=layer.querySelector('#exerciseResults');box.innerHTML=list.map((e,i)=>'<button type="button" role="option" aria-selected="false" data-ex-pick="'+i+'"><strong>'+text(e.name)+'</strong><small>'+text(e.group)+'</small></button>').join('')||'<p>Aucun exercice trouvé.</p>';box.querySelectorAll('[data-ex-pick]').forEach((b,i)=>{b.onclick=()=>pick(list[i].name);b.onkeydown=e=>{if(['ArrowDown','ArrowUp','Home','End'].includes(e.key)){e.preventDefault();const nodes=[...box.querySelectorAll('button')];nodes[e.key==='Home'?0:e.key==='End'?nodes.length-1:Math.max(0,Math.min(nodes.length-1,i+(e.key==='ArrowDown'?1:-1)))].focus();}};});const exact=exactExercise(query);const custom=layer.querySelector('[data-ex-custom]');custom.innerHTML=query.trim()&&!exact?'<button type="button" data-create-custom>+ Créer « '+text(query.trim().slice(0,80))+' » comme exercice personnalisé</button><label class="ex-field">Type<select data-custom-kind><option value="strength">Charge et répétitions</option><option value="bodyweight">Poids du corps</option><option value="cardio">Cardio</option></select></label><small>Vérifie les résultats pour éviter de créer un doublon.</small>':'';custom.querySelector('button')?.addEventListener('click',()=>pick(query.trim().slice(0,80),layer.querySelector("[data-custom-kind]").value));}
+function pick(name,requestedKind){const existing=exactExercise(name);name=existing?.name||name.trim();const kind=requestedKind||existing?.kind||sportExerciseKind({name});if(!name||name.length>80)return;if(ctx.mode==='program'){if(draft.exercises.some(e=>norm(e.name)===norm(name))){error('Cet exercice est déjà dans le programme. Modifie ses séries plutôt que de le dupliquer.');return;}draft.exercises.push({name,kind,sets:Array.from({length:kind==="cardio"?1:3},()=>({kg:0,reps:kind==="cardio"?0:8,done:false,...(kind==="cardio"?{minutes:0,distance:0,resistance:0}:{})}))});view='builder';renderBuilder();return;}if(ctx.mode==='session'){if(!sport.active||sport.active.id!==ctx.sessionId){error('Cette séance n’est plus active. Ferme le sélecteur et réessaie.');return;}if(sport.active.exercises.some(e=>norm(e.name)===norm(name))){error('Cet exercice est déjà dans la séance. Tu peux lui ajouter une série.');return;}const next={...sport,library:remember(sport.library,name),exerciseTypes:{...sport.exerciseTypes,[norm(name)]:kind},active:{...sport.active,exercises:[...sport.active.exercises,{name,kind,sets:[{kg:0,reps:kind==="cardio"?0:8,done:false,...(kind==="cardio"?{minutes:0,distance:0,resistance:0}:{})}]}]}};if(commit(next))close();return;}const next={...sport,library:remember(sport.library,name),exerciseTypes:{...sport.exerciseTypes,[norm(name)]:kind}};if(commit(next))close();}
+function builder(program){if(program?.id===SPORT_LOCKED_ID)return;draft=program?JSON.parse(JSON.stringify(program)):{id:sportId(),name:'',exercises:[]};ctx=null;view='builder';open();renderBuilder();}
+function renderBuilder(){
+ const fields=(ex,i)=>{const kind=sportExerciseKind(ex);const input=(key,label,value,min=0,max="",step="1")=>`<label>${label}<input data-draft-field="${key}" data-index="${i}" type="number" min="${min}" ${max?'max="'+max+'"':''} step="${step}" value="${value}"></label>`;return input("count",kind==="cardio"?"Blocs":"Séries",ex.sets.length,1,12)+(kind==="cardio"?input("minutes","Durée (min)",ex.sets[0]?.minutes||0,0,"","0.5")+input("distance","Distance (km)",ex.sets[0]?.distance||0,0,"","0.1")+input("resistance","Résistance",ex.sets[0]?.resistance||0,0,"","0.5"):input("reps","Répétitions",ex.sets[0]?.reps||8,1)+(kind==="bodyweight"?'':input("kg","Charge (kg)",ex.sets[0]?.kg||0,0,"","0.5")));};
+ shell('Mon programme','<label class="ex-field">Nom du programme<input data-program-name maxlength="80" value="'+text(draft.name)+'" placeholder="Ex. Haut du corps"></label><div class="program-draft-list">'+draft.exercises.map((ex,i)=>'<article class="program-draft-ex"><div><strong>'+text(ex.name)+'</strong><button type="button" data-draft-remove="'+i+'" aria-label="Retirer '+text(ex.name)+'">Retirer</button></div><small>'+({strength:'Charge et répétitions',bodyweight:'Poids du corps',cardio:'Cardio'})[sportExerciseKind(ex)]+'</small><div class="program-set-fields">'+fields(ex,i)+'</div></article>').join('')+'</div><p class="ex-help">Ces valeurs définissent le programme. Tu peux ajuster chaque série ou bloc pendant la séance.</p><button type="button" data-draft-add>+ Choisir un exercice</button><footer><button type="button" data-draft-cancel>Annuler</button><button type="button" data-draft-once>Faire cette séance uniquement</button><button type="button" class="primary" data-draft-save>Enregistrer le programme</button></footer>');
+ layer.querySelector('[data-program-name]').oninput=e=>draft.name=e.target.value;
+ layer.querySelectorAll('[data-draft-remove]').forEach(b=>b.onclick=()=>{draft.exercises.splice(Number(b.dataset.draftRemove),1);renderBuilder();});
+ layer.querySelectorAll('[data-draft-field]').forEach(input=>input.onchange=()=>{const ex=draft.exercises[Number(input.dataset.index)],key=input.dataset.draftField,n=Number(input.value);const min=['reps','count'].includes(key)?1:0;if(!Number.isFinite(n)||n<min||(key==='count'&&(!Number.isInteger(n)||n>12))){error('Indique une valeur valide (1 à 12 séries ou blocs).');input.value=key==='count'?ex.sets.length:ex.sets[0][key]||0;return;}if(key==='count'){const ref=ex.sets.at(-1)||{kg:0,reps:8,done:false};ex.sets=Array.from({length:n},(_,i)=>ex.sets[i]||{...ref,done:false});}else ex.sets=ex.sets.map(s=>({...s,[key]:n}));});
+ layer.querySelector('[data-draft-add]').onclick=()=>picker('program');layer.querySelector('[data-draft-cancel]').onclick=close;
+ layer.querySelector('[data-draft-once]').onclick=()=>{if(!draft.exercises.length){error('Choisis au moins un exercice.');return;}if(sport.active&&!confirm('Remplacer la séance en cours ? Les modifications non terminées seront perdues.'))return;const session={id:sportId(),name:draft.name.trim()||'Séance improvisée',type:'Musculation',date:sportChosenDate(),exercises:JSON.parse(JSON.stringify(draft.exercises))};session.exercises.forEach(ex=>ex.sets.forEach(set=>set.done=false));const next={...sport,active:session,library:session.exercises.reduce((xs,e)=>remember(xs,e.name),sport.library),exerciseTypes:session.exercises.reduce((types,e)=>({...types,[norm(e.name)]:sportExerciseKind(e)}),sport.exerciseTypes||{})};if(commit(next)){sportOpenExercise=null;close();sportPage='home';sportRender();}};
+ layer.querySelector('[data-draft-save]').onclick=()=>{if(!draft.name.trim()||!draft.exercises.length){error('Donne un nom au programme et choisis au moins un exercice.');return;}const program={...draft,name:draft.name.trim()},exists=sport.programs.some(p=>p.id===program.id),next={...sport,programs:exists?sport.programs.map(p=>p.id===program.id?program:p):[...sport.programs,program],library:program.exercises.reduce((xs,e)=>remember(xs,e.name),sport.library),exerciseTypes:program.exercises.reduce((types,e)=>({...types,[norm(e.name)]:sportExerciseKind(e)}),sport.exerciseTypes||{})};if(commit(next)){close();sportPage='programs';sportRender();}};
+ layer.querySelector('[data-program-name]').focus({preventScroll:true});}
+function libraryPage(){if(sportPage!=='library')return;const root=document.getElementById('trainingRoot');const head=root.querySelector('.training-hero'),nav=root.querySelector('.training-nav');root.replaceChildren(...[head,nav].filter(Boolean));const section=document.createElement('section');section.className='sport-card exercise-library-page';section.innerHTML='<h2>Bibliothèque d’exercices</h2><p>'+BUILTIN.length+' exercices de référence · tes exercices personnalisés sont conservés.</p><label class="ex-field">Rechercher<input data-library-search type="search" value="'+text(pageQuery)+'" placeholder="Nom, muscle ou nom anglais…"></label><label class="ex-field">Groupe musculaire<select data-library-group>'+selectHTML(pageGroup)+'</select></label><div class="sport-actions"><button data-library-custom>+ Ajouter un exercice personnalisé</button></div><p data-library-count aria-live="polite"></p><div data-library-results></div><p data-library-status role="status"></p>';root.append(section);section.querySelector('[data-library-search]').oninput=e=>{pageQuery=e.target.value;pageResults();};section.querySelector('[data-library-group]').onchange=e=>{pageGroup=e.target.value;pageResults();};section.querySelector('[data-library-custom]').onclick=()=>picker('library');pageResults();}
+function pageResults(){const box=document.querySelector('[data-library-results]');if(!box)return;const list=matches(catalog(),pageQuery,pageGroup);document.querySelector('[data-library-count]').textContent=list.length+' exercices';box.innerHTML=list.map((e,i)=>'<article><div><strong>'+text(e.name)+'</strong><small>'+text(e.group)+'</small></div>'+(!e.builtin&&sport.library.includes(e.name)?'<button type="button" data-library-remove="'+i+'">Supprimer</button>':'')+'</article>').join('')||'<p>Aucun résultat.</p>';box.querySelectorAll('[data-library-remove]').forEach(b=>b.onclick=()=>{const name=list[Number(b.dataset.libraryRemove)].name;if(confirm('Retirer « '+name+' » de la bibliothèque ? Tes séances passées et tes programmes sont conservés.'))commit({...sport,library:sport.library.filter(n=>norm(n)!==norm(name))});});}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-sport]');if(!b)return;const op=b.dataset.sport;if(!['addActiveEx','addLibrary','newProgram','edit','renameActive'].includes(op))return;e.preventDefault();e.stopImmediatePropagation();if(op==='addActiveEx'&&sport.active)picker('session',sport.active.id);else if(op==='addLibrary')picker('library');else if(op==='newProgram')builder();else if(op==='edit')builder(sport.programs.find(p=>p.id===b.dataset.id));},true);
+document.addEventListener('click',e=>{if(!e.target.closest('[data-start-improvised]'))return;if(sport.active&&!confirm('Remplacer la séance en cours ?'))return;const next={...sport,active:{id:sportId(),name:'Séance improvisée',type:'Musculation',date:sportChosenDate(),exercises:[]}};if(commit(next)){sportOpenExercise=null;sportPage='home';sportRender();}},true);
+// Other existing entry points share the same editor.
+sportCreateProgram=()=>builder();sportEditProgram=p=>builder(p);
+const previous=sportRender;sportRender=function(...args){const result=previous(...args);libraryPage();
+if(sport.active&&sportPage==="home")document.querySelectorAll("#trainingRoot .sport-ex").forEach((node,i)=>{if(sportExerciseKind(sport.active.exercises[i])!=="cardio")return;const add=node.querySelector('[data-sport="addSet"]'),remove=node.querySelector('[data-sport="removeSet"]');if(add)add.textContent="+ Bloc";if(remove){remove.textContent="− Retirer un bloc";remove.title="Retirer le dernier bloc de cardio";}});
+return result;};
+window.rpgExerciseLibrary={catalog:()=>catalog().map(e=>({...e})),normalize:norm,builtinCount:BUILTIN.length};libraryPage();
+})();
+
+</script>
+</body>
+</html>
