@@ -87,6 +87,44 @@ main:not([data-screen="0"]) .card::before,#trainingRoot .sport-card::before{cont
 .story-reading h2{font-size:clamp(27px,5vw,39px)}
 .story-reading p{font:clamp(17px,2.4vw,20px)/1.65 Georgia,serif;color:var(--ink);margin:14px 0}
 .story-turn{margin-top:20px}
+
+/* Touch targets and form text remain readable without focus zoom. */
+button,summary,[data-sport-field="done"]{touch-action:manipulation}
+input:not([type=checkbox]),select,textarea,#trainingRoot input:not([type=checkbox]),#trainingRoot select,#trainingRoot textarea{font-size:16px}
+.quest{border-radius:9px;padding:10px 8px}
+.quest button{min-height:44px}
+.quest[data-done="true"]{background:#214034;border:1px solid #62987b;margin-block:6px;color:#e9ffef}
+.quest[data-done="true"] .meta{color:#c8e1d2}
+.quest-status{display:inline-block;margin-left:8px;color:#bff1d0;font-size:12px;font-weight:750}
+.quest[data-done="true"] button{background:transparent;font-size:13px}
+#trainingRoot .typed-set-row{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;padding:10px;margin-top:8px;border:1px solid var(--line);border-radius:9px}
+#trainingRoot .typed-set-row[data-set-done="true"]{background:#214034;border-color:#62987b}
+.set-heading,.set-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.set-measures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:start}
+.set-measures .sport-field{font-size:13px}
+.set-measures input,.set-actions button,.set-check{min-height:44px}
+.set-check{display:inline-flex;align-items:center;gap:7px;cursor:pointer}
+.set-check input{width:20px;height:20px;accent-color:#93d9aa}
+#trainingRoot .set-remove,#trainingRoot [data-sport="removeActiveEx"]{color:#f4b3c3}
+#trainingRoot .sport-ex>summary{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;align-items:center;min-height:54px}
+#trainingRoot .sport-ex>summary strong{overflow-wrap:anywhere;min-width:0}
+#trainingRoot .sport-ex>summary span,#trainingRoot .sport-ex>summary small{margin:0}
+#trainingRoot .sport-ex>summary small{grid-column:1/-1}
+#exerciseLibraryModal .exercise-dialog{min-width:0;overscroll-behavior:contain}
+#exerciseLibraryModal header{flex-direction:row;align-items:center;padding:0}
+#exerciseLibraryModal header h2{min-width:0;overflow-wrap:anywhere}
+#exerciseLibraryModal .exercise-dialog footer{padding:0;flex-wrap:wrap}
+#exerciseResults>button,[data-library-results] article>div{min-width:0;overflow-wrap:anywhere}
+[data-library-results] article button{flex-shrink:0}
+@media(max-width:660px){
+  #trainingRoot .training-active-session{padding:10px}
+  #trainingRoot .sport-ex{padding-inline:6px}
+  #trainingRoot .sport-actions button{min-height:44px}
+  #trainingRoot .sport-ex>summary{font-size:13px}
+  #trainingRoot .sport-ex>summary span{white-space:nowrap}
+  #exerciseLibraryModal .program-set-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .quest-status{display:block;margin:2px 0 0}
+}
 </style>
 </head>
 <body>
@@ -512,7 +550,7 @@ function renderQuests(){
     return '<section class="card" style="--accent:'+domain.color+'"><div class="spread"><h3 class="accent">'+esc(domainTitle(domain))+'</h3><span class="meta">'+earned+' / '+cap[period]+' XP</span></div>'+bar(earned,cap[period],domainTitle(domain))+quests().filter(q=>q.period===period&&q.domain===domain.id).map(q=>{
       const done=state.log[key+'|'+q.id];
       const blocked=!done&&earned+q.xp>cap[period];
-      return '<div class="quest" data-done="'+Boolean(done)+'"><div><strong>'+esc(done?.name??q.name)+'</strong><span class="meta">+'+(done?.xp??q.xp)+' XP'+(blocked?' · Plafond atteint':'')+'</span></div><button data-quest="'+q.id+'" data-key="'+key+'" aria-label="'+esc((done?'Annuler ':'Valider ')+(done?.name??q.name))+'" '+(blocked?'disabled':'')+'>'+(done?'✓ Annuler':'Valider')+'</button></div>';
+      return '<div class="quest" data-done="'+Boolean(done)+'"><div><strong>'+esc(done?.name??q.name)+'</strong><span class="meta">+'+(done?.xp??q.xp)+' XP'+(blocked?' · Plafond atteint':'')+'</span>'+(done?'<span class="quest-status">✓ Validée</span>':'')+'</div><button data-quest="'+q.id+'" data-key="'+key+'" aria-label="'+esc((done?'Annuler ':'Valider ')+(done?.name??q.name))+'" '+(blocked?'disabled':'')+'>'+(done?'Annuler':'Valider')+'</button></div>';
     }).join('')+'</section>';
   }).join('')+'</div>';
 }
@@ -955,7 +993,15 @@ render();
       function sportExerciseRows(ex,i){const kind=sportExerciseKind(ex);return ex.sets.map((set,j)=>{
         const field=(key,label,step="1")=>`<label class="sport-field">${label}<input type="number" min="0" step="${step}" data-sport-field="${key}" data-ex="${i}" data-set="${j}" value="${sportEsc(set[key]||0)}"></label>`;
         const measures=kind==="cardio"?field("minutes","Durée (min)","0.5")+field("distance","Distance (km)","0.1")+field("resistance","Résistance (facultative)","0.5"):kind==="bodyweight"?field("reps","Répétitions")+`<details class="bodyweight-load"><summary>Lest facultatif</summary>${field("kg","Lest (kg)","0.5")}</details>`:field("kg","kg","0.5")+field("reps","Répétitions");
-        return `<div class="sport-row typed-set-row ${kind}"><label class="sport-field">${kind==="cardio"?"Bloc":"Série"} ${j+1}<span>${set.done?"✓ Terminée":"À faire"}</span></label>${measures}<div><input class="sport-check" aria-label="${sportEsc(ex.name)} · ${kind==="cardio"?"Bloc":"Série"} ${j+1} terminé" type="checkbox" data-sport-field="done" data-ex="${i}" data-set="${j}" ${set.done?"checked":""}></div></div>`;
+        const unit=kind==="cardio"?"Bloc":"Série";
+        return `<div class="sport-row typed-set-row ${kind}" data-set-done="${Boolean(set.done)}">
+          <div class="set-heading"><strong>${unit} ${j+1}</strong><span class="meta">${set.done?"✓ Terminée":"À faire"}</span></div>
+          <div class="set-measures">${measures}</div>
+          <div class="set-actions">
+            <label class="set-check"><input class="sport-check" aria-label="${sportEsc(ex.name)} · ${unit} ${j+1} terminé" type="checkbox" data-sport-field="done" data-ex="${i}" data-set="${j}" ${set.done?"checked":""}><span>${set.done?"Validé":"Valider"}</span></label>
+            <button type="button" class="set-remove" data-sport="removeSet" data-index="${i}" data-set="${j}" aria-label="Supprimer ${unit.toLowerCase()} ${j+1} · ${sportEsc(ex.name)}" ${ex.sets.length<=1?'disabled title="Garde une série ou supprime l’exercice"':''}>Supprimer</button>
+          </div>
+        </div>`;
       }).join("");}
       function sportLast(ex){for(const session of [...sport.sessions].reverse()){const entry=(session.exercises||[]).find(x=>x.name.toLowerCase()===ex.toLowerCase());if(entry)return entry.sets.map(s=>sportSetText(entry,s)).join(" · ");}return "Première séance";}
       function sportProgramCard(p, manage = false) {
@@ -1083,7 +1129,7 @@ render();
                     .find((x) => x.name === ex.name)
                     ?.sets.map((x) => sportSetText(ex,x))
                     .join(" · ") || "Exercice ponctuel",
-                )}</p><div class="sport-actions"><button data-sport="addSet" data-index="${i}">+ Série</button><button data-sport="removeActiveEx" data-index="${i}">Retirer</button></div>${sportExerciseRows(ex,i)}</details>`,
+                )}</p><div class="sport-actions"><button data-sport="addSet" data-index="${i}">+ Ajouter une série</button><button data-sport="removeActiveEx" data-index="${i}">Supprimer l’exercice</button></div>${sportExerciseRows(ex,i)}</details>`,
             )
             .join(
               "",
@@ -1436,11 +1482,13 @@ render();
         } else if (op === "addSet") {
           const ex = sport.active.exercises[+b.dataset.index],
             last = ex.sets.at(-1) || { kg: 0, reps: 8 };
+          sportOpenExercise = +b.dataset.index;
           ex.sets.push({ ...last, done: false });
           sportSave();
         } else if (op === "removeSet") {
           const ex = sport.active.exercises[+b.dataset.index];
           if (ex.sets.length > 1) {
+            sportOpenExercise = +b.dataset.index;
             ex.sets.splice(+b.dataset.set, 1);
             sportSave();
           }
@@ -1451,6 +1499,7 @@ render();
             )
           ) {
             sport.active.exercises.splice(+b.dataset.index, 1);
+            sportOpenExercise = null;
             sportSave();
           }
         } else if (op === "renameActive") {
@@ -1653,7 +1702,7 @@ document.addEventListener('click',e=>{if(!e.target.closest('[data-start-improvis
 // Other existing entry points share the same editor.
 sportCreateProgram=()=>builder();sportEditProgram=p=>builder(p);
 const previous=sportRender;sportRender=function(...args){const result=previous(...args);libraryPage();
-if(sport.active&&sportPage==="home")document.querySelectorAll("#trainingRoot .sport-ex").forEach((node,i)=>{if(sportExerciseKind(sport.active.exercises[i])!=="cardio")return;const add=node.querySelector('[data-sport="addSet"]'),remove=node.querySelector('[data-sport="removeSet"]');if(add)add.textContent="+ Bloc";if(remove){remove.textContent="− Retirer un bloc";remove.title="Retirer le dernier bloc de cardio";}});
+if(sport.active&&sportPage==="home")document.querySelectorAll("#trainingRoot .sport-ex").forEach((node,i)=>{if(sportExerciseKind(sport.active.exercises[i])!=="cardio")return;const add=node.querySelector('[data-sport="addSet"]');if(add)add.textContent="+ Ajouter un bloc";});
 return result;};
 window.rpgExerciseLibrary={catalog:()=>catalog().map(e=>({...e})),normalize:norm,builtinCount:BUILTIN.length};libraryPage();
 })();
