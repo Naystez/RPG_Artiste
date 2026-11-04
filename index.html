@@ -125,6 +125,10 @@ input:not([type=checkbox]),select,textarea,#trainingRoot input:not([type=checkbo
   #exerciseLibraryModal .program-set-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
   .quest-status{display:block;margin:2px 0 0}
 }
+.quest-date-controls{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.quest-date-controls button,.quest-date-controls input{min-height:44px}
+.quest-date-controls button[data-quest-day="-1"],.quest-date-controls button[data-quest-day="1"]{min-width:44px;font-size:22px;padding-block:5px}
+.quest-date-controls input{min-width:0;max-width:100%;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);padding:6px;font-size:16px}
 </style>
 </head>
 <body>
@@ -470,11 +474,11 @@ const questTabs = ['Journalières','Hebdomadaires'];
 const progressTabs = ['Vue d’ensemble','Historique','Bilan hebdomadaire'];
 const adventureTabs = ['Histoire','Personnages','Niveau patrimoine'];
 let screen = 0, questTab = 0, progressTab = 0, adventureTab = 0, chapterId = null;
-let historyDay = null, timer;
+let historyDay = null, dailyQuestDay = null, timer;
 const nf = new Intl.NumberFormat('fr-FR');
 const fmt = value => nf.format(value);
 const esc = value => String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-const dateKey = date => [date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
+const dateKey = date => [String(date.getFullYear()).padStart(4,'0'),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
 const shift = (date,days) => {const next=new Date(date);next.setDate(next.getDate()+days);return next;};
 const monday = date => shift(date,-((date.getDay()+6)%7));
 const parseDay = key => new Date(key+'T12:00:00');
@@ -541,9 +545,12 @@ function renderHome(){
   '<section class="card"><div class="eyebrow">Cette semaine</div><div class="stat">'+fmt(sum(week))+' XP</div><p>'+week.length+' quête(s) hebdomadaire(s) validée(s)</p>'+bar(sum(week),2000,'Quêtes hebdomadaires')+'<button data-go="2" data-review="true">Voir le bilan</button></section></div>';
 }
 function renderQuests(){
-  const period=keys[questTab], now=new Date(), key=periodKey(period,now), rows=summaryFor(period,now);
-  const title=period==='daily'?niceDate(now,{weekday:'long',day:'numeric',month:'long'}):niceDate(monday(now))+' – '+niceDate(shift(monday(now),6));
-  return heading('Le carnet de pratique','Quêtes')+tabs(questTabs,questTab,'quest-tab')+
+  const period=keys[questTab], now=new Date(), todayKey=dateKey(now);
+  const date=period==='daily'&&dailyQuestDay?parseDay(dailyQuestDay):now;
+  const key=periodKey(period,date), rows=summaryFor(period,date);
+  const title=period==='daily'?niceDate(date,{weekday:'long',day:'numeric',month:'long'}):niceDate(monday(now))+' – '+niceDate(shift(monday(now),6));
+  const dayControls=period==='daily'?'<div class="quest-date-controls"><button type="button" data-quest-day="-1" aria-label="Jour précédent">‹</button><input type="date" id="dailyQuestDate" aria-label="Date des quêtes journalières" value="'+key+'" min="0001-01-01" max="'+todayKey+'"><button type="button" data-quest-day="1" aria-label="Jour suivant" '+(key>=todayKey?'disabled':'')+'>›</button><button type="button" data-quest-day="0" '+(key===todayKey?'disabled':'')+'>Aujourd’hui</button></div>':'';
+  return heading('Le carnet de pratique','Quêtes')+tabs(questTabs,questTab,'quest-tab')+dayControls+
   '<div class="spread"><div class="meta">'+title+' · '+fmt(sum(rows))+' XP</div><button data-edit="'+period+'">Personnaliser</button></div>'+
   '<div class="grid">'+domains.map(domain=>{
     const earned=sum(rows.filter(row=>row.domain===domain.id));
@@ -624,15 +631,17 @@ function render(){
 function toggleQuest(id,key){
   const q=quests().find(quest=>quest.id===id);
   const today=new Date();
-  if(!q||key!==periodKey(q.period,today)){render();return;}
+  if(!q) return;
+  const date=q.period==='daily'&&dailyQuestDay?parseDay(dailyQuestDay):today;
+  if(dateKey(date)>dateKey(today)||key!==periodKey(q.period,date)){render();return;}
   const log={...state.log}, eventId=key+'|'+q.id;
   const undo=Boolean(log[eventId]);
   const before=artistLevel(), unlockCount=state.unlocked.length;
   if(undo) delete log[eventId];
   else{
-    const earned=sum(summaryFor(q.period,today).filter(row=>row.domain===q.domain));
+    const earned=sum(summaryFor(q.period,date).filter(row=>row.domain===q.domain));
     if(earned+q.xp>cap[q.period]) return;
-    log[eventId]={...q,key,date:dateKey(today)};
+    log[eventId]={...q,key,date:dateKey(date)};
   }
   const mailCount=state.mail?.length??0;
   if(!save({...state,log},!undo)) return;
@@ -717,11 +726,22 @@ document.addEventListener('click',event=>{
   if(data.readAll!==undefined){readMail(null);return;}
   if(data.read!==undefined){readMail(data.read);return;}
   if(data.close!==undefined){editor.close();return;}
+  if(data.questDay!==undefined){
+    const step=Number(data.questDay), today=dateKey(new Date());
+    const date=step?shift(parseDay(dailyQuestDay??today),step):parseDay(today);
+    const key=dateKey(date);
+    if(date.getFullYear()<1||key>today) return;
+    dailyQuestDay=key===today?null:key;
+    render();
+    const control=main.querySelector('[data-quest-day="'+step+'"]:not(:disabled)')??document.getElementById('dailyQuestDate');
+    control?.focus({preventScroll:true});
+    return;
+  }
   if(data.quest){toggleQuest(data.quest,data.key);return;}
   if(data.edit){openEditor(data.edit);return;}
   if(data.go!==undefined){
     screen=Number(data.go);
-    if(data.period!==undefined) questTab=Number(data.period);
+    if(data.period!==undefined){questTab=Number(data.period);dailyQuestDay=null;}
     if(data.review) progressTab=2;
     window.scrollTo(0,0);
   }else if(data.questTab!==undefined) questTab=Number(data.questTab);
@@ -740,6 +760,14 @@ document.addEventListener('click',event=>{
   if(data.go!==undefined) nav.querySelector('[aria-pressed="true"]')?.focus({preventScroll:true});
 });
 document.addEventListener('change',event=>{
+  if(event.target.id==='dailyQuestDate'){
+    const today=dateKey(new Date());
+    if(event.target.value&&event.target.validity.valid){
+      dailyQuestDay=event.target.value===today?null:event.target.value;
+      render();
+    }else event.target.value=dailyQuestDay??today;
+    return;
+  }
   if(event.target.id==='historyDate'&&event.target.value&&event.target.validity.valid){
     historyDay=event.target.value;
     render();
