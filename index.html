@@ -139,6 +139,13 @@ input:not([type=checkbox]),select,textarea,#trainingRoot input:not([type=checkbo
 #cloudStatus{padding:10px;border-radius:8px;background:#17131f;color:var(--gold)}
 #cloudPanel>.meta{margin:12px 0}
 #cloudPanel [hidden]{display:none}
+
+.artist-object h3{font-family:Georgia,serif;font-size:21px;margin-top:10px}
+.object-icon{font-size:36px;line-height:1.2}
+.artist-object.is-earned{border-color:var(--gold)!important;box-shadow:0 0 16px #f4c48615!important}
+.artist-object.is-locked .object-icon{filter:grayscale(1);opacity:.55}
+.object-status{display:inline-block;margin-top:13px;border-radius:20px;padding:5px 10px;background:#17131f;color:var(--muted);font-size:13px}
+.is-earned .object-status{background:#214034;color:#bff1d0}
 </style>
 </head>
 <body>
@@ -162,8 +169,150 @@ input:not([type=checkbox]),select,textarea,#trainingRoot input:not([type=checkbo
 </dialog>
 <div id="notice" class="notice" role="status" hidden></div>
 <script>
-const source = {"curve": [0, 300, 600, 1200, 1800, 2500, 3100, 4000, 4900, 5800, 6800, 8000, 9200, 10400, 11700, 12900, 14400, 16000, 17500, 19000, 20600, 22400, 24200, 26100, 27900, 29800, 31900, 34100, 36200, 38400, 40500, 43000, 45400, 47900, 50300, 52800, 55500, 58300, 61100, 63800, 66600, 69700, 72700, 75800, 78900, 81900, 85300, 88700, 92100, 95400, 98800, 102500, 106200, 109900, 113500, 117200, 121200, 125200, 129200, 133200, 137200, 141500, 145800, 150100, 154400, 158700, 163300, 167900, 172500, 177100, 181700, 186600, 191500, 196400, 201300, 206200, 211400, 216700, 221900, 227100, 232300, 237800, 243400, 248900, 254400, 259900, 265800, 271600, 277400, 283300, 289100, 295200, 301400, 307500, 313600, 319800, 326200, 332700, 339100, 345600, 352000], "cast": [["Camille", "Héroïne", "Camille veut chanter, jouer et remplir une salle. Pour l’instant, elle remplit surtout son agenda de massages et sa cave de projets. Elle peut répéter un refrain trente fois et hésiter quarante fois avant de le faire écouter."], ["Rachid", "Allié / Coach de vie", "Rachid a un plan d’action pour tout. Tu lui confies une petite hésitation et tu repars avec trois objectifs, une date butoir et un rendez-vous pour faire le point."], ["Lauriane", "Alliée / Électrochoc", "Lauriane distribue ses encouragements comme des contrôles surprises. Elle repère une excuse à travers deux portes et sait exactement quelle question poser pour la faire tomber."], ["Inès", "Alliée / Colocataire", "Inès peut improviser une solution à presque tout, sauf aux poubelles. Depuis qu’une footballeuse est ressortie de son cabinet avec une jambe cassée, elle évite de promettre des résultats spectaculaires."], ["Melissa", "Alliée / Colocataire", "Mélissa a le sens du détail. Depuis son incident avec un soin des sourcils, elle réserve ce talent aux problèmes de ses colocataires et garde la pince à épiler à bonne distance."], ["Voldemort", "Ex toxique", "Voldemort a une définition très personnelle du partage. La maison finit chez lui, les cartons chez Camille, et il trouve encore le moyen d’appeler ça un compromis."], ["Anissa", "Meilleure amie", "Anissa peut gérer une crise au travail avant son premier café. Pour répondre à un simple « salut » après un rendez-vous, elle ouvre une cellule de crise avec Camille."], ["Mère de Camille", "Famille", "La mère de Camille appelle pour prendre des nouvelles et raccroche avec un plan en trois étapes pour sa propre vie amoureuse. Camille avait juste eu le temps de dire allô."], ["Alexis", "Allié", "Alexis est la voix du calme. Quand Lauriane a déjà tranché, il apporte une nuance essentielle en disant exactement la même chose, mais plus doucement."], ["Bande LUX", "Ennemis", "La Bande LUX se dit très exigeante sur la musique. Pour remplacer sa chanteuse, le groupe a surtout comparé les photos. Sur la justesse du refrain, les délibérations continuent."], ["Christelle", "Antagoniste professionnelle", "Christelle dirige le salon de massage et connaît deux températures d’accueil. Camille a droit au courant d’air. Un homme franchit la porte et le printemps revient."], ["Lionel", "Allié / Policier", "Lionel a le don de transformer quinze minutes d’explications de Voldemort en une seule question. Il a aussi la patience d’attendre la réponse."], ["Lio", "Alliée / Nièce", "Lio peut partir chercher du pain et revenir avec une idée de voyage, deux nouveaux amis et aucun pain. Avec elle, Camille pense enfin à autre chose qu’à sa liste de choses à régler."], ["Nathan", "Allié / Neveu", "Nathan connaît toujours quelqu’un qui connaît quelqu’un. Tu lui demandes où se trouve la sortie et il revient avec le numéro du régisseur et une invitation pour vendredi."]], "heritage": [["1", "Cave en colocation"], ["10", "Premières économies"], ["20", "Budget personnel structuré"], ["30", "Premier équipement artistique"], ["40", "Recherche d'un logement"], ["50", "Épargne pour une voiture"], ["60", "Premier véhicule d'occasion envisageable"], ["70", "Matériel artistique personnel"], ["80", "Recherche immobilière active"], ["90", "Premiers revenus artistiques"], ["100", "Possibilité d'acheter une voiture"], ["110", "Meilleure stabilité financière"], ["120", "Premier appartement indépendant"], ["130", "Appartement aménagé"], ["140", "Voiture confortable"], ["150", "Épargne importante"], ["160", "Achat immobilier"], ["170", "Voyages et loisirs"], ["180", "Belle maison avec jardin"], ["190", "Investissements et patrimoine"], ["200", "Indépendance financière et liberté de créer"]]};
+const source = {"curve": [0, 300, 600, 1200, 1800, 2500, 3100, 4000, 4900, 5800, 6800, 8000, 9200, 10400, 11700, 12900, 14400, 16000, 17500, 19000, 20600, 22400, 24200, 26100, 27900, 29800, 31900, 34100, 36200, 38400, 40500, 43000, 45400, 47900, 50300, 52800, 55500, 58300, 61100, 63800, 66600, 69700, 72700, 75800, 78900, 81900, 85300, 88700, 92100, 95400, 98800, 102500, 106200, 109900, 113500, 117200, 121200, 125200, 129200, 133200, 137200, 141500, 145800, 150100, 154400, 158700, 163300, 167900, 172500, 177100, 181700, 186600, 191500, 196400, 201300, 206200, 211400, 216700, 221900, 227100, 232300, 237800, 243400, 248900, 254400, 259900, 265800, 271600, 277400, 283300, 289100, 295200, 301400, 307500, 313600, 319800, 326200, 332700, 339100, 345600, 352000], "cast": [["Camille", "Héroïne", "Camille veut chanter, jouer et remplir une salle. Pour l’instant, elle remplit surtout son agenda de massages et sa cave de projets. Elle peut répéter un refrain trente fois et hésiter quarante fois avant de le faire écouter."], ["Rachid", "Allié / Coach de vie", "Rachid a un plan d’action pour tout. Tu lui confies une petite hésitation et tu repars avec trois objectifs, une date butoir et un rendez-vous pour faire le point."], ["Lauriane", "Alliée / Électrochoc", "Lauriane distribue ses encouragements comme des contrôles surprises. Elle repère une excuse à travers deux portes et sait exactement quelle question poser pour la faire tomber."], ["Inès", "Alliée / Colocataire", "Inès peut improviser une solution à presque tout, sauf aux poubelles. Depuis qu’une footballeuse est ressortie de son cabinet avec une jambe cassée, elle évite de promettre des résultats spectaculaires."], ["Melissa", "Alliée / Colocataire", "Mélissa a le sens du détail. Depuis son incident avec un soin des sourcils, elle réserve ce talent aux problèmes de ses colocataires et garde la pince à épiler à bonne distance."], ["Voldemort", "Ex toxique", "Voldemort a une définition très personnelle du partage. La maison finit chez lui, les cartons chez Camille, et il trouve encore le moyen d’appeler ça un compromis."], ["Anissa", "Meilleure amie", "Anissa peut gérer une crise au travail avant son premier café. Pour répondre à un simple « salut » après un rendez-vous, elle ouvre une cellule de crise avec Camille."], ["Mère de Camille", "Famille", "La mère de Camille appelle pour prendre des nouvelles et raccroche avec un plan en trois étapes pour sa propre vie amoureuse. Camille avait juste eu le temps de dire allô."], ["Alexis", "Allié", "Alexis est la voix du calme. Quand Lauriane a déjà tranché, il apporte une nuance essentielle en disant exactement la même chose, mais plus doucement."], ["Bande LUX", "Ennemis", "La Bande LUX se dit très exigeante sur la musique. Pour remplacer sa chanteuse, le groupe a surtout comparé les photos. Sur la justesse du refrain, les délibérations continuent."], ["Christelle", "Antagoniste professionnelle", "Christelle dirige le salon de massage et connaît deux températures d’accueil. Camille a droit au courant d’air. Un homme franchit la porte et le printemps revient."], ["Lionel", "Allié / Policier", "Lionel a le don de transformer quinze minutes d’explications de Voldemort en une seule question. Il a aussi la patience d’attendre la réponse."], ["Lio", "Alliée / Nièce", "Lio peut partir chercher du pain et revenir avec une idée de voyage, deux nouveaux amis et aucun pain. Avec elle, Camille pense enfin à autre chose qu’à sa liste de choses à régler."], ["Nathan", "Allié / Neveu", "Nathan connaît toujours quelqu’un qui connaît quelqu’un. Tu lui demandes où se trouve la sortie et il revient avec le numéro du régisseur et une invitation pour vendredi."]], "heritage": [["1", "Cave en colocation"], ["3", "Premières économies"], ["6", "Budget personnel structuré"], ["10", "Premier équipement artistique"], ["15", "Recherche d'un logement"], ["20", "Épargne pour une voiture"], ["26", "Premier véhicule d'occasion envisageable"], ["32", "Matériel artistique personnel"], ["40", "Recherche immobilière active"], ["48", "Premiers revenus artistiques"], ["56", "Possibilité d'acheter une voiture"], ["65", "Meilleure stabilité financière"], ["75", "Premier appartement indépendant"], ["86", "Appartement aménagé"], ["98", "Voiture confortable"], ["110", "Épargne importante"], ["123", "Achat immobilier"], ["137", "Voyages et loisirs"], ["152", "Belle maison avec jardin"], ["168", "Investissements et patrimoine"], ["185", "Indépendance financière et liberté de créer"]]};
 // Ajouter les chapitres ici avec un id stable, un titre, un niveau requis et un texte.
+const artistObjects = [
+  {
+    "id": "artiste-01",
+    "level": 1,
+    "icon": "🎤",
+    "name": "Le micro de la cave",
+    "description": "Le tout premier micro de Camille. Il a survécu aux cartons et aux vocalises de six heures du matin."
+  },
+  {
+    "id": "artiste-02",
+    "level": 2,
+    "icon": "📓",
+    "name": "Le carnet des premières chansons",
+    "description": "Un carnet rempli de paroles, de ratures et d’une liste de courses qu’Inès assure ne pas avoir écrite."
+  },
+  {
+    "id": "artiste-03",
+    "level": 4,
+    "icon": "✏️",
+    "name": "Le crayon à refrains",
+    "description": "Il sert à écrire les bonnes idées avant de les oublier. Mélissa a accroché une ficelle dessus."
+  },
+  {
+    "id": "artiste-04",
+    "level": 7,
+    "icon": "🎧",
+    "name": "Le casque de répétition",
+    "description": "Pour entendre sa voix sans réveiller tous les voisins. Le frigo peut enfin jouer en solo."
+  },
+  {
+    "id": "artiste-05",
+    "level": 11,
+    "icon": "🥤",
+    "name": "La gourde des coulisses",
+    "description": "Camille la remplit avant chaque répétition. Rachid a écrit son nom dessus pour arrêter de la chercher."
+  },
+  {
+    "id": "artiste-06",
+    "level": 16,
+    "icon": "🎼",
+    "name": "Le pupitre pliant",
+    "description": "Il remplace la casserole qui tenait les paroles. Inès peut de nouveau faire cuire des pâtes."
+  },
+  {
+    "id": "artiste-07",
+    "level": 22,
+    "icon": "👟",
+    "name": "Les baskets de scène",
+    "description": "La paire de secours devenue célèbre. Camille peut traverser la scène sans penser à ses pieds."
+  },
+  {
+    "id": "artiste-08",
+    "level": 29,
+    "icon": "💡",
+    "name": "Le miroir lumineux",
+    "description": "Un vrai miroir de loge. Il tient debout même quand la machine à laver tourne."
+  },
+  {
+    "id": "artiste-09",
+    "level": 37,
+    "icon": "🎹",
+    "name": "Le clavier de voyage",
+    "description": "Un petit clavier pour composer dans les hôtels. Nathan a promis de ne plus le ranger avec les sandwichs."
+  },
+  {
+    "id": "artiste-10",
+    "level": 46,
+    "icon": "🎬",
+    "name": "Le clap des premiers rôles",
+    "description": "Camille peut annoncer ses prises. Lio exige quand même une bonne raison avant chaque nouveau clap."
+  },
+  {
+    "id": "artiste-11",
+    "level": 57,
+    "icon": "🔊",
+    "name": "L’enceinte de répétition",
+    "description": "Un son assez clair pour travailler ses chansons. Lauriane a caché le bouton du volume au voisin du dessus."
+  },
+  {
+    "id": "artiste-12",
+    "level": 69,
+    "icon": "🎙️",
+    "name": "Le micro de studio",
+    "description": "Il capte toutes les notes et parfois le biscuit qu’Inès essaie de manger en silence."
+  },
+  {
+    "id": "artiste-13",
+    "level": 82,
+    "icon": "🧥",
+    "name": "La chemise porte-bonheur",
+    "description": "La chemise empruntée à Alexis lors de la première tournée. Il a gardé la facture comme souvenir."
+  },
+  {
+    "id": "artiste-14",
+    "level": 96,
+    "icon": "🎭",
+    "name": "La boîte de costumes",
+    "description": "Des tenues pour tous les rôles. La mère de Camille y a ajouté une veste « au cas où il ferait frais »."
+  },
+  {
+    "id": "artiste-15",
+    "level": 111,
+    "icon": "🪪",
+    "name": "Le pass des coulisses",
+    "description": "Le nom de Camille est imprimé dessus. Nathan le porte cinq minutes avant qu’on lui demande de le rendre."
+  },
+  {
+    "id": "artiste-16",
+    "level": 127,
+    "icon": "🎸",
+    "name": "La guitare des nouvelles chansons",
+    "description": "Une guitare pour essayer des mélodies à la maison. Le chien de Lio sert encore de premier public."
+  },
+  {
+    "id": "artiste-17",
+    "level": 144,
+    "icon": "🎟️",
+    "name": "Le billet du premier complet",
+    "description": "Le souvenir d’une salle où chaque place était prise. Camille l’a encadré avec le ticket de lessive."
+  },
+  {
+    "id": "artiste-18",
+    "level": 161,
+    "icon": "📀",
+    "name": "Le disque de la première tournée",
+    "description": "Ses chansons enregistrées avec toute l’équipe. Le batteur de LUX cherche encore où monter la batterie."
+  },
+  {
+    "id": "artiste-19",
+    "level": 179,
+    "icon": "⭐",
+    "name": "L’étoile de loge",
+    "description": "Une plaque dorée avec son nom. Sa mère en a commandé une deuxième pour la porte de son propre salon."
+  },
+  {
+    "id": "artiste-20",
+    "level": 195,
+    "icon": "🏆",
+    "name": "Le trophée de la grande scène",
+    "description": "Le souvenir de son premier grand festival en tête d’affiche. Cette fois, Camille sait dans quel sens le tenir."
+  }
+];
 const chapters = [
   {
     "id": "camille-01",
@@ -495,7 +644,7 @@ const screens = ['Accueil','Quêtes','Progressions','Aventures','Entraînement']
 const inbox = document.getElementById('inbox');
 const questTabs = ['Journalières','Hebdomadaires'];
 const progressTabs = ['Vue d’ensemble','Historique','Bilan hebdomadaire'];
-const adventureTabs = ['Histoire','Personnages','Niveau patrimoine'];
+const adventureTabs = ['Histoire','Personnages','Niveau patrimoine','Objets d’artiste'];
 let screen = 0, questTab = 0, progressTab = 0, adventureTab = 0, chapterId = null;
 let historyDay = null, dailyQuestDay = null, timer;
 const nf = new Intl.NumberFormat('fr-FR');
@@ -513,10 +662,13 @@ const domainTitle = domain => state.titles?.[domain.id] ?? domain.name;
 const quests = () => Object.entries({...defaultQuests,...state.custom})
   .map(([id,q])=>({...defaultQuests[id],...q,id}))
   .filter(q=>!q.archived);
-const stageCurve = [0,0,...source.curve.slice(1).flatMap((xp,index)=>[xp,Math.round((xp+(source.curve[index+2]??xp))/2)]).slice(0,-1)];
+// 36 000 XP reach the final level. Existing XP retain their full value.
+const originalStageCurve = [0,0,...source.curve.slice(1).flatMap((xp,index)=>[xp,Math.round((xp+(source.curve[index+2]??xp))/2)]).slice(0,-1)];
+const stageCurve = originalStageCurve.map(xp=>Math.round(xp*36000/352000/10)*10);
 const levelOf = (xp,curve) => curve.reduce((level,threshold,index)=>xp>=threshold?index:level,0);
 const artistLevel = () => levelOf(sum(allRows()),stageCurve);
-const disciplineCurve = source.curve.map(xp=>xp/4);
+const rewardLevel = () => Math.max(artistLevel(),Number(state.rewardLevel)||1);
+const disciplineCurve = source.curve.map(xp=>Math.round(xp*36000/352000/4/5)*5);
 const rank = level => level>=180?'Tête d’affiche':level>=120?'Artiste confirmée':level>=60?'Artiste émergente':level>=20?'Première scène':'Artiste en devenir';
 const percent = (a,b) => Math.max(0,Math.min(100,b?Math.round(a/b*100):100));
 const bar = (value,max,label) => '<div class="track" role="progressbar" aria-label="'+esc(label)+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+percent(value,max)+'"><i style="width:'+percent(value,max)+'%"></i></div>';
@@ -527,17 +679,23 @@ function flash(message){
   timer=setTimeout(()=>notice.hidden=true,3000);
 }
 function save(next, reward=false){
-  const previousLevel=artistLevel();
+  const previousLevel=artistLevel(), previousRewardLevel=rewardLevel();
   const level=levelOf(sum(Object.values(next.log)),stageCurve);
   const unlocked=chapters.filter(chapter=>chapter.level<=level&&!next.unlocked.includes(chapter.id));
   next.unlocked=[...next.unlocked,...unlocked.map(chapter=>chapter.id)];
+  next.rewardLevel=Math.max(previousRewardLevel,level);
   const rewards=[];
   if(reward && level>previousLevel){
     rewards.push({id:'level-'+level,title:'Niveau '+level+' atteint',text:'Camille monte d’un cran dans sa carrière. '+rank(level)+'.'});
-    for(const [target,label] of source.heritage){
-      if(Number(target)>previousLevel&&Number(target)<=level)
-        rewards.push({id:'heritage-'+target,title:'Patrimoine · Niveau '+target,text:label});
-    }
+
+  }
+  for(const [target,label] of source.heritage){
+    if(Number(target)>previousRewardLevel&&Number(target)<=next.rewardLevel)
+      rewards.push({id:'heritage-v2-'+target,title:'Patrimoine · Niveau '+target,text:label});
+  }
+  for(const item of artistObjects){
+    if(item.level>previousRewardLevel&&item.level<=next.rewardLevel)
+      rewards.push({id:'object-'+item.id,title:'Objet d’artiste débloqué',text:item.icon+' '+item.name+' · '+item.description});
   }
   for(const chapter of unlocked.filter(chapter=>chapter.level>1)) rewards.push({id:'chapter-'+chapter.id,title:'Chapitre débloqué',text:chapter.title});
   const mail=next.mail??[];
@@ -639,11 +797,20 @@ function renderAdventure(){
     }
   }else if(adventureTab===1){
     content='<div class="grid">'+source.cast.map(([name,role,description])=>'<article class="card cast"><div class="eyebrow">'+esc(role)+'</div><h2 style="margin-top:6px">'+esc(name)+'</h2><p>'+esc(description)+'</p></article>').join('')+'</div>';
-  }else{
-    const current=source.heritage.findLastIndex(([target])=>Number(target)<=level);
+  }else if(adventureTab===2){
+    const earned=rewardLevel();
+    const current=source.heritage.findLastIndex(([target])=>Number(target)<=earned);
     const next=source.heritage[current+1];
     content='<section class="card"><div class="eyebrow">Palier actuel · niveau '+source.heritage[current][0]+'</div><h2 style="margin-top:6px">'+esc(source.heritage[current][1])+'</h2><p>'+(next?'Prochain palier au niveau '+next[0]+' · '+esc(next[1]):'Tous les paliers sont atteints.')+'</p></section>'+
     '<section class="card" style="margin-top:13px"><h2>Les paliers de Camille</h2><ul class="list">'+source.heritage.map(([target,label],index)=>'<li class="milestone '+(index===current?'current':'')+'"><small>Niv. '+target+'</small><span>'+esc(label)+'</span><span class="meta">'+(index===current?'Actuel':index<current?'Atteint':'À venir')+'</span></li>').join('')+'</ul></section>';
+  }else{
+    const earned=rewardLevel(), obtained=artistObjects.filter(item=>item.level<=earned);
+    const next=artistObjects.find(item=>item.level>earned);
+    content='<section class="card"><div class="spread"><h2>La collection de Camille</h2><span class="category-level">'+obtained.length+' / '+artistObjects.length+'</span></div><p>'+(next?'Prochain objet au niveau '+next.level+' · '+esc(next.name):'Les 20 objets de Camille sont réunis.')+'</p>'+bar(obtained.length,artistObjects.length,'Objets d’artiste débloqués')+'</section>'+
+      '<div class="grid artist-objects">'+artistObjects.map(item=>{
+        const open=item.level<=earned;
+        return '<article class="card artist-object '+(open?'is-earned':'is-locked')+'"><div class="spread"><span class="object-icon" aria-hidden="true">'+item.icon+'</span><span class="meta">Niveau '+item.level+'</span></div><h3>'+esc(item.name)+'</h3><p>'+esc(item.description)+'</p><div class="object-status">'+(open?'✓ Débloqué':'🔒 À débloquer')+'</div></article>';
+      }).join('')+'</div>';
   }
   return heading('Derrière le rideau','Aventures')+tabs(adventureTabs,adventureTab,'adventure-tab')+content;
 }
