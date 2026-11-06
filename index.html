@@ -129,14 +129,37 @@ input:not([type=checkbox]),select,textarea,#trainingRoot input:not([type=checkbo
 .quest-date-controls button,.quest-date-controls input{min-height:44px}
 .quest-date-controls button[data-quest-day="-1"],.quest-date-controls button[data-quest-day="1"]{min-width:44px;font-size:22px;padding-block:5px}
 .quest-date-controls input{min-width:0;max-width:100%;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);padding:6px;font-size:16px}
+.category-level{flex:none;border:1px solid var(--accent);border-radius:99px;padding:4px 9px;color:var(--accent);font-weight:700;font-size:13px}
+.category-xp{flex-wrap:wrap;gap:4px 10px;margin-bottom:8px}
+#cloudButton{padding:6px 10px;font:18px system-ui;color:var(--gold);min-height:38px}
+#cloudPanel{width:min(590px,calc(100% - 24px))}
+#cloudPanel label{display:grid;gap:4px;margin:10px 0}
+#cloudPanel input{font-size:16px;min-height:44px}
+#cloudPanel .actions{margin:12px 0}
+#cloudStatus{padding:10px;border-radius:8px;background:#17131f;color:var(--gold)}
+#cloudPanel>.meta{margin:12px 0}
+#cloudPanel [hidden]{display:none}
 </style>
 </head>
 <body>
-<header><div class="brand"><span aria-hidden="true">✦</span> Camille <button id="mailButton" data-inbox aria-label="Messagerie">✉ <span id="mailCount" hidden></span></button></div><nav id="nav" aria-label="Navigation principale"></nav></header>
+<header><div class="brand"><span aria-hidden="true">✦</span> Camille <button id="mailButton" data-inbox aria-label="Messagerie">✉ <span id="mailCount" hidden></span></button><button id="cloudButton" aria-label="Compte et sauvegarde cloud"><span id="cloudBadge">☁</span></button></div><nav id="nav" aria-label="Navigation principale"></nav></header>
 <main id="main"></main><main id="training" data-screen="4" hidden><div id="trainingRoot"></div></main>
 <footer>Camille · De la cave aux étoiles</footer>
 <dialog id="editor" aria-labelledby="editorTitle"></dialog>
 <dialog id="inbox" aria-labelledby="inboxTitle"></dialog>
+<dialog id="cloudPanel" aria-labelledby="cloudTitle">
+<div class="spread"><h2 id="cloudTitle">Sauvegarde de Camille</h2><button id="cloudClose" aria-label="Fermer la sauvegarde">×</button></div>
+<p id="cloudAccount">Compte Firebase</p><p id="cloudStatus" role="status">Chargement de Firebase…</p>
+<form id="cloudForm">
+<label>E-mail<input id="cloudEmail" type="email" autocomplete="username" required></label>
+<label>Mot de passe<input id="cloudPassword" type="password" autocomplete="current-password"></label>
+<div class="actions"><button data-cloud type="submit" value="login">Se connecter</button><button data-cloud type="submit" value="create">Créer mon compte</button><button data-cloud type="submit" value="reset">Mot de passe oublié</button></div>
+</form>
+<div id="cloudConnected" hidden><div class="actions"><button data-cloud="refresh">Actualiser la sauvegarde</button><button id="cloudDisconnect">Se déconnecter</button></div></div>
+<div id="cloudChoices" hidden><p>Choisis la progression à utiliser pour ce compte.</p><p id="cloudCompare" class="meta"></p><div class="actions"><button id="cloudUpload" data-cloud="upload">Sauvegarder cet appareil</button><button id="cloudRestore" data-cloud="restore">Charger la progression cloud</button></div></div>
+<p class="meta">La sauvegarde inclut les quêtes, les niveaux, les messages et les entraînements. Les modifications se sauvegardent automatiquement après connexion et choix de progression.</p>
+<button id="cloudExport">Télécharger ma sauvegarde locale</button><button id="cloudPrevious" hidden>Télécharger la copie avant restauration</button>
+</dialog>
 <div id="notice" class="notice" role="status" hidden></div>
 <script>
 const source = {"curve": [0, 300, 600, 1200, 1800, 2500, 3100, 4000, 4900, 5800, 6800, 8000, 9200, 10400, 11700, 12900, 14400, 16000, 17500, 19000, 20600, 22400, 24200, 26100, 27900, 29800, 31900, 34100, 36200, 38400, 40500, 43000, 45400, 47900, 50300, 52800, 55500, 58300, 61100, 63800, 66600, 69700, 72700, 75800, 78900, 81900, 85300, 88700, 92100, 95400, 98800, 102500, 106200, 109900, 113500, 117200, 121200, 125200, 129200, 133200, 137200, 141500, 145800, 150100, 154400, 158700, 163300, 167900, 172500, 177100, 181700, 186600, 191500, 196400, 201300, 206200, 211400, 216700, 221900, 227100, 232300, 237800, 243400, 248900, 254400, 259900, 265800, 271600, 277400, 283300, 289100, 295200, 301400, 307500, 313600, 319800, 326200, 332700, 339100, 345600, 352000], "cast": [["Camille", "Héroïne", "Camille veut chanter, jouer et remplir une salle. Pour l’instant, elle remplit surtout son agenda de massages et sa cave de projets. Elle peut répéter un refrain trente fois et hésiter quarante fois avant de le faire écouter."], ["Rachid", "Allié / Coach de vie", "Rachid a un plan d’action pour tout. Tu lui confies une petite hésitation et tu repars avec trois objectifs, une date butoir et un rendez-vous pour faire le point."], ["Lauriane", "Alliée / Électrochoc", "Lauriane distribue ses encouragements comme des contrôles surprises. Elle repère une excuse à travers deux portes et sait exactement quelle question poser pour la faire tomber."], ["Inès", "Alliée / Colocataire", "Inès peut improviser une solution à presque tout, sauf aux poubelles. Depuis qu’une footballeuse est ressortie de son cabinet avec une jambe cassée, elle évite de promettre des résultats spectaculaires."], ["Melissa", "Alliée / Colocataire", "Mélissa a le sens du détail. Depuis son incident avec un soin des sourcils, elle réserve ce talent aux problèmes de ses colocataires et garde la pince à épiler à bonne distance."], ["Voldemort", "Ex toxique", "Voldemort a une définition très personnelle du partage. La maison finit chez lui, les cartons chez Camille, et il trouve encore le moyen d’appeler ça un compromis."], ["Anissa", "Meilleure amie", "Anissa peut gérer une crise au travail avant son premier café. Pour répondre à un simple « salut » après un rendez-vous, elle ouvre une cellule de crise avec Camille."], ["Mère de Camille", "Famille", "La mère de Camille appelle pour prendre des nouvelles et raccroche avec un plan en trois étapes pour sa propre vie amoureuse. Camille avait juste eu le temps de dire allô."], ["Alexis", "Allié", "Alexis est la voix du calme. Quand Lauriane a déjà tranché, il apporte une nuance essentielle en disant exactement la même chose, mais plus doucement."], ["Bande LUX", "Ennemis", "La Bande LUX se dit très exigeante sur la musique. Pour remplacer sa chanteuse, le groupe a surtout comparé les photos. Sur la justesse du refrain, les délibérations continuent."], ["Christelle", "Antagoniste professionnelle", "Christelle dirige le salon de massage et connaît deux températures d’accueil. Camille a droit au courant d’air. Un homme franchit la porte et le printemps revient."], ["Lionel", "Allié / Policier", "Lionel a le don de transformer quinze minutes d’explications de Voldemort en une seule question. Il a aussi la patience d’attendre la réponse."], ["Lio", "Alliée / Nièce", "Lio peut partir chercher du pain et revenir avec une idée de voyage, deux nouveaux amis et aucun pain. Avec elle, Camille pense enfin à autre chose qu’à sa liste de choses à régler."], ["Nathan", "Allié / Neveu", "Nathan connaît toujours quelqu’un qui connaît quelqu’un. Tu lui demandes où se trouve la sortie et il revient avec le numéro du régisseur et une invitation pour vendredi."]], "heritage": [["1", "Cave en colocation"], ["10", "Premières économies"], ["20", "Budget personnel structuré"], ["30", "Premier équipement artistique"], ["40", "Recherche d'un logement"], ["50", "Épargne pour une voiture"], ["60", "Premier véhicule d'occasion envisageable"], ["70", "Matériel artistique personnel"], ["80", "Recherche immobilière active"], ["90", "Premiers revenus artistiques"], ["100", "Possibilité d'acheter une voiture"], ["110", "Meilleure stabilité financière"], ["120", "Premier appartement indépendant"], ["130", "Appartement aménagé"], ["140", "Voiture confortable"], ["150", "Épargne importante"], ["160", "Achat immobilier"], ["170", "Voyages et loisirs"], ["180", "Belle maison avec jardin"], ["190", "Investissements et patrimoine"], ["200", "Indépendance financière et liberté de créer"]]};
@@ -144,303 +167,303 @@ const source = {"curve": [0, 300, 600, 1200, 1800, 2500, 3100, 4000, 4900, 5800,
 const chapters = [
   {
     "id": "camille-01",
-    "title": "Le plafond de verre fait un mètre quatre-vingts",
+    "title": "La chanteuse de la cave",
     "level": 1,
-    "text": "La première fois que Camille tenta un contre-ut dans sa cave, le voisin frappa trois coups dans la tuyauterie. Elle essaya une tierce plus bas. Deux coups. Enfin quelqu’un qui lui donnait des notes précises.\nEn remontant l’escalier du sous-sol, elle trouva un carton que Voldemort, son ex, avait fait déposer. Il contenait une robe de scène, un micro et une clé qui n’ouvrait plus rien chez lui. Elle posa la clé, brancha le micro et écrivit sur le carton : « À ouvrir quand j’aurai un public. »"
+    "text": "Camille vivait dans une cave avec Inès et Mélissa. Il y avait trois lits, un frigo bruyant et une fenêtre si petite qu’il fallait choisir quel œil regarder dehors.\nCamille travaillait dans un salon de massage. Mais son rêve, c’était de chanter et de jouer au théâtre.\nCe soir-là, elle essaya une note très haute. Le voisin tapa dans un tuyau.\n— C’est peut-être un applaudissement, dit Inès.\nCamille recommença. Le voisin tapa plus fort.\n— Il demande un rappel ? proposa Mélissa.\nPuis une voix cria derrière la porte.\n— Je demande de dormir !\nCamille s’excusa et baissa le son.\nSur son lit, elle trouva un carton envoyé par Voldemort, son ex. Depuis leur séparation, il gardait la maison où ils avaient vécu. Camille essayait encore de récupérer toutes ses affaires. Cette fois, il avait renvoyé son vieux micro.\nElle le sortit du carton.\n— Bon. Il fonctionne encore.\n— Parfait, répondit Inès. Il nous manque seulement une salle de concert.\nMélissa regarda autour d’elle.\n— On peut déjà faire trois places assises. Quatre si le frigo accepte de sortir."
   },
   {
     "id": "camille-02",
-    "title": "Le premier casting se fait en chaussettes",
+    "title": "Le premier public",
     "level": 2,
-    "text": "Camille posta une annonce pour trouver quelqu’un à qui faire écouter sa chanson. Lio arriva en chaussettes, avec deux amis rencontrés dans l’escalier et un chien qu’aucun des trois ne connaissait.\nLe chien s’endormit au deuxième couplet. Au refrain, il leva la tête.\n« Coupe tout ce qui vient avant », dit Lio.\nCamille n’avait encore jamais accepté une note de mise en scène d’un animal. Le soir même, elle raccourcit la chanson et envoya la nouvelle version à Anissa."
+    "text": "Pour essayer sa chanson devant de vraies personnes, Camille invita sa nièce Lio à la cave.\nLio arriva avec deux amis.\n— Ils aiment la musique, expliqua-t-elle.\nUn chien passa entre leurs jambes.\n— Et lui ?\n— Il nous a suivis. On cherche son maître.\nCamille chanta son premier couplet. Le chien se coucha. Au deuxième, il s’endormit.\n— Ça commence mal, souffla Camille.\n— Il a aussi dormi devant une boulangerie, répondit Lio. Ne te compare pas trop vite.\nAu refrain, le chien leva la tête. Les trois invités aussi.\n— Voilà ! dit Lio. C’est cette partie que je préfère.\nCamille demanda ce qui leur plaisait moins. Le début était trop long. Elle racontait presque toute sa journée avant d’arriver au sujet.\nElle coupa plusieurs phrases et recommença.\nCette fois, tout le monde écouta jusqu’au bout.\nOn frappa à la porte. Le maître du chien était là.\n— Il a été sage ?\n— Très bon public, répondit Camille. Surtout quand je vais droit au but."
   },
   {
     "id": "camille-03",
-    "title": "Réunion de crise pour un bouton Envoyer",
+    "title": "Le message qui ne part pas",
     "level": 3,
-    "text": "Anissa écouta la chanson en traversant un open space où une imprimante fumait. Elle débrancha l’imprimante, rassura son équipe et appela Camille.\n« Tu l’envoies au bar des Arcades. Ils font une scène ouverte jeudi. »\nCamille répondit qu’elle devait encore réfléchir à la virgule dans son mail.\n« D’accord. On se donne quinze secondes de réflexion stratégique. »\nAu bout de onze, Anissa entendit le clic. Elle demanda à Camille de lui rendre la pareille pour répondre à un « salut ». Elles y passèrent deux heures."
+    "text": "Anissa écouta la chanson de Camille pendant sa pause au travail. Elle lui envoya le nom d’un bar, les Arcades. Tous les jeudis, des amateurs pouvaient y chanter quelques minutes.\nUne heure plus tard, Camille n’avait toujours pas envoyé sa demande.\nAnissa l’appela.\n— Tu attends quoi ?\n— Je ne sais pas comment commencer mon message.\n— « Bonjour » marche assez bien.\n— Oui, mais après ?\n— « Je voudrais chanter jeudi. »\nCamille tapa la phrase. Puis elle changea « voudrais » en « souhaiterais ».\nAnissa soupira.\n— Tu demandes un passage sur scène, Camille. Tu n’essaies pas de devenir ambassadrice.\nCamille appuya enfin sur Envoyer. Elle posa son téléphone comme s’il venait de devenir brûlant.\n— Et maintenant ?\n— Maintenant, tu attends la réponse.\nLe téléphone d’Anissa sonna. Un homme avec qui elle avait pris un verre venait d’écrire « Salut ».\nElle se tut.\n— Tu lui réponds quoi ? demanda Camille.\n— Attends. Ça dépend de ce qu’il veut dire par là.\nCamille éclata de rire. Cette fois, c’était à son tour de lui conseiller « Bonjour »."
   },
   {
     "id": "camille-04",
-    "title": "Le plan de Rachid comporte un rappel",
+    "title": "Le plan de Rachid",
     "level": 4,
-    "text": "Rachid débarqua avec un agenda et demanda à Camille son objectif à six mois.\n« Pouvoir dire que je chante sans rajouter “un peu”. »\nIl inscrivit « dire que je chante » à la date du jour. Camille protesta qu’il avait oublié le délai.\n« Non. Le délai, c’est pour apprendre à respirer entre les phrases. »\nLe bar des Arcades répondit pendant leur séance. Dix minutes sur scène. Rachid raya ses six premières cases et écrivit une seule ligne : « Jeudi, arriver. »"
+    "text": "Rachid arriva avec un grand cahier pour aider Camille à s’organiser.\n— Quel est ton objectif ?\n— Devenir chanteuse et actrice.\n— Très bien. Et cette semaine ?\nCamille réfléchit.\n— Ranger le coin où je répète.\nRachid regarda le micro posé dans une casserole.\n— Oui. On va commencer par là.\nIls préparèrent un petit programme. Un peu de chant chaque jour, un texte à lire à voix haute et une vraie pause pour se reposer.\nRachid avait dessiné de belles cases à cocher.\n— Et si je rate une journée ?\n— Tu reprends le lendemain.\nInès passa derrière eux et cocha « Sortir les poubelles ».\n— Tu l’as fait ? demanda Camille.\n— Non. Je voulais voir si ça motivait.\nRachid lui reprit le stylo.\nÀ ce moment, le bar répondit. Camille pouvait venir jeudi. Elle aurait dix minutes sur scène.\nElle relut le message trois fois.\nRachid retourna la page de son cahier.\n— Finalement, on a un nouvel objectif.\nIl écrivit en grand « Aller au bar avec le micro. »"
   },
   {
     "id": "camille-05",
-    "title": "Christelle découvre le télétravail vocal",
+    "title": "Les serviettes de Christelle",
     "level": 5,
-    "text": "Au salon de massage, Camille demanda à partir dix minutes plus tôt jeudi. Christelle répondit que toute absence mettait l’établissement en péril.\nPuis un client demanda à décaler d’une heure pour un rendez-vous chez le barbier. Christelle lui souhaita de trouver sa coupe.\nCamille proposa de prendre le premier créneau le lendemain, obtint son échange et descendit répéter dans la réserve. Elle découvrit qu’un carton de serviettes faisait un très bon pupitre. Elle y oublia sa feuille de paroles."
+    "text": "Au salon de massage, Camille demanda à changer un horaire pour arriver à temps au bar.\nChristelle, sa responsable, leva les yeux.\n— Encore une histoire de chanson ?\n— Je peux commencer plus tôt demain pour compenser.\nChristelle regarda l’agenda. Elle finit par accepter.\n— Mais tu termines les serviettes avant de partir.\nPendant sa pause, Camille répéta dans la réserve. Pour lire ses paroles, elle posa sa feuille contre une pile de serviettes.\nElle chanta une phrase. Une cliente qui passait dans le couloir s’arrêta.\n— C’est une nouvelle ambiance pour les soins ?\nChristelle apparut aussitôt.\n— Nous cherchons toujours à améliorer l’expérience.\nPuis elle fit signe à Camille de se taire.\nLa cliente demanda si Camille chantait quelque part.\n— Aux Arcades, jeudi, répondit-elle.\nLa cliente prit l’adresse.\nEn fin de journée, Camille partit vite, son sac sur l’épaule. Elle avait son micro, sa robe et ses chaussures.\nSa feuille de paroles, elle, resta bien droite entre les serviettes."
   },
   {
     "id": "camille-06",
-    "title": "La scène ouverte ferme à vingt-deux heures",
+    "title": "Tomates et lessive",
     "level": 9,
-    "text": "Sur la petite scène des Arcades, Camille chercha sa feuille dans sa poche. Elle en sortit un ticket de caisse et une liste de courses d’Inès. Elle annonça qu’elle allait interpréter « Tomates, lessive, ne pas oublier les tomates ».\nLe public rit. Camille retrouva le refrain sans le papier. Deux personnes le reprirent à la fin, dont une qui s’était trompée de bar.\nDe retour en coulisses, le régisseur lui proposa de revenir. Elle demanda combien de morceaux préparer. Il lui en demanda trois."
+    "text": "Camille monta sur la scène des Arcades avec les jambes raides. En face d’elle, une vingtaine de personnes discutaient autour des tables.\nElle chercha sa feuille dans son sac. Rien.\nElle fouilla sa poche et sortit un papier plié.\nEnfin !\nElle l’ouvrit.\n« Tomates. Lessive. Papier toilette. »\nCamille ferma les yeux. Inès lui avait encore donné sa liste de courses.\n— Je crois que je vous ai préparé une chanson sur la lessive, dit-elle au micro.\nQuelques personnes rirent. Elle se mit à rire aussi.\n— Je vais plutôt essayer celle que je connais.\nLe début fut hésitant. Puis elle retrouva la mélodie et regarda le public.\nÀ une table, la cliente du salon lui fit un petit signe.\nCamille termina sous de vrais applaudissements.\nLe responsable du son lui proposa de revenir avec trois chansons.\nEn bas de la scène, Inès lui tendit son sac.\n— C’était très bien.\n— Tu m’as donné la mauvaise feuille !\nInès regarda le papier.\n— Ah. Ça explique pourquoi j’ai acheté trois couplets et un refrain."
   },
   {
     "id": "camille-07",
-    "title": "Un avis de trois mots",
+    "title": "Les chaussures n’écoutent pas",
     "level": 14,
-    "text": "Lauriane avait filmé la prestation. Elle montra à Camille les vingt secondes où celle-ci scrutait ses chaussures.\n« Tu leur chantes quoi ? »\nCamille n’eut rien à répondre. Au deuxième visionnage, elle vit une femme au premier rang se pencher en avant pour essayer d’attraper son regard.\nAlexis suggéra une solution douce : poser la caméra à hauteur des yeux et refaire une prise. Camille la regarda pendant une chanson entière. La prise était raide et fausse par endroits, mais pour la première fois, on aurait dit qu’elle parlait à quelqu’un."
+    "text": "Lauriane avait filmé Camille au bar. Le lendemain, elle lança la vidéo sur son téléphone.\nPendant presque toute la chanson, Camille regardait le sol.\n— Tes chaussures ont passé une bonne soirée, dit Lauriane.\n— J’étais stressée.\n— Je sais. Mais regarde les gens. Ils sont venus pour toi.\nAlexis proposa de refaire la chanson dans la cave, avec la caméra à hauteur des yeux.\nCamille essaya. Au bout de dix secondes, elle regarda encore ses pieds.\nLauriane se plaça juste devant elle.\n— Je vais me mettre là. Si tu regardes en bas, je te le dis.\nCamille reprit.\n— Les pieds, annonça Lauriane.\nElle reprit encore.\n— Les pieds.\nÀ la quatrième tentative, Camille réussit à garder les yeux levés.\nAlexis applaudit doucement.\n— Tu vois, ça vient.\nLauriane sourit.\n— Encore deux répétitions et on pourra rendre tes chaussures à la vie privée.\nLe soir suivant, Camille regarda la cliente du salon pendant tout un refrain. C’était beaucoup plus facile de chanter à une personne que de chanter à vingt tables."
   },
   {
     "id": "camille-08",
-    "title": "La bande LUX fait un geste",
+    "title": "Le retour de LUX",
     "level": 18,
-    "text": "LUX, l’ancien groupe de Camille, vit la vidéo des Arcades. Le groupe lui proposa de revenir pour une soirée, « en qualité d’ancienne collaboratrice ». Elle lut le détail : apporter son propre micro, apparaître derrière le batteur et chanter les harmonies.\nElle déclina et demanda la vieille maquette qu’ils avaient enregistrée ensemble. Le batteur l’envoya, ravi qu’on lui parle enfin d’autre chose que du volume de sa caisse claire. Camille retrouva dessus un couplet qu’elle avait écrit et oublié. Elle en fit sa deuxième chanson."
+    "text": "LUX, l’ancien groupe de Camille, vit sa vidéo. Ils lui proposèrent de chanter avec eux pour une soirée.\nCamille fut d’abord contente. Puis elle lut les détails.\nElle devait apporter son micro et chanter derrière le batteur. Son nom ne figurait pas sur l’affiche.\n— Ils te mettent où, exactement ? demanda Mélissa.\nCamille montra le plan.\n— Là.\n— Derrière quoi ?\n— Tout.\nLauriane prit la feuille.\n— Au moins, tu ne verras pas leurs chaussures.\nCamille refusa poliment. Elle demanda aussi au batteur de lui envoyer un ancien enregistrement. Elle y avait chanté un couplet qu’elle avait écrit.\nLe batteur le retrouva.\n— Je t’envoie ça. Tu trouves que ma batterie est trop forte ?\nSur le fichier, on entendait surtout les cymbales.\n— Je vais d’abord essayer de retrouver ma voix dessous, répondit Camille.\nElle passa la soirée à retravailler son couplet. Cette fois, elle décida d’en faire une chanson à elle."
   },
   {
     "id": "camille-09",
-    "title": "Le colis en recommandé",
+    "title": "Le câble de Voldemort",
     "level": 22,
-    "text": "Voldemort découvrit la vidéo. Il écrivit : « Fier de ce que tu deviens. Passe à la maison, on parlera de ce que je peux faire pour toi. » Puis, comme Camille ne répondait pas : « Tu as pris mon câble. »\nCamille faillit ressortir du métro pour aller le lui rendre. Anissa lui fit relire les deux messages dans l’ordre. Camille expédia le câble et demanda que les questions sur ses affaires passent par écrit. Elle garda une copie du reçu dans le carton du micro."
+    "text": "Voldemort écrivit à Camille après avoir vu la vidéo.\n« Tu progresses grâce à ce que je t’ai appris. Viens à la maison, on peut parler de ta carrière. »\nQuelques minutes plus tard, il ajouta « Et rapporte mon câble. »\nCamille regarda son téléphone, inquiète. Pendant leur relation, il décidait souvent à sa place et lui faisait croire qu’elle avait besoin de lui pour tout.\nElle commença une longue réponse. Anissa lui demanda de la lire à voix haute.\nAu milieu de la troisième explication, Camille s’arrêta.\n— Je suis encore en train de me justifier.\nElle effaça le texte. Elle écrivit seulement qu’elle ne souhaitait pas discuter de sa carrière avec lui et qu’elle enverrait le câble.\nInès l’aida à préparer le paquet.\n— Tu veux que je mette un petit mot ?\n— Non.\n— Même pas « câble bien reçu, chanteuse non disponible » ?\nCamille sourit, mais ferma le carton sans rien ajouter. Puis elle retourna travailler sa nouvelle chanson."
   },
   {
     "id": "camille-10",
-    "title": "Les loges sentent la lessive",
+    "title": "La loge et la machine à laver",
     "level": 27,
-    "text": "Pour la deuxième soirée aux Arcades, Inès transforma la buanderie en loge avec un miroir posé sur un panier à linge. Mélissa accrocha au mur un plan de maquillage « compatible avec deux yeux ouverts », une clause à laquelle elle tenait personnellement.\nLa nouvelle chanson passa bien. La troisième, trop longue, laissa au public le temps de commander deux tournées. Une femme attendit pourtant la fin pour dire à Camille que son histoire de clé lui rappelait la sienne. Camille nota la phrase de la femme, après lui avoir demandé la permission."
+    "text": "Pour la deuxième soirée aux Arcades, Mélissa voulut préparer une vraie loge.\nElle posa un miroir dans la buanderie, alluma deux lampes et accrocha un drap pour cacher les produits ménagers.\n— Bienvenue chez les stars, annonça-t-elle.\nCamille s’assit devant le miroir.\nLa machine à laver démarra derrière le drap. Le miroir se mit à trembler.\n— Le fauteuil massant est offert, précisa Inès.\nElles riaient encore en arrivant au bar.\nCamille chanta ses trois morceaux. Le dernier était trop long et plusieurs personnes se remirent à discuter avant la fin.\nElle le remarqua, mais termina quand même.\nAprès le concert, une femme l’attendait.\n— J’ai aimé votre chanson sur la maison qu’on quitte. Ça m’a rappelé une période de ma vie.\nCamille l’écouta sans l’interrompre. La femme lui dit une phrase très simple sur le fait de garder une vieille clé.\nCamille lui demanda si elle pouvait s’en inspirer pour une chanson.\nLa femme accepta. Dans le bus du retour, Camille trouva son nouveau refrain."
   },
   {
     "id": "camille-11",
-    "title": "Deux invités, un tabouret",
+    "title": "Le pianiste et le tabouret",
     "level": 31,
-    "text": "Nathan décrocha un duo au Café du Pont en discutant avec un homme qui n’était pas le patron. L’homme était le pianiste et le patron n’était au courant de rien. Ils s’arrangèrent autour d’un tabouret.\nCamille avait prévu de chanter toutes ses chansons au même tempo. Le pianiste en ralentit une sans la prévenir. Il lui laissa assez de silence pour qu’elle entende une phrase qu’elle avait jusque-là avalée. À la fin, elle lui demanda s’il voulait refaire ça en étant officiellement attendu."
+    "text": "Nathan annonça qu’il avait trouvé un concert au Café du Pont.\n— Tu as parlé au patron ?\n— À quelqu’un de très important.\nEn arrivant, Camille découvrit que la personne très importante était le pianiste. Le patron, lui, n’était au courant de rien.\nIls discutèrent. Finalement, Camille put chanter deux morceaux entre les passages du pianiste.\nUn seul tabouret était disponible. Nathan proposa de le partager.\n— On va plutôt rester debout, répondit Camille.\nPendant la chanson de la clé, le pianiste ralentit un peu. Camille dut respirer et prendre son temps.\nElle entendit enfin les mots qu’elle chantait. Ils avaient plus de sens quand elle ne courait pas après la musique.\nAprès les applaudissements, elle lui demanda s’il voulait travailler avec elle.\n— Avec plaisir. Mais la prochaine fois, on prévient le patron.\nNathan leva le pouce.\n— Je m’en occupe.\nLe pianiste attrapa son téléphone.\n— Cette fois, je vais le faire moi-même."
   },
   {
     "id": "camille-12",
-    "title": "Le père Noël du mois de mai",
+    "title": "Une audition très rouge",
     "level": 35,
-    "text": "Nathan lui trouva aussi une audition pour une publicité. Camille devait dire « Je le veux rouge » avec l’intensité d’une femme qui vient d’apprendre un secret. Elle s’imagina que le père Noël lui devait de l’argent.\nL’équipe éclata de rire. Le directeur de casting lui demanda de rejouer la scène presque sans bouger. Cette fois, il sourit et garda son numéro. La publicité prit quelqu’un d’autre. Trois jours plus tard, il rappela pour une lecture de théâtre."
+    "text": "Camille reçut une proposition pour une publicité. Elle devait regarder un objet et dire « Je le veux rouge » avec beaucoup d’émotion.\nDans la salle d’attente, elle essaya la phrase plusieurs fois.\nUne femme se leva.\n— Moi aussi, je passe pour cette publicité. Tu crois qu’on vend quoi ?\nCamille regarda sa feuille.\n— À ce niveau d’émotion, j’espère une maison.\nDevant la caméra, elle imagina qu’on lui proposait une robe affreuse.\n— Je le veux rouge !\nL’équipe rit. On lui demanda une autre version, plus calme.\nElle recommença en parlant tout doucement. Cette fois, le responsable hocha la tête.\nCamille ne fut pas choisie pour la publicité. Mais trois jours plus tard, le même homme l’appela.\nUne metteuse en scène cherchait une comédienne pour un petit rôle.\nCamille accepta de venir lire le texte.\nAvant de raccrocher, elle demanda ce que vendait la publicité.\n— Une poubelle.\nCamille resta silencieuse un instant.\nInès, à côté d’elle, leva la tête.\n— Rouge, j’espère ?"
   },
   {
     "id": "camille-13",
-    "title": "L’actrice qui attend son tour",
+    "title": "Deux répliques, une erreur",
     "level": 40,
-    "text": "À la lecture, Camille jouait une voisine. Elle avait deux répliques et passa les quatre-vingts premières minutes à les répéter dans sa tête. Quand son tour arriva, elle dit la première au milieu de la tirade d’un autre.\nLa metteuse en scène lui demanda de lire ce qui précédait, puis de répondre comme si elle découvrait la situation. Camille entendit la voix de son partenaire trembler. Sa réplique sortit tout autrement. Elle obtint le rôle et repartit avec une consigne : écouter jusqu’au bout."
+    "text": "Au théâtre, Camille devait jouer une voisine qui venait se plaindre du bruit. Elle avait seulement deux phrases à dire.\nElle les apprit si bien qu’elle ne fit plus attention aux autres acteurs.\nDès qu’elle entendit le mot « voisin », elle se leva.\n— Ça suffit, ce vacarme !\nUn comédien s’arrêta au milieu de sa phrase.\nLa metteuse en scène regarda Camille.\n— Tu arrives dans quatre pages.\nCamille se rassit. Tout le monde souriait.\nAu deuxième essai, elle attendit trop longtemps.\n— Maintenant, Camille.\n— Ça suffit, ce vacarme !\nCette fois, elle avait parlé dans un grand silence.\nLa metteuse en scène lui expliqua quand entrer et pourquoi sa voisine était en colère. Puis elle lui demanda d’écouter toute la scène.\nAu troisième essai, Camille entendit les autres se disputer. Sa phrase sortit presque toute seule.\nElle obtint le rôle.\nEn rentrant, elle annonça la nouvelle à ses colocataires.\nInès leva les yeux.\n— Ça suffit, ce vacarme !\n— Toi aussi, tu arrives trop tôt, répondit Camille."
   },
   {
     "id": "camille-14",
-    "title": "Un frigo en résidence artistique",
+    "title": "Le frigo joue aussi",
     "level": 44,
-    "text": "En répétition, Camille apporta le bruit de son frigo comme exemple de ce qui épuise sa voisine. Le régisseur demanda un enregistrement. Inès s’en chargea, puis oublia d’arrêter le téléphone avant de lui dire : « Tu peux faire moins de bruit ? C’est pour une œuvre. »\nLa metteuse en scène garda la prise, y compris la négociation avec le frigo. Elle demanda à Camille d’écrire une chanson courte pour le changement de décor. Camille comprit qu’une cuisine pouvait lui servir de studio, à condition d’attendre la fin du cycle de dégivrage."
+    "text": "La metteuse en scène demanda à Camille si elle connaissait un bruit agaçant à utiliser dans la pièce.\nCamille pensa aussitôt au frigo de la cave. Il faisait un long bourdonnement, puis un gros claquement.\nInès proposa de l’enregistrer.\nElle posa son téléphone devant l’appareil et attendit. Le frigo se tut.\n— Tu le fais exprès ?\nToujours rien.\n— Toute la nuit, tu nous réveilles. Et maintenant que tu as un travail, tu refuses ?\nLe frigo se remit à bourdonner.\n— Merci. Tu vois quand tu veux.\nInès envoya le fichier entier au théâtre.\nÀ la répétition suivante, on entendit sa conversation avec le frigo dans les enceintes.\nLes comédiens éclatèrent de rire.\nLa metteuse en scène garda le bruit seul pour la pièce, mais demanda à conserver le reste pour l’équipe.\nPuis elle proposa à Camille de chanter pendant un changement de décor.\nCamille aurait un petit rôle et une chanson.\nInès demanda si le frigo aurait son nom sur l’affiche."
   },
   {
     "id": "camille-15",
-    "title": "Une critique à deux étoiles",
+    "title": "Deux étoiles sur cinq",
     "level": 48,
-    "text": "Le spectacle ouvrit devant seize personnes. Un blog lui donna deux étoiles. La mère de Camille annonça la nouvelle avec enthousiasme avant de comprendre que le barème en comptait cinq.\nCamille lut que la chanson de transition semblait arriver « d’un autre spectacle ». Elle retourna s’asseoir avec la metteuse en scène pour écouter la réplique qui la précédait. Elles coupèrent un couplet et changèrent son entrée. Le lendemain, Camille entendit quelqu’un fredonner l’air en quittant la salle."
+    "text": "La première représentation attira seize personnes. Camille les compta deux fois, en espérant en avoir oublié quelques-unes.\nSa mère s’était installée au milieu du premier rang. Quand Camille entra, elle lui fit un grand signe.\nCamille essaya de ne pas rire.\nLe lendemain, un petit journal publia un avis avec deux étoiles.\nSa mère appela aussitôt.\n— Deux étoiles ! C’est magnifique !\n— Sur cinq, maman.\n— Ah. Ils sont difficiles.\nLe texte disait que la chanson de Camille était jolie, mais qu’elle était trop longue pour le changement de décor.\nCamille eut envie de ne plus lire. Puis elle en parla avec la metteuse en scène.\nElles coupèrent un couplet et changèrent le départ du piano. La scène avançait mieux.\nAprès la représentation suivante, un spectateur sortit en fredonnant.\nCamille entendit sa mère lui parler dans le hall.\n— C’est ma fille qui chante.\n— Je sais, madame. Vous nous l’avez dit avant que ça commence."
   },
   {
     "id": "camille-16",
-    "title": "Le comité des poubelles",
+    "title": "Le concert des poubelles",
     "level": 53,
-    "text": "Camille proposa de jouer ses nouvelles chansons dans la cour de l’immeuble. Inès s’engagea à vider les poubelles avant le concert. Elle tint parole à sa façon : elles disparurent derrière un rideau.\nAu moment le plus émouvant, le camion de collecte passa et le gardien surgit sur scène pour récupérer les bacs. Camille décala son deuxième couplet et attendit son retour. Il s’assit au premier rang, en gants orange. Elle décida de garder la pause dans la chanson. Elle ferait moins de bruit à l’enregistrement."
+    "text": "Camille proposa un petit concert dans la cour de l’immeuble. Le gardien accepta à condition que le passage reste libre.\nInès promit de sortir les poubelles avant le début.\nQuand Camille arriva pour vérifier, les sacs avaient disparu.\n— Tu les as descendus ?\n— Ils sont déjà en bas, répondit Inès.\nCamille souleva le rideau derrière le piano. Les poubelles étaient cachées dessous.\n— Tu as juste déplacé le problème !\n— Oui, mais maintenant, il est dans le décor.\nCamille n’eut pas le temps de répondre. Les voisins arrivaient.\nAu milieu d’une chanson, le camion de collecte s’arrêta devant l’immeuble. Le gardien entra dans la cour avec de grands gestes.\nCamille s’écarta et le laissa récupérer les sacs.\n— On fait une petite pause technique, annonça-t-elle.\nLe public rit et applaudit le gardien quand il revint s’asseoir.\nAprès le concert, il demanda si elle comptait recommencer.\n— Avec plaisir.\nIl regarda Inès.\n— Cette fois, les poubelles passent avant la chanteuse."
   },
   {
     "id": "camille-17",
-    "title": "La maquette à l’heure creuse",
+    "title": "Le studio de six heures",
     "level": 57,
-    "text": "Mélissa obtint un studio à tarif réduit entre six et huit heures du matin. À six heures, personne n’avait de voix. À sept heures, Camille en avait assez pour enregistrer la chanson de la clé. À sept heures cinquante-huit, elle essaya une version avec le silence de la cour.\nLe pianiste préféra celle-là. Il lui demanda aussi de mettre son nom sur la maquette : les harmonies et l’arrangement venaient de leurs répétitions communes. Camille ajouta les crédits avant de faire écouter quoi que ce soit."
+    "text": "Grâce à une connaissance de Mélissa, Camille put louer un studio à petit prix. Il était libre de six à huit heures du matin.\nÀ cinq heures trente, personne ne parlait dans la cave.\nInès tenait une chaussure dans une main et une tasse dans l’autre.\n— Pourquoi on va au studio de nuit ?\n— C’est le matin, répondit Mélissa.\n— Ça dépend pour qui.\nAu studio, Camille commença par faire quelques exercices de voix. Le pianiste arriva avec le café.\nIls enregistrèrent plusieurs essais de la chanson de la clé.\nSur une prise, on entendit la chaise de Camille grincer.\nSur une autre, on entendit Inès dire « C’est bientôt la pause ? »\nLa dernière fut la bonne.\nCamille l’écouta au casque. Elle entendait enfin sa chanson comme elle l’avait imaginée.\nElle demanda au pianiste comment écrire son nom dans les crédits.\nMélissa leva la main.\n— Et moi ?\n— Tu veux être notée comment ?\n— Responsable des gens qui arrivent à l’heure. C’est mon premier poste de direction."
   },
   {
     "id": "camille-18",
-    "title": "Une chanson en pièce jointe",
+    "title": "Le producteur autoproclamé",
     "level": 61,
-    "text": "Voldemort renvoya un dossier qu’il disait avoir préparé « pour sa carrière ». Sur la couverture, son propre nom occupait plus de place que celui de Camille. Il voulait présenter ses chansons à des producteurs en se faisant passer pour son représentant.\nElle refusa et écrivit aux deux personnes qu’il avait mises en copie. L’une d’elles, une programmatrice, demanda quand même à écouter la maquette, envoyée directement par Camille. Il y avait une date libre à la fin du mois. Le dossier de Voldemort partit dans un sous-dossier nommé « À conserver »."
+    "text": "Voldemort envoya à Camille un dossier qu’il avait préparé sans lui demander.\nIl voulait présenter ses chansons à des professionnels et parler en son nom.\nSur la première page, son propre nom était écrit en grosses lettres.\nCelui de Camille apparaissait plus bas.\n— Il chante aussi ? demanda Inès.\n— Non.\n— Alors il prend beaucoup de place pour quelqu’un qui ne tient même pas le micro.\nCamille ne riait qu’à moitié. Elle ne voulait pas qu’il décide encore pour elle.\nElle lui écrivit qu’elle ne l’avait pas autorisé à la représenter. Puis elle contacta les personnes à qui il avait envoyé le dossier.\nElle expliqua clairement qu’elles devaient passer directement par elle.\nL’une d’elles organisait des concerts.\n— Dans ce cas, envoyez-moi votre enregistrement, répondit-elle.\nCamille lui fit écouter la chanson de la clé. Elle obtint une date.\nElle ouvrit son agenda pour la noter elle-même.\nRachid sourit.\n— Tu vois, tu sais très bien tenir un stylo sans lui."
   },
   {
     "id": "camille-19",
-    "title": "Le premier cachet",
+    "title": "Payée pour chanter",
     "level": 66,
-    "text": "La date payée rapporta à Camille assez pour régler le studio et dîner après le concert. À la table, Rachid sortit un tableur pour répartir l’argent.\n« Le dessert est dans quelle colonne ? » demanda Inès.\nIl en créa une. Camille paya le pianiste avant de commander, glissa la facture dans une enveloppe et garda une pièce pour le vestiaire. En récupérant son manteau, elle trouva dans la poche un flyer de l’époque de LUX. Elle écrivit le montant de son premier cachet au dos."
+    "text": "Pour la première fois, Camille reçut de l’argent pour un concert. Il n’y en avait pas énormément, mais assez pour payer le pianiste, une partie du studio et un repas.\nElle invita ses amis à manger un morceau.\nRachid posa son cahier sur la table.\n— On peut regarder les dépenses ?\n— On peut commander avant ? demanda Inès.\nIl fit plusieurs colonnes. Transport, musique, location de matériel.\nInès pointa le bas de la page.\n— Tu as oublié les frites.\n— C’est un budget de concert.\n— J’ai porté le piano électrique. Je suis dans le budget.\nCamille régla la part du pianiste et rangea soigneusement les reçus.\nPuis elle commanda des frites pour la table.\nPendant le repas, elle ne parla presque pas. Elle avait encore du mal à y croire.\nMélissa lui donna un petit coup de coude.\n— Qu’est-ce qu’il y a ?\nCamille sourit.\n— Aujourd’hui, on m’a payée pour faire ce que j’aime.\nInès leva sa fourchette.\n— Et nous, on touche enfin des frites."
   },
   {
     "id": "camille-20",
-    "title": "Une saison au théâtre",
+    "title": "Le rôle derrière le rideau",
     "level": 70,
-    "text": "La metteuse en scène proposa à Camille un rôle plus long pour sa prochaine pièce. Elle y jouait une chanteuse obligée de doubler la voix d’une vedette derrière un paravent.\nCamille trouva la situation peu crédible. Puis elle se rappela l’invitation de LUX à chanter derrière le batteur et demanda quand commençaient les répétitions.\nLe premier jour, elle chanta si fort qu’on ne comprit plus la réplique de la vedette. Les deux actrices essayèrent ensemble jusqu’à ce que le public puisse entendre l’effort de l’une pour voler la place de l’autre."
+    "text": "La metteuse en scène prépara une nouvelle pièce et proposa à Camille un rôle plus important.\nElle devait jouer une chanteuse cachée derrière un rideau. Sur scène, une vedette faisait semblant de chanter avec sa voix.\nCamille lut le texte.\n— Ça me rappelle un peu LUX.\n— Alors tu vas comprendre le personnage, répondit la metteuse en scène.\nPendant la première répétition, la comédienne qui jouait la vedette ouvrit la bouche trop tard.\nCamille, elle, avait déjà fini sa phrase.\nElles recommencèrent. Cette fois, la vedette ouvrit grand la bouche, mais Camille avait besoin de tousser.\nTout le monde éclata de rire.\nLes deux femmes travaillèrent ensemble jusqu’à se connaître par cœur. Camille devait suivre les gestes de sa partenaire, même quand elle ne la voyait pas bien.\nEn rentrant, elle montra la scène à ses amies.\nInès voulut jouer la vedette.\nElle ouvrit la bouche et Mélissa lui fit dire « Je vais sortir les poubelles ».\nInès arrêta immédiatement sa carrière."
   },
   {
     "id": "camille-21",
-    "title": "Une salle de trente mètres carrés",
+    "title": "La répétition sans public",
     "level": 74,
-    "text": "Pour répéter sans faire trembler les tuyaux de la cave, Camille loua une salle à l’heure. Lio vint pour la première répétition, revint pour la deuxième et disparut à la troisième. Camille lui demanda ce qu’elle avait raté.\n« Rien. C’est justement le problème. Tu faisais la même chose trois fois. »\nCamille prit une feuille et y écrivit les passages qu’elle voulait essayer autrement. À la séance suivante, Lio revint et resta jusqu’au bout. Elle avait apporté du pain, ce qui inquiétait davantage l’équipe que son absence."
+    "text": "Camille loua une petite salle pour répéter au calme. Elle avait demandé à Lio de venir lui donner son avis.\nLa première fois, Lio resta jusqu’au bout.\nLa deuxième, elle regarda plusieurs fois son téléphone.\nÀ la troisième invitation, elle trouva une excuse.\nCamille lui demanda ce qui n’allait pas.\n— Tu refais toujours le début, répondit Lio. Dès qu’une note te déplaît, tu recommences.\n— Je veux que ce soit bien.\n— Moi aussi. Mais j’aimerais connaître la fin un jour.\nCamille comprit qu’elle passait une heure sur deux minutes de chanson. Elle préparait très mal les passages suivants.\nPour la répétition suivante, elle choisit de chanter tous ses morceaux sans s’arrêter. Elle nota les erreurs après.\nLio revint et écouta le concert entier.\n— Ah ! Il y a une troisième chanson !\nCamille lui tira la langue.\nÀ la fin, Lio applaudit.\n— Cette fois, je peux te donner un avis complet.\nElle prit une voix très sérieuse.\n— Tu devrais prévoir une chaise moins dure."
   },
   {
     "id": "camille-22",
-    "title": "Le contrat et le stabilo",
+    "title": "Le contrat et le paquet de biscuits",
     "level": 79,
-    "text": "Une petite société de production proposa de financer un EP de trois titres. Le contrat offrait une somme ronde et réclamait une liste de droits beaucoup plus longue. Rachid arriva avec un stabilo neuf. Au bout de deux pages, il demanda un deuxième stabilo.\nCamille fit relire l’accord, négocia la durée et conserva la possibilité de jouer ses chansons sur scène. La société accepta de financer deux titres au lieu de trois. Elle choisit elle-même lesquels et décida de payer le troisième avec ses prochains cachets."
+    "text": "Une petite maison de production proposa d’aider Camille à enregistrer plusieurs chansons.\nElle était ravie. Puis elle ouvrit le contrat.\nIl faisait beaucoup de pages et utilisait des mots qu’elle ne comprenait pas.\nRachid arriva avec deux stylos de couleur et un paquet de biscuits.\n— Une couleur pour ce qu’on comprend. Une pour les questions.\nUne heure plus tard, le paquet était vide et presque toute la deuxième couleur avait servi.\n— Il nous faut quelqu’un qui connaît les contrats, dit Camille.\nElle fit relire le document par une professionnelle. Plusieurs points furent discutés, notamment la durée de l’accord et l’utilisation de ses chansons.\nCamille obtint un contrat plus clair. Le budget permettait finalement d’enregistrer deux titres.\nElle décida de payer le troisième avec ses prochains concerts.\nLe soir de la signature, Rachid lui demanda si elle avait encore une question.\n— Oui. Pourquoi tu as mangé tous les biscuits ?\nIl regarda la table.\n— Je crois qu’Inès nous a aidés.\nDans la cuisine, on entendit un paquet se refermer."
   },
   {
     "id": "camille-23",
-    "title": "Le podcast qu’on aurait pu couper",
+    "title": "Christelle passe à la radio",
     "level": 83,
-    "text": "Une journaliste invita Camille à parler de sa double vie entre salon et théâtre. Camille expliqua la réserve, la feuille de paroles oubliée et le ticket de caisse. Elle ajouta que Christelle avait du flair, surtout pour entendre une demande de congé à travers trois cloisons.\nL’extrait circula. Christelle le fit écouter à la réception pour prouver que Camille « avait toujours eu du potentiel ». Camille profita du moment pour demander un vrai jour fixe pour les répétitions. Christelle accepta devant deux clientes qui venaient de s’abonner au podcast."
+    "text": "Une journaliste invita Camille à raconter ses débuts dans une émission.\nCamille parla du salon, de la cave et de sa feuille oubliée entre les serviettes.\n— Votre responsable vous encourage ?\n— Elle m’a laissé changer un horaire. Mais elle entend une demande de congé même à travers trois portes.\nLa journaliste rit.\nLe lendemain, Christelle avait mis l’émission à la réception du salon.\n— Je l’ai toujours soutenue, expliquait-elle à une cliente.\nCamille s’arrêta devant le comptoir.\nDans l’enregistrement, sa voix disait justement « Au début, elle m’a demandé de me taire dans la réserve ».\nChristelle baissa le son.\n— Le contexte est important.\nLa cliente sourit.\n— Vous viendrez à son concert ?\nChristelle répondit qu’elle avait beaucoup de travail.\nCamille en profita pour demander un jour fixe pour ses répétitions. Christelle accepta après avoir regardé le planning.\nLe soir, Inès écouta l’émission.\n— Tu as parlé du frigo ?\n— Non.\n— Il va demander un droit de réponse."
   },
   {
     "id": "camille-24",
-    "title": "Le public est en avance sur le refrain",
+    "title": "La chanson du double de clé",
     "level": 87,
-    "text": "Une vidéo des Arcades dépassa tout ce que Camille avait posté. À son concert suivant, le public reprit la phrase de la clé avant elle. Camille eut le réflexe de chanter par-dessus, puis regarda le pianiste et attendit. Le public termina le refrain à sa place.\nAu bar, quelqu’un commanda « la chanson du double de clé ». Le barman servit deux cafés.\nCamille changea le titre sur la maquette. Elle tenait enfin le nom que les gens se rappelleraient sans avoir à ouvrir leur téléphone."
+    "text": "La vidéo de la chanson de Camille commença à circuler. Des personnes qu’elle ne connaissait pas lui écrivirent pour demander où l’écouter.\nAu concert suivant, elle arriva au refrain et entendit plusieurs voix le chanter avec elle.\nElle s’arrêta une seconde, surprise.\nLe pianiste continua.\nCamille regarda les gens et sourit avant de reprendre.\nAprès le concert, un homme demanda au barman le nom de « la chanson du double de clé ».\nLe barman n’avait rien entendu.\n— Deux cafés ?\n— Non, la chanson !\nIl posa quand même deux tasses sur le comptoir.\nCamille vint les aider. Puis elle nota les mots de l’homme dans son téléphone.\nJusque-là, elle avait donné un titre compliqué au morceau. Personne ne s’en souvenait.\nLe soir même, elle le renomma « Le double de clé ».\nRachid approuva.\n— C’est simple. On sait de quoi tu parles.\nInès leva la main.\n— Je réserve « Le double des poubelles » pour mon premier album."
   },
   {
     "id": "camille-25",
-    "title": "La tournée des trois ronds-points",
+    "title": "Quatre concerts et une valise",
     "level": 92,
-    "text": "Nathan trouva quatre dates dans trois villes. La voiture d’Alexis affichait un voyant que Lauriane appelait « l’étoile de la prudence ». Ils partirent quand même avec un budget essence, de quoi payer les techniciens et un sac de vêtements qui arriva une ville avant eux.\nAu premier concert, Camille joua avec les manches de la chemise d’Alexis retroussées jusqu’aux coudes. Elle la remit le lendemain alors que sa valise était revenue. Elle avait enfin trouvé une tenue dans laquelle elle oubliait de rentrer le ventre."
+    "text": "Nathan trouva quatre concerts dans plusieurs villes. Cette fois, il avait confirmé toutes les dates avec les bonnes personnes.\nAlexis prêta sa voiture pour le voyage et prit le volant.\nLauriane vérifia les adresses, le matériel et les horaires.\n— Il manque quelque chose, dit-elle.\nCamille regarda ses sacs.\n— Non, je crois que tout est là.\nÀ l’arrivée, elle découvrit que sa valise de vêtements était partie avec une autre voiture vers la ville du lendemain.\nIl lui restait son jean et un tee-shirt.\nAlexis lui prêta une chemise. Les manches lui couvraient presque les mains.\n— Tu peux les relever, proposa-t-il.\n— Et si je les garde, je peux aussi cacher mon micro dedans.\nElle les remonta et monta sur scène.\nLe concert se passa très bien. Elle se sentait à l’aise dans cette tenue simple.\nLe lendemain, la valise revint.\nCamille choisit quand même la chemise.\nAlexis ouvrit la bouche.\nLauriane le regarda.\n— C’est fini. Maintenant, elle est dans le spectacle."
   },
   {
     "id": "camille-26",
-    "title": "Une voix dans le public",
+    "title": "Une visite non prévue",
     "level": 96,
-    "text": "Voldemort se présenta à une date et demanda à entrer en coulisses en se disant responsable de Camille. La personne à l’accueil vérifia la liste. Son nom n’y figurait pas.\nCamille apprit l’incident en arrivant. Elle en parla à la responsable de la salle, qui prévint l’équipe. Puis elle appela Anissa et lui demanda de rester au téléphone pendant qu’elle faisait ses vocalises.\nElle entra sur scène encore secouée. Au premier rang, une femme à qui elle avait serré la main la veille attendait le deuxième couplet."
+    "text": "Avant un concert, Voldemort se présenta à l’entrée des coulisses.\nIl expliqua qu’il connaissait très bien Camille et devait la voir.\nLa personne de l’accueil vérifia sa liste. Son nom n’y était pas.\nElle alla prévenir Camille au lieu de le laisser entrer.\nCamille sentit son ventre se nouer. Elle n’avait pas envie d’une discussion juste avant de chanter.\nElle dit clairement à la responsable qu’elle ne souhaitait pas le recevoir. L’équipe s’occupa de l’accueil et lui laissa le temps de se préparer.\nCamille appela Anissa.\n— Je tremble.\n— Assieds-toi. Bois un peu d’eau. Je reste avec toi.\nMélissa arriva avec deux chaussures différentes.\n— J’ai voulu te préparer ta tenue vite, mais je viens d’inventer un nouveau style.\nCamille la regarda, puis se mit à rire malgré elle.\nElles retrouvèrent la bonne paire.\nQuelques minutes plus tard, Camille entra sur scène. Elle avait encore peur, mais elle savait que ses amis et l’équipe étaient là pour l’aider."
   },
   {
     "id": "camille-27",
-    "title": "La preuve par la clé USB",
+    "title": "Le dossier de Lionel",
     "level": 100,
-    "text": "Lionel aida Camille à mettre de l’ordre dans les messages et les documents conservés. Il lui demanda ce qu’elle voulait récupérer, et elle dressa la liste de ses affaires et des enregistrements qui étaient restés chez Voldemort.\nLa récupération fut organisée avec un tiers. Parmi les cartons, Camille retrouva une vieille clé USB étiquetée « FINAL définitif V8 ». Elle contenait la première prise de sa chanson, qu’elle croyait perdue. Elle la copia, rangea la clé et passa le reste de l’après-midi à répéter avec son pianiste."
+    "text": "Camille demanda de l’aide à Lionel pour mettre de l’ordre dans les messages de Voldemort et préparer la récupération de ses affaires.\nIl arriva avec une petite pochette.\nCamille lui montra ses captures d’écran. Il y en avait partout.\n— Tu as tout gardé ?\n— Oui.\n— Tu as tout classé ?\nCamille hésita.\nInès leva la main.\n— On a un dossier qui s’appelle « Trucs importants 2 nouveau ».\nLionel posa calmement sa pochette.\n— D’accord. On reprend depuis le début.\nCamille fit une liste précise. Des vêtements, quelques papiers et de vieux enregistrements étaient encore dans la maison.\nLa récupération fut organisée avec une autre personne, pour éviter qu’elle se retrouve seule avec son ex.\nDans un carton, elle trouva une clé USB portant une étiquette.\n« Version finale, vraiment finale. »\nElle contenait sa toute première chanson.\nCamille l’écouta. Sa voix était moins assurée, mais les mots lui plaisaient encore.\nElle copia le fichier et rangea la clé.\n— Tu vas la reprendre ? demanda Lionel.\n— Oui. Mais cette fois, je vais lui donner un meilleur nom de fichier."
   },
   {
     "id": "camille-28",
-    "title": "Camille joue quelqu’un de calme",
+    "title": "Le rideau qui tombe trop tôt",
     "level": 105,
-    "text": "La troupe présenta sa pièce dans un festival. Le jour de la représentation, le paravent ne tenait plus debout. Camille proposa de jouer sa chanteuse à découvert, face au public, pendant que les autres personnages feraient semblant de ne pas la voir.\nLa scène devint plus drôle et plus cruelle. Au salut, la metteuse en scène souffla qu’elle avait envie de garder ce dispositif.\n« Le paravent est disponible pour un entretien », répondit Camille. Ils le laissèrent plié contre le mur pour la représentation suivante."
+    "text": "La pièce de théâtre fut invitée dans un festival. Tout le monde était content, jusqu’au moment où le grand rideau du décor se décrocha pendant une répétition.\nIl tomba sur une chaise vide.\nCamille regarda la metteuse en scène.\n— La chaise va bien ?\nUn comédien souleva le tissu.\n— Elle demande une pause.\nLa réparation prendrait du temps. La troupe devait pourtant jouer le soir même.\nCamille proposa de chanter à découvert, sur le côté. Les personnages feraient semblant de ne pas la voir, même quand elle se retrouvait juste à côté d’eux.\nIls essayèrent. Cela rendait la scène encore plus drôle.\nLa vedette ouvrait la bouche avec sérieux pendant que Camille chantait à un mètre d’elle.\nLe public comprit tout et rit beaucoup.\nAprès les saluts, la metteuse en scène décida de garder cette version.\nCamille montra le rideau plié dans un coin.\n— On lui annonce comment ?\n— Par écrit, répondit le régisseur. Il a l’air sensible."
   },
   {
     "id": "camille-29",
-    "title": "Le clip sans pluie",
+    "title": "Le clip et le tuyau d’arrosage",
     "level": 109,
-    "text": "Pour filmer son premier clip, Lio avait prévu un orage spectaculaire. Le ciel resta bleu. Inès proposa un tuyau d’arrosage et faillit tremper l’unique prise électrique.\nCamille coupa l’eau et déplaça l’équipe dans la cage d’escalier. Elle chanta en remontant les marches pendant que Lio descendait à reculons, très lentement, pour éviter d’ajouter une chute au scénario. En découvrant les images, elles gardèrent le début, où l’on entendait les tuyaux du sous-sol répondre avant la première note."
+    "text": "Lio voulait réaliser une vidéo pour « Le double de clé ».\nSon idée était simple. Camille devait chanter sous la pluie et quitter la maison au dernier refrain.\nLe jour du tournage, le soleil brillait.\nInès arriva avec un tuyau d’arrosage.\n— J’ai réglé le problème.\nElle tourna le robinet. Un jet partit sur le mur, rebondit et arrosa Nathan.\n— Tu faisais partie du décor, expliqua-t-elle.\nCamille regarda le câble posé au sol et demanda qu’on range l’eau avant de continuer.\nIls changèrent de plan. Elle chanterait dans l’escalier de la cave en montant lentement vers la rue.\nLio filmait en reculant. Nathan lui disait où poser les pieds.\n— Encore une marche. Encore une. Là, c’est mon pied.\nIls durent recommencer parce que tout le monde riait.\nSur la bonne prise, Camille ouvrit la porte et sortit dans la lumière du jour.\nC’était simple et beau.\nNathan passa le reste de l’après-midi au soleil pour faire sécher son pantalon."
   },
   {
     "id": "camille-30",
-    "title": "Neuf virgule quatre sur dix",
+    "title": "Le concours et la chaise pliable",
     "level": 113,
-    "text": "Un concours de chanson sélectionna Camille. Avant le passage, on lui demanda de condenser son parcours en une phrase et demie. Elle répondit : « J’ai commencé dans une cave. Ensuite, il y avait des escaliers. »\nElle ne remporta pas le prix du jury. Le public lui donna pourtant la meilleure note de la soirée. En coulisses, une productrice de théâtre lui demanda de venir parler de ses chansons et de ses textes. Camille prit rendez-vous pour le matin, avant que le concours ne retire la table de café."
+    "text": "Camille fut choisie pour participer à un concours de chanson.\nDans les coulisses, elle s’assit pour attendre. Sa chaise se replia légèrement sous elle.\nElle se releva d’un bond.\n— Elle est stressée aussi, observa Mélissa.\nUn assistant vint lui demander de raconter son parcours en une phrase.\n— J’ai commencé dans une cave et j’essaie de monter les étages.\nIl sourit et nota la réponse.\nSur scène, Camille chanta avec son pianiste. Elle entendit plusieurs personnes reprendre le refrain.\nLe jury donna son prix à une autre candidate. Camille fut déçue, même si elle applaudit sincèrement.\nPuis on annonça qu’elle avait reçu le prix du public.\nElle monta récupérer un petit trophée qu’elle faillit tenir à l’envers.\nAprès la soirée, une productrice de théâtre vint lui parler.\n— J’aimerais discuter d’un spectacle avec vous.\nCamille regarda Mélissa pour vérifier qu’elle avait bien entendu.\nMélissa lui tendit son agenda.\n— Cette fois, prends le rendez-vous avant que la chaise essaie de nous manger."
   },
   {
     "id": "camille-31",
-    "title": "Une offre trop parfaite",
+    "title": "Deux offres sur la table",
     "level": 118,
-    "text": "La productrice lui proposa un spectacle à elle, à condition qu’elle apporte une idée claire. Le même jour, une agence lui offrit des mois de dates et une interview exclusive si elle racontait publiquement sa rupture dans les détails.\nCamille posa les deux offres sur la table. La seconde promettait de remplir l’agenda tout de suite. La première lui demandait d’arriver avec dix pages pour vendredi. Elle se servit du verso du dossier de l’agence pour écrire la première scène."
+    "text": "La productrice invita Camille à lui proposer un spectacle avec ses chansons et des scènes de théâtre. Elle lui donna quelques jours pour préparer une idée.\nLe même après-midi, une agence lui proposa plusieurs passages dans des émissions.\nCamille était ravie jusqu’à ce qu’elle lise le sujet des interviews. L’agence voulait surtout qu’elle raconte sa relation avec Voldemort dans les détails.\nCamille posa les deux messages devant Anissa.\n— Si je refuse l’agence, je rate peut-être une occasion.\n— Tu as envie de raconter tout ça à la télévision ?\n— Non. J’ai envie qu’on entende mes chansons.\nElles relurent l’offre ensemble. Camille la refusa, puis prit une feuille pour écrire son spectacle.\nInès arriva avec un thé.\n— Tu as trouvé le titre ?\n— Pas encore.\n— « Trois filles et un frigo ».\nMélissa passa la tête par la porte.\n— Ça donne envie d’acheter un appareil ménager.\nCamille nota quand même l’idée. Pour commencer, elle avait surtout envie de raconter leur vie dans la cave."
   },
   {
     "id": "camille-32",
-    "title": "Le spectacle qui commence en bas",
+    "title": "La réunion des voisins",
     "level": 122,
-    "text": "Camille écrivit un spectacle où une chanteuse répétait au sous-sol pendant qu’une assemblée de copropriétaires, à l’étage, cherchait l’origine du bruit. Ses chansons donnaient une autre version de chaque événement.\nLauriane lut le texte et souligna trois pages de débat sur les charges.\n« Est-ce que le public vient pour chanter ou pour voter le budget du syndic ? »\nCamille supprima deux pages. Elle garda le moment où une voisine se mettait à chanter à travers la bouche d’aération. Elle avait enfin trouvé comment faire se rencontrer les deux étages."
+    "text": "Camille imagina un spectacle en deux parties. En bas, une jeune chanteuse répétait dans une cave. En haut, des voisins se réunissaient pour trouver d’où venait le bruit.\nChaque chanson montrait ce que la chanteuse vivait pendant que les voisins se plaignaient.\nElle lut ses premières pages à ses amis.\nAu bout d’un moment, Lauriane leva la main.\n— Ça fait combien de temps qu’ils parlent de la porte du garage ?\n— Trois pages.\n— Coupe. J’ai l’impression d’habiter dans l’immeuble.\nCamille relut le passage. Elle y avait mis presque toute une vraie réunion de voisins.\nElle supprima deux pages et ajouta un échange où une voisine se mettait à chanter par une bouche d’aération.\nAlexis joua le voisin très sérieux.\nInès devait faire la chanteuse.\n— Je sais pas les paroles.\n— Tu peux lire.\n— Je ne sais pas où j’ai posé le texte.\nTout le monde regarda Camille.\nElle sourit.\n— Bon. Cette scène-là, je la connais."
   },
   {
     "id": "camille-33",
-    "title": "Les auditions du plafond",
+    "title": "Une ancienne de LUX",
     "level": 126,
-    "text": "Camille ouvrit les auditions pour son spectacle. Son ancienne choriste de LUX se présenta sans prévenir. Camille s’attendait à des excuses. La choriste expliqua simplement qu’elle avait quitté le groupe à son tour et demanda si elle pouvait lire le rôle.\nCamille lui fit passer le même essai qu’aux autres. Elle fut la seule à entendre l’entrée du piano depuis derrière le décor et à donner la réplique au bon moment. Camille lui proposa le rôle et envoya les conditions par écrit le jour même."
+    "text": "Pour son spectacle, Camille organisa des essais avec plusieurs comédiens. Elle cherchait aussi une personne capable de chanter avec elle.\nUne ancienne chanteuse de LUX arriva.\nCamille fut surprise. Cette femme l’avait remplacée dans le groupe.\n— Je suis partie, expliqua la candidate. Et j’ai vu ton annonce.\nIl y eut un petit silence.\nCamille lui tendit le texte.\n— Tu veux essayer cette scène ?\nElles jouèrent deux voisines qui se disputaient à travers un mur. Au milieu de l’essai, quelqu’un fit tomber un dossier dans la salle.\nLa candidate sursauta.\n— Voilà ! Encore du bruit !\nCamille répondit aussitôt.\n— C’est mon chat qui classe ses papiers !\nLa productrice se mit à rire.\nLes deux femmes reprirent la scène et chantèrent ensuite ensemble.\nLeurs voix allaient bien l’une avec l’autre.\nCamille lui proposa de rejoindre la troupe. Elles discutèrent du rôle, des répétitions et du salaire.\nEn sortant, la nouvelle chanteuse sourit.\n— Ça me change. Chez LUX, on discutait surtout de qui serait devant sur la photo."
   },
   {
     "id": "camille-34",
-    "title": "La générale était presque générale",
+    "title": "Maman veut voter",
     "level": 131,
-    "text": "À la générale, la moitié des accessoires manquait et la mère de Camille s’était assise dans une chaise du décor. À la deuxième scène, une actrice dut lui demander de quitter la réunion de copropriété.\n« Je peux au moins voter ? »\nLa salle de répétition éclata de rire. Camille demanda ensuite à la comédienne de reprendre cette phrase dans le spectacle. Sa mère exigea un crédit au programme et proposa deux autres répliques. L’une concernait son nouveau compagnon. Camille ne retint que le vote."
+    "text": "La troupe fit une répétition complète avant l’ouverture du spectacle.\nLa mère de Camille avait promis de rester discrète au fond de la salle.\nQuand Camille entra sur scène, elle la trouva assise à la table des voisins, au milieu des comédiens.\n— Maman ?\n— J’attends que ça commence.\n— Mais tu es dans le décor.\nElle regarda les chaises autour d’elle.\n— Ah. Elles sont plus confortables que celles du public.\nUn acteur, toujours dans son rôle, lui demanda de quitter la réunion.\nElle le regarda très sérieusement.\n— Je peux au moins voter pour la porte du garage ?\nLes comédiens éclatèrent de rire. Camille dut s’appuyer contre le faux mur pour reprendre son souffle.\nLa productrice leur demanda de recommencer la scène en gardant cette phrase.\nLa mère de Camille retourna enfin dans la salle.\n— Vous me mettrez dans le programme ?\nCamille accepta de la remercier.\nÀ la pause, sa mère lui apporta trois pages de nouvelles idées.\nCamille en garda une. Les deux autres parlaient surtout du voisin de sa mère."
   },
   {
     "id": "camille-35",
-    "title": "On ajoute une chaise",
+    "title": "Soixante places, pas une de plus",
     "level": 135,
-    "text": "À la première, le spectacle remplit soixante places. Le lendemain, une famille se présenta avec un billet de plus que la salle ne pouvait en accueillir. Camille vit le théâtre leur trouver une autre représentation et prendre leur numéro. La semaine précédente, elle avait appelé trois cousins pour compléter la salle.\nElle resta écouter les spectateurs dans le hall. Plusieurs parlaient de leurs voisins avant même de parler des chansons. Elle demanda à la productrice combien de dates ils pourraient ajouter avec la même équipe. Elles en trouvèrent deux."
+    "text": "Le premier soir, les soixante places du théâtre étaient occupées.\nCamille regardait la salle par un petit trou du rideau.\n— Tu les comptes encore ? demanda la choriste.\n— J’essaie de savoir si je connais tout le monde.\n— Si tu as soixante cousins, il faut prévenir les services de sécurité.\nCamille rit, puis retourna se préparer.\nLe spectacle se passa bien. Les gens riaient aux disputes des voisins et écoutaient les chansons jusqu’au bout.\nDans le hall, une famille expliqua qu’elle avait voulu prendre une place de plus.\nLe théâtre leur proposa de revenir un autre soir où ils pourraient être assis ensemble.\nCamille entendit la discussion. Quelques mois plus tôt, elle cherchait des gens pour remplir dix chaises. Maintenant, certaines personnes devaient attendre une autre date.\nElle demanda à la productrice si elles pouvaient ajouter des représentations.\nElles en trouvèrent deux.\nEn rentrant, Inès ouvrit le frigo.\n— On fête ça comment ?\n— Avec ce qu’il reste.\nElle regarda une vieille carotte.\n— On peut peut-être attendre demain."
   },
   {
     "id": "camille-36",
-    "title": "Le rideau a pris une décision",
+    "title": "Le rideau coupe la chanson",
     "level": 139,
-    "text": "En tournée, un rideau automatique descendit au milieu d’une chanson et s’arrêta à hauteur de genoux. Le public vit les chaussures de Camille et entendit la fin du couplet.\nCamille termina accroupie, tête sous le rideau. La choriste entra à son tour et elles chantèrent la dernière phrase assises au bord du plateau. Le lendemain, on proposa de reproduire l’accident pour les réseaux. Camille demanda plutôt à la régie de lui montrer comment vérifier les changements de décor avant l’ouverture des portes."
+    "text": "Pendant une représentation, le rideau de la salle commença à descendre au milieu d’une chanson.\nCamille continua, persuadée qu’il allait s’arrêter.\nIl s’arrêta effectivement. À la hauteur de ses genoux.\nLe public ne voyait plus que ses chaussures.\nCamille se baissa et passa la tête dessous.\n— Je suis toujours là.\nLa salle éclata de rire.\nLa choriste vint la rejoindre à quatre pattes. Elles finirent le refrain assises au bord de la scène.\nLe technicien réussit à remonter le rideau quelques secondes plus tard.\nCamille se releva.\n— Merci. On a changé d’étage.\nAprès le spectacle, la productrice proposa de garder une petite scène où les deux chanteuses étaient assises au sol.\nMais Camille demanda aussi de vérifier le rideau avant chaque représentation.\nLe lendemain, Lauriane vint aux répétitions.\n— J’ai vu la vidéo.\n— Et alors ?\n— On voit très bien tes chaussures. Tu as enfin trouvé comment leur donner le premier rôle."
   },
   {
     "id": "camille-37",
-    "title": "La vidéo avec la mauvaise légende",
+    "title": "Le nom sous la vidéo",
     "level": 144,
-    "text": "Un extrait du spectacle circula avec une légende attribuant la chanson à LUX. Le groupe avait gardé en ligne un bout de l’ancienne maquette. Camille reconnut le couplet enregistré chez eux.\nElle joignit les fichiers datés, contacta la chaîne qui avait publié l’extrait et fit corriger les crédits, y compris le nom de son pianiste. Le batteur de LUX partagea la version rectifiée. Il avait ajouté « baissez un peu le piano » sous la publication. Camille lui envoya un cœur et laissa le piano exactement où il était."
+    "text": "Une vidéo du spectacle circula sur Internet. Beaucoup de personnes la partageaient.\nMais sous la chanson de Camille, il était écrit qu’elle appartenait à LUX.\nCamille reconnut le vieux couplet enregistré à l’époque du groupe.\nElle chercha ses fichiers pour montrer qu’elle l’avait écrit.\nRachid l’aida à préparer un message clair. Ils ajoutèrent les dates et les noms des personnes qui avaient travaillé sur la version actuelle.\n— Je savais que garder « version finale vraiment finale » servirait un jour, dit Camille.\nLa page corrigea les informations. Le nom du pianiste fut ajouté avec celui de Camille.\nLe batteur de LUX partagea ensuite la bonne vidéo.\nIl écrivit un petit commentaire pour dire que la batterie aurait pu être plus forte.\n— Il n’y a pas de batterie dans cette chanson, remarqua Mélissa.\nCamille répondit au batteur avec un sourire.\nPuis elle passa au morceau suivant. Elle avait surtout envie de continuer à écrire."
   },
   {
     "id": "camille-38",
-    "title": "La loge avec une porte qui ferme",
+    "title": "Le premier appartement",
     "level": 148,
-    "text": "Camille récupéra les clés d’un appartement. Elle mit deux semaines à comprendre que la table de la cuisine pouvait rester une table de cuisine même quand elle ne servait pas de bureau, de pupitre ou de surface de repassage.\nInès et Mélissa vinrent dîner. Elles apportèrent le miroir de la buanderie et une petite plaque « LOGE 1 ». Camille accrocha la plaque à la porte de la chambre. Puis elles déplièrent une table de secours pour pouvoir manger autour du miroir, que personne n’avait pensé à retirer."
+    "text": "Avec ses revenus et ses économies, Camille put louer un petit appartement.\nElle avait une vraie chambre et une fenêtre qui montrait autre chose que des chevilles.\nLe jour du déménagement, Inès et Mélissa apportèrent le miroir de la buanderie.\nLio arriva avec une plante si grande qu’elle ne passait pas dans l’ascenseur.\n— C’est pour ton salon.\n— Je vais devoir choisir entre elle et le canapé.\nNathan proposa de démonter le pot. Personne ne le laissa essayer.\nLa mère de Camille accrocha une plaque « Loge 1 » à la porte de la chambre.\nLe soir, ils mangèrent tous par terre parce que les chaises n’étaient pas encore arrivées.\nCamille regarda son nouvel appartement avec émotion.\n— Ça va me faire bizarre de dormir sans le bruit du frigo de la cave.\nInès hocha la tête.\n— J’ai un enregistrement si tu veux.\nÀ minuit, tout le monde partit.\nCamille s’allongea dans son lit.\nLe silence était agréable. Elle s’endormit avant d’avoir besoin du fichier."
   },
   {
     "id": "camille-39",
-    "title": "L’interview de quatre minutes",
+    "title": "Quatre minutes à la télévision",
     "level": 152,
-    "text": "La promotion du spectacle envoya Camille sur un plateau télé. Le présentateur voulait savoir qui l’avait « découverte ». Elle cita le régisseur des Arcades, le pianiste, la metteuse en scène, Lio et le chien. La régie afficha le mot « publicité » avant la fin de la liste.\nOn lui laissa quand même chanter un refrain. Elle choisit celui que les gens connaissaient déjà. L’appel arriva le soir même : une grande salle voulait la recevoir sur une date d’essai. Elle aurait la soirée entière et devrait adapter le spectacle à un plateau trois fois plus large."
+    "text": "Camille fut invitée dans une émission de télévision pour parler de son spectacle.\nAvant d’entrer, on lui expliqua qu’elle aurait quatre minutes.\n— Pour parler et chanter ?\n— Oui.\nElle décida de faire des réponses courtes.\nLe présentateur lui demanda qui l’avait aidée à commencer.\nCamille cita le bar des Arcades, le pianiste, la metteuse en scène et ses amis.\nPuis elle parla du chien qui s’était endormi pendant sa première chanson.\nLe présentateur la regarda, surpris.\n— Vous remerciez un chien ?\n— Il m’a aidée à couper le premier couplet.\nLe public rit.\nCamille put chanter un refrain avant la fin de l’émission.\nQuand elle sortit du plateau, Anissa lui montra les messages reçus. Des gens cherchaient des billets.\nLa mère de Camille avait aussi écrit.\n« Très bien, mais la caméra n’a pas montré tes chaussures. »\nLe soir même, une salle de sept cents places appela la productrice. Elle voulait accueillir le spectacle."
   },
   {
     "id": "camille-40",
-    "title": "L’écho de sept cents places",
+    "title": "Sept cents places",
     "level": 157,
-    "text": "Depuis le fond de la grande salle, Lauriane fit signe à Camille de recommencer la scène de la cave. Le premier geste, visible à soixante places, disparaissait à cette distance. Camille essaya plus grand. On aurait dit qu’elle guidait un avion.\nElles travaillèrent le placement et les éclairages jusqu’à ce que le fond de salle voie enfin la clé dans sa main. Camille demanda à la régie de ne pas éclairer tout le plateau pendant ce passage. Pour que la salle paraisse grande plus tard, il fallait d’abord retrouver la taille de la cave."
+    "text": "Camille entra dans la grande salle vide. Elle monta sur scène et regarda les rangées de sièges.\n— On dirait qu’il y a beaucoup plus de gens quand il n’y a personne, dit-elle.\nLauriane s’installa tout au fond pour vérifier ce qu’on voyait.\nCamille joua la scène où elle tenait une petite clé dans la main.\n— Je ne vois rien ! cria Lauriane.\nCamille leva le bras plus haut.\n— Maintenant ?\n— Tu as l’air de chercher le bus !\nAlexis prit sa place et essaya de lui montrer un geste plus simple.\nIls travaillèrent ensuite avec la responsable des lumières. Un éclairage précis permit de voir la clé et le visage de Camille.\nElle n’avait plus besoin de faire de grands gestes.\nAu bout de deux heures, Camille réussit enfin à jouer la scène naturellement.\nLauriane descendit vers le plateau.\n— Voilà. Cette fois, j’ai compris.\n— Et mes grands gestes ?\n— Garde-les pour appeler Alexis. Il cherche la sortie depuis dix minutes.\nAlexis apparut entre deux rangées.\n— Il y a sept cents sièges et pas un panneau assez grand !"
   },
   {
     "id": "camille-41",
-    "title": "Une affiche avec assez de place",
+    "title": "La pince à linge",
     "level": 161,
-    "text": "Le premier projet d’affiche disait « Camille, le phénomène ». Camille demanda à mettre le titre de son spectacle plus gros que son prénom et à indiquer les noms de la troupe dans le programme.\nLa photographe proposa ensuite un portrait majestueux. Camille posa en chemise retroussée, sa tenue des trois ronds-points. Un technicien lui prêta une pince à linge pour tenir le col. Sur la photo retenue, on devinait la pince. Sa mère lui demanda si elle faisait désormais du placement de produit."
+    "text": "Pour l’affiche, la photographe demanda à Camille de choisir une tenue dans laquelle elle se sentait bien.\nElle apporta la chemise d’Alexis.\n— Elle est à moi, maintenant, dit-elle.\nAlexis, qui passait derrière, leva un doigt.\nLauriane lui baissa doucement la main.\nLe col de la chemise ne tenait pas comme la photographe le voulait. Un technicien trouva une pince à linge.\nIl la fixa derrière l’épaule.\nCamille posa avec son micro. Au premier essai, elle faisait une tête si sérieuse que Mélissa lui demanda si elle vendait des assurances.\nCamille éclata de rire. La photographe prit la photo à ce moment-là.\nC’était la bonne.\nSur l’image, on devinait encore un petit bout de la pince.\nSa mère la remarqua immédiatement.\n— Tu veux que je t’en apporte une plus jolie ?\nCamille décida de laisser la photo comme elle était. Elle ressemblait à une version heureuse d’elle-même, ce qui lui plaisait beaucoup."
   },
   {
     "id": "camille-42",
-    "title": "Le jour où l’escalier craque",
+    "title": "La marche cassée",
     "level": 165,
-    "text": "À quinze minutes de l’ouverture, une marche du décor se fendit. La régisseuse condamna l’escalier. Camille revit son entrée et demanda à la choriste si elle pouvait commencer la scène à l’étage pendant qu’elle chanterait depuis la fosse.\nElles essayèrent une fois. Ça fonctionna mieux que prévu : Camille se trouvait littéralement plus bas que le public et les premiers rangs entendirent son souffle avant la musique. L’escalier fut réparé le lendemain. La fosse garda son rôle."
+    "text": "Le décor du spectacle comportait un petit escalier. Camille devait le monter pour montrer qu’elle quittait la cave.\nJuste avant l’ouverture de la salle, une marche se fendit.\nLa responsable technique arrêta les essais et interdit de l’utiliser.\nNathan proposa du ruban adhésif.\nElle le regarda.\n— Sur un micro, peut-être. Sous les pieds de Camille, non.\nIls cherchèrent une autre façon de commencer.\nCamille pouvait entrer par le bas de la salle, près des premiers rangs. La choriste jouerait la voisine sur scène.\nElles répétèrent rapidement le nouveau passage.\nLe soir, Camille commença à chanter tout près du public. Les gens l’entendaient avant de bien la voir.\nLa scène fonctionna très bien.\nAprès la représentation, la productrice demanda de garder cette entrée.\nNathan remballa son rouleau de ruban.\n— Bon. Ça fera moins de matériel.\nLa responsable technique lui confia un carton à refermer. Il eut enfin le droit de réparer quelque chose."
   },
   {
     "id": "camille-43",
-    "title": "Le rappel qui vide le frigo",
+    "title": "La chanson du frigo revient",
     "level": 170,
-    "text": "La grande salle demanda un rappel. Camille avait prévu un morceau de plus. Le public en réclama deux. Le pianiste lança au hasard l’accord de la chanson du frigo.\n« Vous êtes sûrs ? À la maison, on paie pour qu’il se taise. »\nElle chanta le premier couplet et entendit la choriste lui répondre sans avoir besoin de regarder le conducteur. La régisseuse leur annonça les chiffres à la sortie. La salle proposait une deuxième date. Camille demanda d’abord si toute l’équipe pouvait revenir."
+    "text": "À la fin de la soirée, le public applaudit longtemps. Camille et la troupe revinrent saluer.\nPuis les gens demandèrent une autre chanson.\nCamille en avait prévu une. Ils la jouèrent.\nLes applaudissements recommencèrent.\nLe pianiste regarda Camille avec un petit sourire et lança les premières notes de la chanson du frigo, écrite pour leur ancienne pièce.\n— Tu es sérieux ? murmura-t-elle.\nIl continua.\nCamille raconta rapidement l’histoire de l’appareil qui empêchait tout le monde de dormir.\nDans la salle, Inès se leva pour saluer.\n— Elle parle du frigo, pas de toi ! lui souffla Mélissa.\nCamille les entendit et dut attendre de finir de rire avant de chanter.\nLa choriste reprit le refrain avec elle. Elles se connaissaient assez bien pour jouer sans tout préparer.\nAprès le concert, la salle proposa une nouvelle date.\nCamille demanda si toute la troupe était disponible. Elle voulait revenir avec les mêmes personnes."
   },
   {
     "id": "camille-44",
-    "title": "Le message à la mauvaise personne",
+    "title": "La liste des invités",
     "level": 174,
-    "text": "Voldemort écrivit à la salle pour demander une invitation et ajouta qu’il avait « rendu possible le début de sa carrière ». Le message atterrit chez Anissa, qui s’occupait exceptionnellement des accréditations.\nElle le transmit à Camille avec une question : « Je réponds quoi ? »\nCamille relut la phrase et lui demanda de suivre la procédure habituelle. Les invitations d’équipe étaient déjà attribuées. Elle posa son téléphone et retourna à sa répétition. Quand elle rentra, elle avait oublié de demander si Voldemort avait répondu."
+    "text": "Anissa aida l’équipe à préparer la liste des invités pour la grande représentation suivante.\nElle reçut un message de Voldemort. Il demandait une place gratuite et expliquait qu’il avait beaucoup aidé Camille à devenir artiste.\nAnissa le transmit à son amie avant de répondre.\nCamille le lut et posa son téléphone.\n— Les invitations sont déjà distribuées ?\n— Oui.\n— Alors tu peux lui répondre ça.\nAnissa le fit simplement. Camille retourna répéter.\nUn peu plus tard, sa mère arriva avec un papier.\nElle avait ajouté six noms à la liste.\n— Ce sont des gens qui te soutiennent.\nCamille regarda.\n— Maman, je ne connais pas ton dentiste.\n— Il a vu ton affiche.\n— Et le monsieur du pressing ?\n— Il a très bien repassé ma veste.\nAnissa prit une nouvelle feuille pour vérifier les places restantes.\nCamille sourit. Cette liste-là lui prenait aussi du temps, mais elle savait au moins pourquoi sa mère la trouvait si longue."
   },
   {
     "id": "camille-45",
-    "title": "La chanson qui refuse de finir",
+    "title": "Une chanson qui monte trop haut",
     "level": 178,
-    "text": "Une salle nationale proposa à Camille la tête d’affiche de son festival. Elle décida d’écrire un final inédit. Pendant une semaine, chaque version se terminait par un changement de tonalité de plus. À la huitième, le pianiste vérifia qu’il restait des touches au clavier.\nCamille reprit la phrase de la femme des Arcades et essaya de la chanter seule. Le reste de l’équipe entra après le silence. Elle jeta les six dernières pages et demanda à tout le monde de répéter cette entrée jusqu’à pouvoir se passer de signe."
+    "text": "Camille voulait écrire une grande chanson pour terminer le spectacle. Elle avait peur que le dernier morceau ne soit pas assez impressionnant.\nÀ chaque nouvel essai, elle ajoutait une note plus haute.\nLe pianiste devait changer de ton encore et encore.\nAu huitième essai, il retira ses mains du clavier.\n— Tu veux qu’on termine sur le toit ?\nCamille s’assit.\n— Je veux que les gens se souviennent de la fin.\nLa choriste proposa d’essayer avec moins de notes. Elles reprirent un petit passage calme, presque comme une conversation.\nCamille pensa à la femme des Arcades et à toutes les fois où quelqu’un lui avait dit « Moi aussi, j’ai vécu ça ».\nElle écrivit un refrain simple.\nLes autres chanteurs entraient après elle, chacun à son tour.\nCette fois, personne n’avait besoin de crier pour être entendu.\nLio écouta la chanson.\n— Je la retiens déjà.\nCamille sourit.\nLe pianiste aussi.\n— Parfait. On peut redescendre du toit."
   },
   {
     "id": "camille-46",
-    "title": "Les chaussures de secours",
+    "title": "Les baskets de secours",
     "level": 183,
-    "text": "Le matin du festival, Camille découvrit que le colis contenant ses bottes avait été livré à un autre théâtre. Lio proposa une expédition. Mélissa demanda combien de scènes se passaient vraiment debout. Camille alla chercher dans son sac les baskets qu’elle mettait pour monter l’escalier de la cave.\nElle fit les balances avec, traversa le plateau deux fois et les garda. Dans les coulisses, elle retrouva son premier ticket des Arcades dans la poche du sac. Elle le glissa dans le programme du soir."
+    "text": "La troupe arriva au festival pour jouer devant un public encore plus grand.\nCamille avait prévu de porter de belles bottes. Mais leur colis avait été livré dans un autre théâtre.\nLio proposa de partir les chercher. Nathan sortit déjà les clés de voiture.\nLauriane demanda à voir l’adresse.\nLe théâtre était à trois heures de route.\nTout le monde rangea les clés.\nCamille fouilla dans son sac et retrouva ses vieilles baskets. Elle les avait souvent mises pour monter l’escalier de la cave avec ses sacs.\nElle les enfila.\n— Ce sera ça.\nMélissa regarda la tenue complète.\n— Franchement, ça va très bien.\nLa mère de Camille envoya un message pour demander si elle pouvait acheter les mêmes.\nPendant les derniers essais, Camille marcha d’un bout à l’autre du plateau sans avoir mal aux pieds.\nElle garda les baskets.\nEn vidant une petite poche du sac, elle retrouva le papier des courses d’Inès.\nElle le plia soigneusement.\nCette fois, elle savait ses paroles."
   },
   {
     "id": "camille-47",
-    "title": "Le silence du premier rang",
+    "title": "Le public écoute",
     "level": 187,
-    "text": "À l’entrée du spectacle, les premiers rangs étaient si silencieux que Camille crut avoir raté son départ. Elle vit une femme poser son téléphone et se pencher comme aux Arcades. Elle continua.\nAu dernier refrain, la choriste attendit une seconde de plus que prévu. Camille lui laissa cette seconde. Quand le piano entra, elle entendit la salle reprendre une phrase du final qu’elle venait d’inventer. Le lendemain, un festival d’été lui proposa sa grande scène. Son nom serait seul en haut de l’affiche, pour le spectacle qu’elle avait écrit."
+    "text": "Avant le spectacle du festival, Camille regarda la foule et sentit le trac revenir.\nElle avait maintenant plus d’expérience, mais cette grande scène l’impressionnait.\nDans les coulisses, Rachid lui proposa de relire le programme.\n— Je le connais.\n— Alors qu’est-ce que tu veux faire ?\n— Respirer deux minutes.\nIl rangea son cahier et resta simplement à côté d’elle.\nQuand Camille commença à chanter, les premiers rangs se turent. Elle eut d’abord peur qu’ils s’ennuient.\nPuis elle vit des gens poser leur téléphone et se tourner vers elle.\nIls écoutaient vraiment.\nElle prit le temps de finir chaque phrase. Au refrain, plusieurs voix l’accompagnèrent.\nÀ la fin, toute la troupe revint saluer.\nLe lendemain, les organisateurs d’un autre grand festival lui proposèrent de fermer leur soirée principale avec son spectacle.\nElle serait l’artiste annoncée en haut de l’affiche.\nCamille lut le message à ses amis.\nInès demanda si la cave allait devenir un lieu historique.\n— Il faudra déjà la ranger, répondit Mélissa."
   },
   {
     "id": "camille-48",
-    "title": "La grande scène est un chantier",
+    "title": "Plus d’écran, toujours des chansons",
     "level": 191,
-    "text": "Le jour du grand concert, le festival perdit la projection et une partie du son au cours des balances. Le directeur proposa de décaler d’une heure pour réparer. Le public arrivait déjà et la choriste devait partir tôt.\nCamille demanda à la régisseuse ce qu’ils pouvaient jouer avec le piano, les micros qui marchaient et les projecteurs disponibles. La régisseuse compta, refit son plan et dit : « On peut ouvrir la cave. »\nIls ressortirent le petit éclairage de la première scène et gardèrent la place du grand final."
+    "text": "Le jour du grand spectacle, une partie du matériel tomba en panne pendant les essais.\nL’écran du fond resta noir. Deux micros ne répondaient plus.\nCamille regarda la responsable technique.\n— On peut faire quoi ?\nElles listèrent ensemble ce qui marchait. Le piano, plusieurs micros et les lumières principales étaient prêts.\nLa troupe pouvait jouer avec un décor plus simple.\nNathan proposa de dessiner un immeuble sur un grand carton.\n— Tu as combien de temps ? demanda Lio.\n— Douze minutes.\n— Alors dessine une petite maison.\nLa responsable technique répartit les derniers réglages. Camille revit les déplacements avec la choriste.\nTout le monde avait quelque chose de précis à faire.\nAu moment où les portes s’ouvrirent, Camille sentit qu’ils étaient prêts.\nElle repensa à la cave, à ses trois invités et au chien.\nCette fois, des milliers de personnes attendaient.\nElle serra son micro et sourit à son équipe.\n— Bon. On leur raconte notre histoire ?"
   },
   {
     "id": "camille-49",
-    "title": "Les étoiles étaient côté cour",
+    "title": "Tout le monde sur scène",
     "level": 196,
-    "text": "Camille monta sur la grande scène en baskets. Au milieu du deuxième morceau, elle aperçut sa mère qui agitait le programme à l’envers, Inès et Mélissa qui ne regardaient plus les écrans, et Anissa qui tenait son téléphone sans filmer.\nÀ la dernière chanson, le système de projection revint. La régisseuse demanda dans l’oreillette s’il fallait l’allumer. Camille regarda ses partenaires, qui attendaient leur entrée dans la pénombre.\n« Garde le projecteur sur eux. »\nLe refrain traversa la foule sans image. Puis l’équipe revint saluer au complet."
+    "text": "Camille entra sous les lumières avec ses baskets et la chemise empruntée à Alexis.\nDans le public, elle aperçut sa mère qui agitait son programme à l’envers. Inès et Mélissa étaient debout à côté d’elle.\nLa première scène fit rire les premiers rangs. Puis les rires gagnèrent le reste de la foule.\nLes chansons suivirent. Camille prit le temps de regarder les gens, comme elle l’avait appris avec Lauriane.\nAu dernier morceau, l’écran se ralluma.\nLa responsable technique demanda dans son oreillette si elle voulait utiliser les images.\nCamille regarda ses partenaires.\n— On continue comme ça.\nIls chantèrent le refrain tous ensemble. Le public le reprit.\nQuand la musique s’arrêta, les applaudissements furent si forts que Camille en oublia de saluer.\nLa choriste lui donna un petit coup de coude.\n— Tu peux te pencher. C’est prévu.\nCamille rit, puis salua avec toute la troupe.\nElle était arrivée en haut de l’affiche avec le spectacle qu’elle avait écrit."
   },
   {
     "id": "camille-50",
-    "title": "Le sommet a une sortie de secours",
+    "title": "Une place au premier rang",
     "level": 200,
-    "text": "Quelques semaines après le festival, Camille retourna aux Arcades pour inaugurer une scène ouverte qu’elle avait aidé à financer. Au mur, l’affiche de la grande scène portait les signatures de toute la troupe. Le régisseur lui demanda si elle voulait ouvrir la soirée. Elle lui demanda plutôt de donner ses dix minutes à une fille qui attendait au bar, les yeux rivés sur ses chaussures.\nLa fille monta sans feuille, vida ses poches et posa une clé sur le tabouret. Camille reconnut le bruit de métal. Elle recula sa chaise pour que le premier rang voie mieux."
+    "text": "Après le festival, les demandes de concerts et les propositions de théâtre se multiplièrent. Camille pouvait enfin vivre de son travail d’artiste.\nQuelques mois plus tard, elle retourna aux Arcades. Elle avait aidé le bar à acheter du matériel pour ses soirées de jeunes chanteurs.\nAu mur, une photo de son grand concert était accrochée près de l’entrée.\nLe responsable du son lui proposa de chanter pour ouvrir la soirée.\nCamille aperçut une fille qui attendait avec une feuille froissée.\n— Elle passe à quelle heure ?\n— Juste après toi.\n— Tu peux lui donner mes dix minutes en plus.\nLa fille monta sur scène. Elle tremblait et chercha longtemps son papier.\nCamille s’installa au premier rang avec ses amis.\nLa fille vida ses poches sur le tabouret. Un ticket de caisse tomba par terre.\nInès se pencha vers Camille.\n— Si elle sort ma liste de courses, je demande une part des recettes.\nCamille éclata de rire, puis se tut pour écouter.\nLa jeune chanteuse releva les yeux. Elle trouva devant elle un public qui lui souriait."
   }
 ];
 const domains = [
@@ -523,6 +546,7 @@ function save(next, reward=false){
   try {localStorage.setItem(storeKey,JSON.stringify(next));}
   catch {flash('La sauvegarde locale a échoué.');return false;}
   state=next;
+  window.dispatchEvent(new Event("camille-local-save"));
   if(fresh.length) flash('✉ '+(fresh.length===1?'Nouvelle récompense':'Nouvelles récompenses')+' dans la messagerie.');
   return true;
 }
@@ -544,6 +568,11 @@ function renderHome(){
   '<div class="grid"><section class="card"><div class="eyebrow">Aujourd’hui</div><div class="stat">'+fmt(sum(day))+' XP</div><p>'+day.length+' quête(s) validée(s) · plafond de 1 000 XP</p>'+bar(sum(day),1000,'Quêtes du jour')+'<button class="primary" data-go="1" data-period="0">Mes quêtes du jour</button></section>'+
   '<section class="card"><div class="eyebrow">Cette semaine</div><div class="stat">'+fmt(sum(week))+' XP</div><p>'+week.length+' quête(s) hebdomadaire(s) validée(s)</p>'+bar(sum(week),2000,'Quêtes hebdomadaires')+'<button data-go="2" data-review="true">Voir le bilan</button></section></div>';
 }
+function categoryProgress(domain){
+  const xp=sum(allRows().filter(row=>row.domain===domain.id));
+  const level=levelOf(xp,disciplineCurve), next=disciplineCurve[level+1];
+  return {xp,level,next,base:disciplineCurve[level]};
+}
 function renderQuests(){
   const period=keys[questTab], now=new Date(), todayKey=dateKey(now);
   const date=period==='daily'&&dailyQuestDay?parseDay(dailyQuestDay):now;
@@ -554,7 +583,11 @@ function renderQuests(){
   '<div class="spread"><div class="meta">'+title+' · '+fmt(sum(rows))+' XP</div><button data-edit="'+period+'">Personnaliser</button></div>'+
   '<div class="grid">'+domains.map(domain=>{
     const earned=sum(rows.filter(row=>row.domain===domain.id));
-    return '<section class="card" style="--accent:'+domain.color+'"><div class="spread"><h3 class="accent">'+esc(domainTitle(domain))+'</h3><span class="meta">'+earned+' / '+cap[period]+' XP</span></div>'+bar(earned,cap[period],domainTitle(domain))+quests().filter(q=>q.period===period&&q.domain===domain.id).map(q=>{
+    const title=domainTitle(domain);
+    const {xp,level,next,base}=categoryProgress(domain);
+    const levelProgress=bar(xp-base,next===undefined?0:next-base,'Progression du niveau · '+title);
+    const remaining=next===undefined?'Niveau maximal':fmt(next-xp)+' XP avant le niveau '+(level+1);
+    return '<section class="card" style="--accent:'+domain.color+'"><div class="spread"><h3 class="accent">'+esc(title)+'</h3><span class="category-level">Niveau '+level+'</span></div>'+levelProgress+'<div class="spread category-xp"><span class="meta">'+remaining+'</span><span class="meta">'+earned+' / '+cap[period]+' XP '+(period==='daily'?'du jour':'de la semaine')+'</span></div>'+quests().filter(q=>q.period===period&&q.domain===domain.id).map(q=>{
       const done=state.log[key+'|'+q.id];
       const blocked=!done&&earned+q.xp>cap[period];
       return '<div class="quest" data-done="'+Boolean(done)+'"><div><strong>'+esc(done?.name??q.name)+'</strong><span class="meta">+'+(done?.xp??q.xp)+' XP'+(blocked?' · Plafond atteint':'')+'</span>'+(done?'<span class="quest-status">✓ Validée</span>':'')+'</div><button data-quest="'+q.id+'" data-key="'+key+'" aria-label="'+esc((done?'Annuler ':'Valider ')+(done?.name??q.name))+'" '+(blocked?'disabled':'')+'>'+(done?'Annuler':'Valider')+'</button></div>';
@@ -569,8 +602,7 @@ function renderProgress(){
   let content;
   if(progressTab===0){
     content='<div class="grid">'+domains.map(domain=>{
-      const xp=sum(allRows().filter(row=>row.domain===domain.id)), level=levelOf(xp,disciplineCurve);
-      const next=disciplineCurve[level+1],base=disciplineCurve[level];
+      const {xp,level,next,base}=categoryProgress(domain);
       return '<section class="card" style="--accent:'+domain.color+'"><h3 class="accent">'+esc(domainTitle(domain))+'</h3><div class="stat">Niveau '+level+'</div>'+bar(xp-base,next===undefined?0:next-base,domainTitle(domain))+'<div class="meta">'+fmt(xp)+' XP au total · '+(next===undefined?'Niveau maximal':fmt(next-xp)+' XP avant le prochain niveau')+'</div></section>';
     }).join('')+'</div>';
   }else if(progressTab===1){
@@ -784,8 +816,8 @@ render();
       const today = () => dateKey(new Date());
       const appStorage = {
         getItem: key => localStorage.getItem(key),
-        setItem: (key,value) => localStorage.setItem(key,value),
-        commit: entries => Object.entries(entries).forEach(([key,value])=>localStorage.setItem(key,value)),
+        setItem: (key,value) => {localStorage.setItem(key,value);window.dispatchEvent(new Event("camille-local-save"));},
+        commit: entries => {Object.entries(entries).forEach(([key,value])=>localStorage.setItem(key,value));window.dispatchEvent(new Event("camille-local-save"));},
         validate: (key,value) => {
           if(!Array.isArray(value.sessions)||!Array.isArray(value.programs)||!Array.isArray(value.library))
             throw new Error("Carnet invalide");
@@ -1733,6 +1765,271 @@ const previous=sportRender;sportRender=function(...args){const result=previous(.
 if(sport.active&&sportPage==="home")document.querySelectorAll("#trainingRoot .sport-ex").forEach((node,i)=>{if(sportExerciseKind(sport.active.exercises[i])!=="cardio")return;const add=node.querySelector('[data-sport="addSet"]');if(add)add.textContent="+ Ajouter un bloc";});
 return result;};
 window.rpgExerciseLibrary={catalog:()=>catalog().map(e=>({...e})),normalize:norm,builtinCount:BUILTIN.length};libraryPage();
+})();
+
+</script>
+<script>
+(function(){
+'use strict';
+const GAME='camille-atelier-v1', TRAIN='camille-training-v1';
+const BIND='camille-cloud-binding-v1', BACKUP='camille-before-restore-v1';
+const panel=document.getElementById('cloudPanel');
+const status=document.getElementById('cloudStatus');
+let auth, db, sdk, user=null, binding=null, remote=null, ready=false, busy=false, authBusy=false, debounce, epoch=0;
+const payload=()=>({game:localStorage.getItem(GAME)||JSON.stringify(blank()),training:localStorage.getItem(TRAIN)||JSON.stringify(sportDefault())});
+const canonical=value=>{
+  if(Array.isArray(value))return value.map(canonical);
+  if(value&&typeof value==='object')return Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])]));
+  return value;
+};
+const equal=(a,b)=>a&&b&&JSON.stringify(canonical(JSON.parse(a.game)))===JSON.stringify(canonical(JSON.parse(b.game)))&&JSON.stringify(canonical(JSON.parse(a.training)))===JSON.stringify(canonical(JSON.parse(b.training)));
+const hasProgress=data=>{
+  const game=JSON.parse(data.game), training=JSON.parse(data.training);
+  return Object.keys(game.log||{}).length||Object.keys(game.custom||{}).length||Object.keys(game.titles||{}).length||
+    (game.unlocked||[]).length||(game.mail||[]).length||(training.library||[]).length||(training.sessions||[]).length||training.active||
+    (training.programs||[]).some(program=>program.id!==SPORT_LOCKED_ID);
+};
+function validate(data){
+  if(!data||typeof data.game!=='string'||typeof data.training!=='string')throw Error('invalid-backup');
+  const game=JSON.parse(data.game), training=JSON.parse(data.training);
+  if(!game||!game.log||!game.custom||!Array.isArray(game.unlocked))throw Error('invalid-backup');
+  for(const row of Object.values(game.log))if(!row||!Number.isFinite(row.xp)||typeof row.domain!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(row.date))throw Error('invalid-backup');
+  appStorage.validate(TRAIN,training);
+  for(const session of [...training.sessions,...training.programs,...(training.active?[training.active]:[])])
+    if(!session||!Array.isArray(session.exercises)&&session.type==='Musculation')throw Error('invalid-backup');
+  return {game,training};
+}
+function setBinding(revision,data){
+  const next={uid:user.uid,revision,base:data};
+  localStorage.setItem(BIND,JSON.stringify(next));
+  binding=next;
+}
+function message(text){
+  status.textContent=text;
+  ui();
+}
+function ui(){
+  document.getElementById('cloudAccount').textContent=user?.email||'Compte Firebase';
+  document.getElementById('cloudForm').hidden=Boolean(user);
+  document.getElementById('cloudConnected').hidden=!user;
+  document.getElementById('cloudChoices').hidden=!user||!remote||ready;
+  document.getElementById('cloudUpload').textContent=remote?.exists?'Utiliser ma progression de cet appareil':'Sauvegarder cet appareil dans le cloud';
+  document.getElementById('cloudRestore').hidden=!remote?.exists;
+  const describe=data=>{
+    const game=JSON.parse(data.game), training=JSON.parse(data.training);
+    return Object.keys(game.log||{}).length+' quêtes validées, '+(training.sessions||[]).length+' séances terminées'+(training.active?', une séance en cours':'');
+  };
+  document.getElementById('cloudCompare').textContent='Cet appareil · '+describe(payload())+(remote?.exists?' — Cloud · '+describe(remote.data):'');
+  document.getElementById('cloudPrevious').hidden=!localStorage.getItem(BACKUP);
+  for(const button of panel.querySelectorAll('button[data-cloud]'))button.disabled=busy||authBusy||!sdk;
+  document.getElementById('cloudDisconnect').disabled=busy||authBusy||!auth;
+  document.getElementById('cloudBadge').textContent=!user?'☁':busy?'↻':ready?'☁ ✓':'☁ !';
+}
+const friendly=error=>({
+  'auth/operation-not-allowed':'Active E-mail/Mot de passe dans Firebase Authentication.',
+  'auth/email-already-in-use':'Ce compte existe déjà. Utilise Se connecter.',
+  'auth/invalid-credential':'Adresse e-mail ou mot de passe incorrect.',
+  'auth/invalid-email':'Vérifie ton adresse e-mail.',
+  'auth/weak-password':'Choisis un mot de passe d’au moins 6 caractères.',
+  'auth/network-request-failed':'Connexion indisponible. Réessaie avec Internet.',
+  'auth/too-many-requests':'Trop de tentatives. Réessaie plus tard.',
+  'auth/unauthorized-domain':'Ajoute le domaine GitHub Pages dans les domaines autorisés de Firebase Authentication.',
+  'permission-denied':'Accès refusé. Vérifie la création de Firestore et ses règles.',
+  'unavailable':'Cloud indisponible. Les modifications sont enregistrées sur cet appareil.',
+  'invalid-backup':'La sauvegarde reçue est invalide. La copie locale est conservée.',
+  'resource-exhausted':'La limite Firebase est atteinte. La copie locale est conservée.'
+}[error.code||error.message]||'La synchronisation a échoué. La copie locale est conservée. Réessaie.');
+function readRemote(snapshot){
+  if(!snapshot.exists())return {exists:false,revision:0,data:null};
+  const value=snapshot.data();
+  if(value.schema!==1||!Number.isSafeInteger(value.revision)||value.revision<1)throw Error('invalid-backup');
+  validate(value.payload);
+  return {exists:true,revision:value.revision,data:value.payload};
+}
+function restore(data,revision){
+  const parsed=validate(data), old=payload(), oldBind=localStorage.getItem(BIND);
+  localStorage.setItem(BACKUP,JSON.stringify({date:new Date().toISOString(),payload:old}));
+  try{
+    localStorage.setItem(GAME,data.game);
+    localStorage.setItem(TRAIN,data.training);
+    setBinding(revision,data);
+  }catch(error){
+    localStorage.setItem(GAME,old.game);
+    localStorage.setItem(TRAIN,old.training);
+    if(oldBind===null)localStorage.removeItem(BIND);else localStorage.setItem(BIND,oldBind);
+    throw error;
+  }
+  state=parsed.game;
+  sport={...sportDefault(),...parsed.training};
+  // The installed reference program follows this version of the application.
+  sport.programs=sport.programs.filter(program=>program.id!==SPORT_LOCKED_ID&&program.id!=='fullbody-initial-v451');
+  sport.programs.unshift(sportStarter());
+  sportOpenExercise=null;
+  render();
+  sportRender();
+}
+async function reconcile(){
+  if(!user||busy)return;
+  busy=true;ready=false;remote=null;
+  const session=epoch, account=user.uid;
+  const ref=sdk.doc(db,'users',account,'saves','rpg-artiste');
+  message('Vérification de la sauvegarde…');
+  try{
+    const found=readRemote(await sdk.getDocFromServer(ref));
+    if(session!==epoch)return;
+    remote=found;
+    const local=payload();
+    if(found.exists&&equal(local,found.data)){
+      setBinding(found.revision,local);ready=true;message('Progression synchronisée.');
+    }else if(found.exists&&(!hasProgress(local)||(binding?.uid===account&&equal(local,binding.base)))){
+      restore(found.data,found.revision);ready=true;message('Progression restaurée depuis le cloud.');
+    }else if(found.exists&&binding?.uid===account&&binding.revision===found.revision){
+      ready=true;message('Modifications de cet appareil à sauvegarder.');
+    }else message(found.exists?'Deux progressions sont disponibles. Choisis celle à conserver.':'Première sauvegarde. Confirme la progression de cet appareil.');
+  }catch(error){if(session===epoch)message(friendly(error));}
+  finally{
+    if(session===epoch){busy=false;ui();if(ready&&!equal(payload(),binding?.base))schedule();}
+  }
+}
+async function upload(explicit=false){
+  if(!user||busy||!remote||(!ready&&!explicit))return;
+  const session=epoch, account=user.uid, captured=payload(), expected=explicit?remote.revision:binding?.revision;
+  const ref=sdk.doc(db,'users',account,'saves','rpg-artiste');
+  busy=true;message('Sauvegarde dans le cloud…');
+  try{
+    validate(captured);
+    if(new TextEncoder().encode(JSON.stringify(captured)).length>750000)throw {code:'resource-exhausted'};
+    const revision=await sdk.runTransaction(db,async transaction=>{
+      const current=readRemote(await transaction.get(ref));
+      if(session!==epoch||auth.currentUser?.uid!==account)throw Error('account-changed');
+      if(current.revision!==expected)throw Error('conflict');
+      const next=current.revision+1;
+      transaction.set(ref,{schema:1,revision:next,payload:captured,updatedAt:sdk.serverTimestamp()});
+      return next;
+    });
+    if(session!==epoch)return;
+    setBinding(revision,captured);
+    remote={exists:true,revision,data:captured};
+    ready=true;
+    message(equal(payload(),captured)?'Sauvegarde cloud à jour · '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'Modifications en attente de sauvegarde.');
+  }catch(error){
+    if(session!==epoch)return;
+    ready=false;
+    if(error.message==='conflict'){
+      remote=null;message('Un autre appareil a modifié la progression. Actualise la sauvegarde avant de choisir.');
+    }else message(friendly(error));
+  }finally{
+    if(session===epoch){busy=false;ui();if(ready&&!equal(payload(),binding?.base))schedule();}
+  }
+}
+function schedule(){
+  clearTimeout(debounce);
+  if(!user)return;
+  if(!ready){ui();return;}
+  if(equal(payload(),binding?.base))return;
+  message('Enregistré sur cet appareil · sauvegarde cloud en attente…');
+  debounce=setTimeout(()=>upload(),1400);
+}
+function downloadLocal(){
+  const blob=new Blob([JSON.stringify({application:'RPG_Artiste',date:new Date().toISOString(),payload:payload()},null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob), anchor=document.createElement('a');
+  anchor.href=url;anchor.download='RPG_Artiste_sauvegarde_'+dateKey(new Date())+'.json';anchor.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+document.getElementById('cloudButton').onclick=()=>{panel.showModal();ui();};
+document.getElementById('cloudClose').onclick=()=>panel.close();
+document.getElementById('cloudExport').onclick=downloadLocal;
+document.getElementById('cloudPrevious').onclick=()=>{
+  const previous=localStorage.getItem(BACKUP);
+  if(!previous)return;
+  const url=URL.createObjectURL(new Blob([previous],{type:'application/json'}));
+  const anchor=document.createElement('a');
+  anchor.href=url;anchor.download='RPG_Artiste_avant_restauration.json';anchor.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+document.getElementById('cloudDisconnect').onclick=async()=>{
+  if(busy||authBusy)return;
+  clearTimeout(debounce);ready=false;epoch++;
+  try{await sdk.signOut(auth);}catch(error){message(friendly(error));}
+};
+document.getElementById('cloudForm').onsubmit=async event=>{
+  event.preventDefault();
+  if(!sdk||authBusy)return;
+  const action=event.submitter?.value, email=document.getElementById('cloudEmail').value.trim();
+  const password=document.getElementById('cloudPassword').value;
+  authBusy=true;ui();
+  try{
+    if(action==='reset'){
+      await sdk.sendPasswordResetEmail(auth,email);
+      message('Si cette adresse correspond à un compte, un e-mail de réinitialisation a été envoyé.');
+    }else if(action==='create')await sdk.createUserWithEmailAndPassword(auth,email,password);
+    else await sdk.signInWithEmailAndPassword(auth,email,password);
+    document.getElementById('cloudPassword').value='';
+  }catch(error){message(friendly(error));}
+  finally{authBusy=false;ui();}
+};
+panel.addEventListener('click',async event=>{
+  const op=event.target.closest('[data-cloud]')?.dataset.cloud;
+  if(!op||busy||authBusy)return;
+  if(op==='refresh'){await reconcile();return;}
+  if(op==='upload'){
+    if(!remote)return;
+    if(remote.exists&&!confirm('Remplacer la sauvegarde cloud par la progression de cet appareil ?'))return;
+    await upload(true);
+  }
+  if(op==='restore'&&remote?.exists){
+    if(!confirm('Charger la progression cloud sur cet appareil ? Une copie locale sera conservée avant le remplacement.'))return;
+    const revision=remote.revision, expectedLocal=payload(), session=epoch;
+    busy=true;ui();
+    try{
+      const fresh=readRemote(await sdk.getDocFromServer(sdk.doc(db,'users',user.uid,'saves','rpg-artiste')));
+      if(session!==epoch)return;
+      if(fresh.revision!==revision||!equal(payload(),expectedLocal)){
+        remote=fresh;message('Une progression a changé. Vérifie à nouveau ton choix.');return;
+      }
+      restore(fresh.data,fresh.revision);ready=true;message('Progression restaurée depuis le cloud.');
+    }catch(error){message(friendly(error));}
+    finally{busy=false;ui();if(ready&&!equal(payload(),binding?.base))schedule();}
+  }
+});
+window.addEventListener('camille-local-save',schedule);
+window.addEventListener('storage',event=>{
+  if(![GAME,TRAIN,BIND].includes(event.key))return;
+  if(event.key===TRAIN){try{sport={...sportDefault(),...JSON.parse(event.newValue)};sportRender();}catch{}}
+  // Another tab can change local data, but cannot establish this tab's cloud revision.
+  schedule();
+});
+window.addEventListener('online',()=>{if(user)reconcile();});
+window.addEventListener('focus',()=>{if(user&&!panel.open)reconcile();});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&user)reconcile();});
+window.addEventListener('beforeunload',event=>{
+  if(user&&(!binding||!equal(payload(),binding.base))){event.preventDefault();event.returnValue='';}
+});
+(async()=>{
+  try{
+    const [appApi,authApi,fireApi]=await Promise.all([
+      import('https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js'),
+      import('https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js'),
+      import('https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js')
+    ]);
+    sdk={...authApi,...fireApi};
+    const app=appApi.initializeApp({
+      apiKey:'AIzaSyC5ChYC6Ihz9NiFvsJXC4HXb2nKhJA_7iA',
+      authDomain:'rpg-artiste.firebaseapp.com',
+      projectId:'rpg-artiste',
+      storageBucket:'rpg-artiste.firebasestorage.app',
+      messagingSenderId:'476179946844',
+      appId:'1:476179946844:web:762dfbe89bb3a9f2973599'
+    },'camille');
+    auth=sdk.getAuth(app);db=sdk.getFirestore(app);
+    sdk.onAuthStateChanged(auth,async account=>{
+      epoch++;user=account;ready=false;busy=false;remote=null;clearTimeout(debounce);binding=null;
+      try{const stored=JSON.parse(localStorage.getItem(BIND));if(stored?.uid===account?.uid)binding=stored;}catch{}
+      if(account)await reconcile();
+      else message('Connecte-toi pour sauvegarder et retrouver ta progression.');
+    });
+  }catch(error){message('Firebase ne se charge pas. Vérifie Internet puis recharge la page.');}
+})();
 })();
 
 </script>
